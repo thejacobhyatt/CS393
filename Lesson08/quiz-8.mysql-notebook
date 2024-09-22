@@ -1,0 +1,846 @@
+{
+    "type": "MySQLNotebook",
+    "version": "1.0",
+    "caption": "DB Notebook",
+    "content": "USE cartoon_equipment;\nSHOW TABLES;\nSELECT * FROM customerorder;\n-- Write a query that shows the product id and product name for products that have more than the average number of product notes.\n\nSELECT product.productId, product.productName\nFROM product\nWHERE (\n    SELECT COUNT(*) \n    FROM productnote\n    WHERE productnote.productId = product.productId) > (SELECT AVG(note_count) \n        FROM (SELECT COUNT(*) AS note_count\n            FROM productnote\n            GROUP BY productId) AS avgNotes);\n-- Write a query that shows the customer id and customer name for customers who have purchased a product with a product note. \nSELECT DISTINCT customer.customerId, customer.customerName\nFROM customer\nINNER JOIN customerorder \n    ON customer.customerId = customerorder.customerId\nINNER JOIN orderitem\n    ON orderitem.orderNumber = customerorder.orderNumber\nINNER JOIN product\n    ON product.productId = orderitem.productId\nINNER JOIN productnote \n    ON product.productId = productnote.productId;\n-- Show the customer id, name, and total value of all orders for each customer.\nSELECT customer.customerId, customer.customerName, SUM(orderitem.quantity * orderitem.itemPrice) AS totalPrice\nFROM customer\nINNER JOIN customerorder \n    ON customer.customerId = customerorder.customerId\nINNER JOIN orderitem\n    ON orderitem.orderNumber = customerorder.orderNumber\nGROUP BY customer.customerId;\n-- Find the average of the total quantity of items purchased per order\nSELECT AVG(totalQuantity) AS averageItemsPerOrder\nFROM(SELECT SUM(orderitem.quantity) AS totalQuantity\nFROM customer\nINNER JOIN customerorder \n    ON customer.customerId = customerorder.customerId\nINNER JOIN orderitem\n    ON orderitem.orderNumber = customerorder.orderNumber\nGROUP BY customerorder.orderNumber)\nAS orderTotal;\n-- Use a subquery to find customers who have a customer order on or after 01-Oct-2005\nSELECT customerId, customerName\nFROM customer\nWHERE customer.customerId IN (\n    SELECT customerId \n    FROM customerorder\n    WHERE orderDate >= '2005-10-01');\n\n\n",
+    "options": {
+        "tabSize": 4,
+        "insertSpaces": true,
+        "indentSize": 4,
+        "defaultEOL": "CRLF",
+        "trimAutoWhitespace": true
+    },
+    "viewState": {
+        "cursorState": [
+            {
+                "inSelectionMode": false,
+                "selectionStart": {
+                    "lineNumber": 18,
+                    "column": 26
+                },
+                "position": {
+                    "lineNumber": 18,
+                    "column": 26
+                }
+            }
+        ],
+        "viewState": {
+            "scrollLeft": 0,
+            "firstPosition": {
+                "lineNumber": 1,
+                "column": 1
+            },
+            "firstPositionDeltaTop": 0
+        },
+        "contributionsState": {
+            "editor.contrib.folding": {},
+            "editor.contrib.wordHighlighter": false
+        }
+    },
+    "contexts": [
+        {
+            "state": {
+                "start": 1,
+                "end": 1,
+                "language": "mysql",
+                "result": {
+                    "type": "text",
+                    "text": [
+                        {
+                            "type": 4,
+                            "index": 0,
+                            "resultId": "5513e2d3-2683-4bfc-eb78-dc9810acd0ef",
+                            "content": "OK, 0 records retrieved in 0.501ms"
+                        }
+                    ]
+                },
+                "currentHeight": 28,
+                "currentSet": 1,
+                "statements": [
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 0,
+                            "length": 22
+                        },
+                        "contentStart": 0,
+                        "state": 0
+                    }
+                ]
+            },
+            "data": []
+        },
+        {
+            "state": {
+                "start": 2,
+                "end": 2,
+                "language": "mysql",
+                "result": {
+                    "type": "resultIds",
+                    "list": [
+                        "a0674226-81ab-4b2a-8632-44b6c6e0a2cc"
+                    ]
+                },
+                "currentHeight": 217,
+                "currentSet": 1,
+                "statements": [
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 0,
+                            "length": 12
+                        },
+                        "contentStart": 0,
+                        "state": 0
+                    }
+                ]
+            },
+            "data": [
+                {
+                    "tabId": "6cf50e0b-4f34-4636-ea45-726e710fd29b",
+                    "resultId": "a0674226-81ab-4b2a-8632-44b6c6e0a2cc",
+                    "rows": [
+                        {
+                            "0": "customer"
+                        },
+                        {
+                            "0": "customerorder"
+                        },
+                        {
+                            "0": "orderitem"
+                        },
+                        {
+                            "0": "product"
+                        },
+                        {
+                            "0": "productnote"
+                        },
+                        {
+                            "0": "vendor"
+                        }
+                    ],
+                    "columns": [
+                        {
+                            "title": "Tables_in_cartoon_equipment",
+                            "field": "0",
+                            "dataType": {
+                                "type": 17,
+                                "characterMaximumLength": 65535,
+                                "flags": [
+                                    "BINARY",
+                                    "ASCII",
+                                    "UNICODE"
+                                ],
+                                "needsQuotes": true,
+                                "parameterFormatType": "OneOrZero"
+                            },
+                            "inPK": false,
+                            "nullable": false,
+                            "autoIncrement": false
+                        }
+                    ],
+                    "executionInfo": {
+                        "text": "OK, 6 records retrieved in 0.997ms"
+                    },
+                    "totalRowCount": 6,
+                    "hasMoreRows": false,
+                    "currentPage": 0,
+                    "index": 0,
+                    "sql": "SHOW TABLES",
+                    "updatable": false
+                }
+            ]
+        },
+        {
+            "state": {
+                "start": 3,
+                "end": 3,
+                "language": "mysql",
+                "result": {
+                    "type": "resultIds",
+                    "list": [
+                        "77e1c0b6-fe1c-4644-da58-d49a6a1b95e0"
+                    ]
+                },
+                "currentHeight": 192,
+                "currentSet": 1,
+                "statements": [
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 0,
+                            "length": 28
+                        },
+                        "contentStart": 0,
+                        "state": 0
+                    }
+                ]
+            },
+            "data": [
+                {
+                    "tabId": "6cf50e0b-4f34-4636-ea45-726e710fd29b",
+                    "resultId": "77e1c0b6-fe1c-4644-da58-d49a6a1b95e0",
+                    "rows": [
+                        {
+                            "0": 20005,
+                            "1": "2005-09-01 00:00:00",
+                            "2": 10001
+                        },
+                        {
+                            "0": 20006,
+                            "1": "2005-09-12 00:00:00",
+                            "2": 10003
+                        },
+                        {
+                            "0": 20007,
+                            "1": "2005-09-30 00:00:00",
+                            "2": 10004
+                        },
+                        {
+                            "0": 20008,
+                            "1": "2005-10-03 00:00:00",
+                            "2": 10005
+                        },
+                        {
+                            "0": 20009,
+                            "1": "2005-10-08 00:00:00",
+                            "2": 10001
+                        }
+                    ],
+                    "columns": [
+                        {
+                            "title": "orderNumber",
+                            "field": "0",
+                            "dataType": {
+                                "type": 4,
+                                "flags": [
+                                    "SIGNED",
+                                    "ZEROFILL"
+                                ],
+                                "numericPrecision": 10,
+                                "parameterFormatType": "OneOrZero",
+                                "synonyms": [
+                                    "INTEGER",
+                                    "INT4"
+                                ]
+                            },
+                            "inPK": true,
+                            "nullable": false,
+                            "autoIncrement": true
+                        },
+                        {
+                            "title": "orderDate",
+                            "field": "1",
+                            "dataType": {
+                                "type": 26,
+                                "dateTimePrecision": 8,
+                                "needsQuotes": true,
+                                "parameterFormatType": "OneOrZero"
+                            },
+                            "inPK": false,
+                            "nullable": false,
+                            "autoIncrement": false
+                        },
+                        {
+                            "title": "customerId",
+                            "field": "2",
+                            "dataType": {
+                                "type": 4,
+                                "flags": [
+                                    "SIGNED",
+                                    "ZEROFILL"
+                                ],
+                                "numericPrecision": 10,
+                                "parameterFormatType": "OneOrZero",
+                                "synonyms": [
+                                    "INTEGER",
+                                    "INT4"
+                                ]
+                            },
+                            "inPK": false,
+                            "nullable": false,
+                            "autoIncrement": false
+                        }
+                    ],
+                    "executionInfo": {
+                        "text": "OK, 5 records retrieved in 0s"
+                    },
+                    "totalRowCount": 5,
+                    "hasMoreRows": false,
+                    "currentPage": 0,
+                    "index": 0,
+                    "sql": "SELECT * FROM customerorder",
+                    "updatable": true,
+                    "fullTableName": "customerorder"
+                }
+            ]
+        },
+        {
+            "state": {
+                "start": 4,
+                "end": 14,
+                "language": "mysql",
+                "result": {
+                    "type": "resultIds",
+                    "list": [
+                        "0e0355e3-a2ac-49a4-fe62-aa11fa6c6627"
+                    ]
+                },
+                "currentHeight": 167,
+                "currentSet": 1,
+                "statements": [
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 0,
+                            "length": 438
+                        },
+                        "contentStart": 131,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 438,
+                            "length": 4
+                        },
+                        "contentStart": 438,
+                        "state": 1
+                    }
+                ]
+            },
+            "data": [
+                {
+                    "tabId": "6cf50e0b-4f34-4636-ea45-726e710fd29b",
+                    "resultId": "0e0355e3-a2ac-49a4-fe62-aa11fa6c6627",
+                    "rows": [
+                        {
+                            "0": "ANV01",
+                            "1": ".5 ton anvil"
+                        },
+                        {
+                            "0": "FC",
+                            "1": "Carrots"
+                        },
+                        {
+                            "0": "SAFE",
+                            "1": "Safe"
+                        },
+                        {
+                            "0": "TNT2",
+                            "1": "TNT (5 sticks)"
+                        }
+                    ],
+                    "columns": [
+                        {
+                            "title": "productId",
+                            "field": "0",
+                            "dataType": {
+                                "type": 17,
+                                "characterMaximumLength": 65535,
+                                "flags": [
+                                    "BINARY",
+                                    "ASCII",
+                                    "UNICODE"
+                                ],
+                                "needsQuotes": true,
+                                "parameterFormatType": "OneOrZero"
+                            },
+                            "inPK": false,
+                            "nullable": false,
+                            "autoIncrement": false
+                        },
+                        {
+                            "title": "productName",
+                            "field": "1",
+                            "dataType": {
+                                "type": 17,
+                                "characterMaximumLength": 65535,
+                                "flags": [
+                                    "BINARY",
+                                    "ASCII",
+                                    "UNICODE"
+                                ],
+                                "needsQuotes": true,
+                                "parameterFormatType": "OneOrZero"
+                            },
+                            "inPK": false,
+                            "nullable": false,
+                            "autoIncrement": false
+                        }
+                    ],
+                    "executionInfo": {
+                        "text": "OK, 4 records retrieved in 0.999ms"
+                    },
+                    "totalRowCount": 4,
+                    "hasMoreRows": false,
+                    "currentPage": 0,
+                    "index": 0,
+                    "sql": "-- Write a query that shows the product id and product name for products that have more than the average number of product notes.\n\nSELECT product.productId, product.productName\nFROM product\nWHERE (\n    SELECT COUNT(*) \n    FROM productnote\n    WHERE productnote.productId = product.productId) > (\n        SELECT AVG(note_count) \n        FROM (\n            SELECT COUNT(*) AS note_count\n            FROM productnote\n            GROUP BY productId\n        ) AS avgNotes\n    )",
+                    "updatable": true,
+                    "fullTableName": ""
+                }
+            ]
+        },
+        {
+            "state": {
+                "start": 15,
+                "end": 25,
+                "language": "mysql",
+                "result": {
+                    "type": "resultIds",
+                    "list": [
+                        "b623dfa6-c9bc-41a7-e871-c0543b81b971"
+                    ]
+                },
+                "currentHeight": 142,
+                "currentSet": 1,
+                "statements": [
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 0,
+                            "length": 497
+                        },
+                        "contentStart": 127,
+                        "state": 0
+                    }
+                ]
+            },
+            "data": [
+                {
+                    "tabId": "6cf50e0b-4f34-4636-ea45-726e710fd29b",
+                    "resultId": "b623dfa6-c9bc-41a7-e871-c0543b81b971",
+                    "rows": [
+                        {
+                            "0": 10004,
+                            "1": "Yosemite Place"
+                        },
+                        {
+                            "0": 10001,
+                            "1": "Coyote Inc."
+                        },
+                        {
+                            "0": 10005,
+                            "1": "E Fudd"
+                        }
+                    ],
+                    "columns": [
+                        {
+                            "title": "customerId",
+                            "field": "0",
+                            "dataType": {
+                                "type": 4,
+                                "flags": [
+                                    "SIGNED",
+                                    "ZEROFILL"
+                                ],
+                                "numericPrecision": 10,
+                                "parameterFormatType": "OneOrZero",
+                                "synonyms": [
+                                    "INTEGER",
+                                    "INT4"
+                                ]
+                            },
+                            "inPK": false,
+                            "nullable": false,
+                            "autoIncrement": false
+                        },
+                        {
+                            "title": "customerName",
+                            "field": "1",
+                            "dataType": {
+                                "type": 17,
+                                "characterMaximumLength": 65535,
+                                "flags": [
+                                    "BINARY",
+                                    "ASCII",
+                                    "UNICODE"
+                                ],
+                                "needsQuotes": true,
+                                "parameterFormatType": "OneOrZero"
+                            },
+                            "inPK": false,
+                            "nullable": false,
+                            "autoIncrement": false
+                        }
+                    ],
+                    "executionInfo": {
+                        "text": "OK, 3 records retrieved in 0.499ms"
+                    },
+                    "totalRowCount": 3,
+                    "hasMoreRows": false,
+                    "currentPage": 0,
+                    "index": 0,
+                    "sql": "-- Write a query that shows the customer id and customer name for customers who have purchased a product with a product note. \nSELECT DISTINCT customer.customerId, customer.customerName\nFROM customer\nINNER JOIN customerorder \n    ON customer.customerId = customerorder.customerId\nINNER JOIN orderitem\n    ON orderitem.orderNumber = customerorder.orderNumber\nINNER JOIN product\n    ON product.productId = orderitem.productId\nINNER JOIN productnote \n    ON product.productId = productnote.productId",
+                    "updatable": false,
+                    "fullTableName": ""
+                }
+            ]
+        },
+        {
+            "state": {
+                "start": 26,
+                "end": 33,
+                "language": "mysql",
+                "result": {
+                    "type": "resultIds",
+                    "list": [
+                        "6ebd1594-4386-4e67-efe5-b8f840a91b54"
+                    ]
+                },
+                "currentHeight": 36,
+                "currentSet": 1,
+                "statements": [
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 0,
+                            "length": 392
+                        },
+                        "contentStart": 80,
+                        "state": 0
+                    }
+                ]
+            },
+            "data": [
+                {
+                    "tabId": "6cf50e0b-4f34-4636-ea45-726e710fd29b",
+                    "resultId": "6ebd1594-4386-4e67-efe5-b8f840a91b54",
+                    "rows": [
+                        {
+                            "0": 10001,
+                            "1": "Coyote Inc.",
+                            "2": "188.34"
+                        },
+                        {
+                            "0": 10003,
+                            "1": "Wascals",
+                            "2": "55.00"
+                        },
+                        {
+                            "0": 10004,
+                            "1": "Yosemite Place",
+                            "2": "1000.00"
+                        },
+                        {
+                            "0": 10005,
+                            "1": "E Fudd",
+                            "2": "125.00"
+                        }
+                    ],
+                    "columns": [
+                        {
+                            "title": "customerId",
+                            "field": "0",
+                            "dataType": {
+                                "type": 4,
+                                "flags": [
+                                    "SIGNED",
+                                    "ZEROFILL"
+                                ],
+                                "numericPrecision": 10,
+                                "parameterFormatType": "OneOrZero",
+                                "synonyms": [
+                                    "INTEGER",
+                                    "INT4"
+                                ]
+                            },
+                            "inPK": false,
+                            "nullable": false,
+                            "autoIncrement": false
+                        },
+                        {
+                            "title": "customerName",
+                            "field": "1",
+                            "dataType": {
+                                "type": 17,
+                                "characterMaximumLength": 65535,
+                                "flags": [
+                                    "BINARY",
+                                    "ASCII",
+                                    "UNICODE"
+                                ],
+                                "needsQuotes": true,
+                                "parameterFormatType": "OneOrZero"
+                            },
+                            "inPK": false,
+                            "nullable": false,
+                            "autoIncrement": false
+                        },
+                        {
+                            "title": "totalPrice",
+                            "field": "2",
+                            "dataType": {
+                                "type": 10,
+                                "flags": [
+                                    "UNSIGNED",
+                                    "ZEROFILL"
+                                ],
+                                "numericPrecision": 65,
+                                "numericScale": 30,
+                                "parameterFormatType": "TwoOrOneOrZero",
+                                "synonyms": [
+                                    "FIXED",
+                                    "NUMERIC",
+                                    "DEC"
+                                ]
+                            },
+                            "inPK": false,
+                            "nullable": false,
+                            "autoIncrement": false
+                        }
+                    ],
+                    "executionInfo": {
+                        "text": "OK, 4 records retrieved in 0.499ms"
+                    },
+                    "totalRowCount": 4,
+                    "hasMoreRows": false,
+                    "currentPage": 0,
+                    "index": 0,
+                    "sql": "-- Show the customer id, name, and total value of all orders for each customer.\nSELECT customer.customerId, customer.customerName, SUM(orderitem.quantity * orderitem.itemPrice) AS totalPrice\nFROM customer\nINNER JOIN customerorder \n    ON customer.customerId = customerorder.customerId\nINNER JOIN orderitem\n    ON orderitem.orderNumber = customerorder.orderNumber\nGROUP BY customer.customerId",
+                    "updatable": false,
+                    "fullTableName": ""
+                }
+            ]
+        },
+        {
+            "state": {
+                "start": 34,
+                "end": 43,
+                "language": "mysql",
+                "result": {
+                    "type": "resultIds",
+                    "list": [
+                        "e88f4299-7d1d-4477-d95f-7bf56f736483"
+                    ]
+                },
+                "currentHeight": 36,
+                "currentSet": 1,
+                "statements": [
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 0,
+                            "length": 396
+                        },
+                        "contentStart": 71,
+                        "state": 0
+                    }
+                ]
+            },
+            "data": [
+                {
+                    "tabId": "6cf50e0b-4f34-4636-ea45-726e710fd29b",
+                    "resultId": "e88f4299-7d1d-4477-d95f-7bf56f736483",
+                    "rows": [
+                        {
+                            "0": "34.8000"
+                        }
+                    ],
+                    "columns": [
+                        {
+                            "title": "averageItemsPerOrder",
+                            "field": "0",
+                            "dataType": {
+                                "type": 10,
+                                "flags": [
+                                    "UNSIGNED",
+                                    "ZEROFILL"
+                                ],
+                                "numericPrecision": 65,
+                                "numericScale": 30,
+                                "parameterFormatType": "TwoOrOneOrZero",
+                                "synonyms": [
+                                    "FIXED",
+                                    "NUMERIC",
+                                    "DEC"
+                                ]
+                            },
+                            "inPK": false,
+                            "nullable": false,
+                            "autoIncrement": false
+                        }
+                    ],
+                    "executionInfo": {
+                        "text": "OK, 1 record retrieved in 0.999ms"
+                    },
+                    "totalRowCount": 1,
+                    "hasMoreRows": false,
+                    "currentPage": 0,
+                    "index": 0,
+                    "sql": "-- Find the average of the total quantity of items purchased per order\nSELECT AVG(totalQuantity) AS averageItemsPerOrder\nFROM(SELECT SUM(orderitem.quantity) AS totalQuantity\nFROM customer\nINNER JOIN customerorder \n    ON customer.customerId = customerorder.customerId\nINNER JOIN orderitem\n    ON orderitem.orderNumber = customerorder.orderNumber\nGROUP BY customerorder.orderNumber)\nAS orderTotal",
+                    "updatable": true,
+                    "fullTableName": ""
+                }
+            ]
+        },
+        {
+            "state": {
+                "start": 44,
+                "end": 50,
+                "language": "mysql",
+                "result": {
+                    "type": "resultIds",
+                    "list": [
+                        "40e8cf1a-8808-4cad-96b4-85fbd8279b98"
+                    ]
+                },
+                "currentHeight": 36,
+                "currentSet": 1,
+                "statements": [
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 0,
+                            "length": 246
+                        },
+                        "contentStart": 86,
+                        "state": 0
+                    }
+                ]
+            },
+            "data": [
+                {
+                    "tabId": "6cf50e0b-4f34-4636-ea45-726e710fd29b",
+                    "resultId": "40e8cf1a-8808-4cad-96b4-85fbd8279b98",
+                    "rows": [
+                        {
+                            "0": 10005,
+                            "1": "E Fudd"
+                        },
+                        {
+                            "0": 10001,
+                            "1": "Coyote Inc."
+                        }
+                    ],
+                    "columns": [
+                        {
+                            "title": "customerId",
+                            "field": "0",
+                            "dataType": {
+                                "type": 4,
+                                "flags": [
+                                    "SIGNED",
+                                    "ZEROFILL"
+                                ],
+                                "numericPrecision": 10,
+                                "parameterFormatType": "OneOrZero",
+                                "synonyms": [
+                                    "INTEGER",
+                                    "INT4"
+                                ]
+                            },
+                            "inPK": false,
+                            "nullable": false,
+                            "autoIncrement": false
+                        },
+                        {
+                            "title": "customerName",
+                            "field": "1",
+                            "dataType": {
+                                "type": 17,
+                                "characterMaximumLength": 65535,
+                                "flags": [
+                                    "BINARY",
+                                    "ASCII",
+                                    "UNICODE"
+                                ],
+                                "needsQuotes": true,
+                                "parameterFormatType": "OneOrZero"
+                            },
+                            "inPK": false,
+                            "nullable": false,
+                            "autoIncrement": false
+                        }
+                    ],
+                    "executionInfo": {
+                        "text": "OK, 2 records retrieved in 0.5ms"
+                    },
+                    "totalRowCount": 2,
+                    "hasMoreRows": false,
+                    "currentPage": 0,
+                    "index": 0,
+                    "sql": "-- Use a subquery to find customers who have a customer order on or after 01-Oct-2005\nSELECT customerId, customerName\nFROM customer\nWHERE customer.customerId IN\n(SELECT customerId \nFROM customerorder\nWHERE orderDate >= '2005-10-01')",
+                    "updatable": true,
+                    "fullTableName": ""
+                }
+            ]
+        },
+        {
+            "state": {
+                "start": 51,
+                "end": 51,
+                "language": "mysql",
+                "result": {
+                    "type": "text",
+                    "text": [
+                        {
+                            "type": 0,
+                            "index": 0,
+                            "content": "MySQL Error (1064): ClassicSession.run_sql: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ') > (\n        SELECT AVG(note_count) \n        FROM (\n            SELECT COUNT(*)' at line 3",
+                            "language": "ansi"
+                        }
+                    ],
+                    "executionInfo": {
+                        "text": ""
+                    }
+                },
+                "currentHeight": 28,
+                "currentSet": 1,
+                "statements": [
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 0,
+                            "length": 0
+                        },
+                        "contentStart": -1,
+                        "state": 3
+                    }
+                ]
+            },
+            "data": []
+        },
+        {
+            "state": {
+                "start": 52,
+                "end": 52,
+                "language": "mysql",
+                "currentSet": 1,
+                "statements": [
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 0,
+                            "length": 0
+                        },
+                        "contentStart": 0,
+                        "state": 3
+                    }
+                ]
+            },
+            "data": []
+        },
+        {
+            "state": {
+                "start": 53,
+                "end": 53,
+                "language": "mysql",
+                "currentSet": 1,
+                "statements": [
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 0,
+                            "length": 0
+                        },
+                        "contentStart": 0,
+                        "state": 0
+                    }
+                ]
+            },
+            "data": []
+        }
+    ]
+}
