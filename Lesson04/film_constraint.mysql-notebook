@@ -1,0 +1,622 @@
+{
+    "type": "MySQLNotebook",
+    "version": "1.0",
+    "caption": "DB Notebook",
+    "content": "CREATE DATABASE IF NOT EXISTS lesson04;\nUSE lesson04;\n\nDROP TABLE IF EXISTS film;\nDROP TABLE IF EXISTS language;\n\nCREATE TABLE language (\n    language_id TINYINT UNSIGNED PRIMARY KEY\n);\n\nCREATE TABLE film (\n  film_id SMALLINT UNSIGNED NOT NULL AUTO_INCREMENT,\n  title VARCHAR(128) NOT NULL UNIQUE,\n  description TEXT,\n  release_year YEAR,\n  language_id TINYINT UNSIGNED NOT NULL,\n  original_language_id TINYINT UNSIGNED,\n  rental_duration TINYINT UNSIGNED NOT NULL DEFAULT 3,\n  rental_rate DECIMAL(4,2) NOT NULL DEFAULT 4.99,\n  length SMALLINT UNSIGNED,\n  replacement_cost DECIMAL(5,2) NOT NULL DEFAULT 19.99,\n  rating ENUM('G','PG','PG-13','R','NC-17') DEFAULT 'G',\n  special_features SET('Trailers','Commentaries','Deleted Scenes','Behind the Scenes'),\n  last_update TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,\n  PRIMARY KEY  (film_id),\n  FOREIGN KEY (language_id) REFERENCES language (language_id),\n  FOREIGN KEY (original_language_id) REFERENCES language (language_id),\n  CHECK (length > 0),\n  CHECK (rental_rate > PI()),\n  -- CHECK (release_year <= YEAR(CURRENT_TIMESTAMP)), -- cannot use non-deterministic functions in CHECK\n  CHECK (replacement_cost > rental_rate * rental_duration)\n);\nDESCRIBE film;\nSHOW CREATE TABLE film;\n\n\n\n\n\n",
+    "options": {
+        "tabSize": 4,
+        "indentSize": 4,
+        "insertSpaces": true,
+        "defaultEOL": "LF",
+        "trimAutoWhitespace": true
+    },
+    "viewState": {
+        "cursorState": [
+            {
+                "inSelectionMode": false,
+                "selectionStart": {
+                    "lineNumber": 35,
+                    "column": 1
+                },
+                "position": {
+                    "lineNumber": 35,
+                    "column": 1
+                }
+            }
+        ],
+        "viewState": {
+            "scrollLeft": 0,
+            "firstPosition": {
+                "lineNumber": 34,
+                "column": 1
+            },
+            "firstPositionDeltaTop": 46
+        },
+        "contributionsState": {
+            "editor.contrib.folding": {},
+            "editor.contrib.wordHighlighter": false
+        }
+    },
+    "contexts": [
+        {
+            "state": {
+                "start": 1,
+                "end": 32,
+                "language": "mysql",
+                "result": {
+                    "type": "text",
+                    "text": [
+                        {
+                            "type": 4,
+                            "index": 0,
+                            "resultId": "f6afb982-fd60-448d-c351-8d5d2f442588",
+                            "content": "OK, 1 row affected in 1.999ms"
+                        },
+                        {
+                            "type": 4,
+                            "index": 1,
+                            "resultId": "71fdd91e-b41b-4267-9eb4-62c5acc13dab",
+                            "content": "OK, 0 records retrieved in 0s"
+                        },
+                        {
+                            "type": 4,
+                            "index": 2,
+                            "resultId": "b8bb0700-4d2a-4dbd-8a68-325456407a78",
+                            "content": "OK, 0 records retrieved in 17.937ms"
+                        },
+                        {
+                            "type": 4,
+                            "index": 3,
+                            "resultId": "7bd104ce-74e4-4ca2-b002-644241a0f3b7",
+                            "content": "OK, 0 records retrieved in 7.445ms"
+                        },
+                        {
+                            "type": 4,
+                            "index": 4,
+                            "resultId": "d965e3f6-5ed2-43d3-f7b4-b9eb93af672a",
+                            "content": "OK, 0 records retrieved in 17.439ms"
+                        },
+                        {
+                            "type": 4,
+                            "index": 5,
+                            "resultId": "a51f4cd9-0fd4-4a74-ef47-95534f3208ad",
+                            "content": "OK, 0 records retrieved in 31.542ms"
+                        }
+                    ]
+                },
+                "currentHeight": 28,
+                "currentSet": 1,
+                "statements": [
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 0,
+                            "length": 39
+                        },
+                        "contentStart": 0,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 39,
+                            "length": 14
+                        },
+                        "contentStart": 40,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 53,
+                            "length": 28
+                        },
+                        "contentStart": 56,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 81,
+                            "length": 31
+                        },
+                        "contentStart": 83,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 112,
+                            "length": 73
+                        },
+                        "contentStart": 114,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 185,
+                            "length": 1009
+                        },
+                        "contentStart": 187,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 1194,
+                            "length": 0
+                        },
+                        "contentStart": 1193,
+                        "state": 3
+                    }
+                ]
+            },
+            "data": []
+        },
+        {
+            "state": {
+                "start": 33,
+                "end": 33,
+                "language": "mysql",
+                "result": {
+                    "type": "resultIds",
+                    "list": [
+                        "b9656ae5-bdd7-4a3f-a00b-d0c3c8ef61d3"
+                    ]
+                },
+                "currentHeight": 352,
+                "currentSet": 1,
+                "statements": [
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 0,
+                            "length": 14
+                        },
+                        "contentStart": 1,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 14,
+                            "length": 0
+                        },
+                        "contentStart": 13,
+                        "state": 3
+                    }
+                ]
+            },
+            "data": [
+                {
+                    "tabId": "49fc480e-5a1b-4746-de33-11b1ff159183",
+                    "resultId": "b9656ae5-bdd7-4a3f-a00b-d0c3c8ef61d3",
+                    "rows": [
+                        {
+                            "0": "film_id",
+                            "1": "smallint unsigned",
+                            "2": "NO",
+                            "3": "PRI",
+                            "4": null,
+                            "5": "auto_increment"
+                        },
+                        {
+                            "0": "title",
+                            "1": "varchar(128)",
+                            "2": "NO",
+                            "3": "UNI",
+                            "4": null,
+                            "5": ""
+                        },
+                        {
+                            "0": "description",
+                            "1": "text",
+                            "2": "YES",
+                            "3": "",
+                            "4": null,
+                            "5": ""
+                        },
+                        {
+                            "0": "release_year",
+                            "1": "year",
+                            "2": "YES",
+                            "3": "",
+                            "4": null,
+                            "5": ""
+                        },
+                        {
+                            "0": "language_id",
+                            "1": "tinyint unsigned",
+                            "2": "NO",
+                            "3": "MUL",
+                            "4": null,
+                            "5": ""
+                        },
+                        {
+                            "0": "original_language_id",
+                            "1": "tinyint unsigned",
+                            "2": "YES",
+                            "3": "MUL",
+                            "4": null,
+                            "5": ""
+                        },
+                        {
+                            "0": "rental_duration",
+                            "1": "tinyint unsigned",
+                            "2": "NO",
+                            "3": "",
+                            "4": "3",
+                            "5": ""
+                        },
+                        {
+                            "0": "rental_rate",
+                            "1": "decimal(4,2)",
+                            "2": "NO",
+                            "3": "",
+                            "4": "4.99",
+                            "5": ""
+                        },
+                        {
+                            "0": "length",
+                            "1": "smallint unsigned",
+                            "2": "YES",
+                            "3": "",
+                            "4": null,
+                            "5": ""
+                        },
+                        {
+                            "0": "replacement_cost",
+                            "1": "decimal(5,2)",
+                            "2": "NO",
+                            "3": "",
+                            "4": "19.99",
+                            "5": ""
+                        },
+                        {
+                            "0": "rating",
+                            "1": "enum('G','PG','PG-13','R','NC-17')",
+                            "2": "YES",
+                            "3": "",
+                            "4": "G",
+                            "5": ""
+                        },
+                        {
+                            "0": "special_features",
+                            "1": "set('Trailers','Commentaries','Deleted Scenes','Behind the Scenes')",
+                            "2": "YES",
+                            "3": "",
+                            "4": null,
+                            "5": ""
+                        },
+                        {
+                            "0": "last_update",
+                            "1": "timestamp",
+                            "2": "NO",
+                            "3": "",
+                            "4": "CURRENT_TIMESTAMP",
+                            "5": "DEFAULT_GENERATED"
+                        }
+                    ],
+                    "columns": [
+                        {
+                            "title": "Field",
+                            "field": "0",
+                            "dataType": {
+                                "type": 17,
+                                "characterMaximumLength": 65535,
+                                "flags": [
+                                    "BINARY",
+                                    "ASCII",
+                                    "UNICODE"
+                                ],
+                                "needsQuotes": true,
+                                "parameterFormatType": "OneOrZero"
+                            },
+                            "inPK": false,
+                            "nullable": false,
+                            "autoIncrement": false
+                        },
+                        {
+                            "title": "Type",
+                            "field": "1",
+                            "dataType": {
+                                "type": 17,
+                                "characterMaximumLength": 65535,
+                                "flags": [
+                                    "BINARY",
+                                    "ASCII",
+                                    "UNICODE"
+                                ],
+                                "needsQuotes": true,
+                                "parameterFormatType": "OneOrZero"
+                            },
+                            "inPK": false,
+                            "nullable": false,
+                            "autoIncrement": false
+                        },
+                        {
+                            "title": "Null",
+                            "field": "2",
+                            "dataType": {
+                                "type": 17,
+                                "characterMaximumLength": 65535,
+                                "flags": [
+                                    "BINARY",
+                                    "ASCII",
+                                    "UNICODE"
+                                ],
+                                "needsQuotes": true,
+                                "parameterFormatType": "OneOrZero"
+                            },
+                            "inPK": false,
+                            "nullable": false,
+                            "autoIncrement": false
+                        },
+                        {
+                            "title": "Key",
+                            "field": "3",
+                            "dataType": {
+                                "type": 43,
+                                "needsQuotes": true
+                            },
+                            "inPK": false,
+                            "nullable": false,
+                            "autoIncrement": false
+                        },
+                        {
+                            "title": "Default",
+                            "field": "4",
+                            "dataType": {
+                                "type": 17,
+                                "characterMaximumLength": 65535,
+                                "flags": [
+                                    "BINARY",
+                                    "ASCII",
+                                    "UNICODE"
+                                ],
+                                "needsQuotes": true,
+                                "parameterFormatType": "OneOrZero"
+                            },
+                            "inPK": false,
+                            "nullable": false,
+                            "autoIncrement": false
+                        },
+                        {
+                            "title": "Extra",
+                            "field": "5",
+                            "dataType": {
+                                "type": 17,
+                                "characterMaximumLength": 65535,
+                                "flags": [
+                                    "BINARY",
+                                    "ASCII",
+                                    "UNICODE"
+                                ],
+                                "needsQuotes": true,
+                                "parameterFormatType": "OneOrZero"
+                            },
+                            "inPK": false,
+                            "nullable": false,
+                            "autoIncrement": false
+                        }
+                    ],
+                    "executionInfo": {
+                        "text": "OK, 13 records retrieved in 0s"
+                    },
+                    "totalRowCount": 13,
+                    "hasMoreRows": false,
+                    "currentPage": 0,
+                    "index": 0,
+                    "sql": "DESCRIBE film",
+                    "updatable": false
+                }
+            ]
+        },
+        {
+            "state": {
+                "start": 34,
+                "end": 34,
+                "language": "mysql",
+                "result": {
+                    "type": "resultIds",
+                    "list": [
+                        "b354120a-f91c-4b0a-92fa-95695fd95bae"
+                    ]
+                },
+                "currentHeight": 352,
+                "currentSet": 1,
+                "statements": [
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 0,
+                            "length": 23
+                        },
+                        "contentStart": 0,
+                        "state": 0
+                    }
+                ]
+            },
+            "data": [
+                {
+                    "tabId": "49fc480e-5a1b-4746-de33-11b1ff159183",
+                    "resultId": "b354120a-f91c-4b0a-92fa-95695fd95bae",
+                    "rows": [
+                        {
+                            "0": "film",
+                            "1": "CREATE TABLE `film` (\n  `film_id` smallint unsigned NOT NULL AUTO_INCREMENT,\n  `title` varchar(128) NOT NULL,\n  `description` text,\n  `release_year` year DEFAULT NULL,\n  `language_id` tinyint unsigned NOT NULL,\n  `original_language_id` tinyint unsigned DEFAULT NULL,\n  `rental_duration` tinyint unsigned NOT NULL DEFAULT '3',\n  `rental_rate` decimal(4,2) NOT NULL DEFAULT '4.99',\n  `length` smallint unsigned DEFAULT NULL,\n  `replacement_cost` decimal(5,2) NOT NULL DEFAULT '19.99',\n  `rating` enum('G','PG','PG-13','R','NC-17') DEFAULT 'G',\n  `special_features` set('Trailers','Commentaries','Deleted Scenes','Behind the Scenes') DEFAULT NULL,\n  `last_update` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,\n  PRIMARY KEY (`film_id`),\n  UNIQUE KEY `title` (`title`),\n  KEY `language_id` (`language_id`),\n  KEY `original_language_id` (`original_language_id`),\n  CONSTRAINT `film_ibfk_1` FOREIGN KEY (`language_id`) REFERENCES `language` (`language_id`),\n  CONSTRAINT `film_ibfk_2` FOREIGN KEY (`original_language_id`) REFERENCES `language` (`language_id`),\n  CONSTRAINT `film_chk_1` CHECK ((`length` > 0)),\n  CONSTRAINT `film_chk_2` CHECK ((`rental_rate` > pi())),\n  CONSTRAINT `film_chk_3` CHECK ((`replacement_cost` > (`rental_rate` * `rental_duration`)))\n) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci"
+                        }
+                    ],
+                    "columns": [
+                        {
+                            "title": "Table",
+                            "field": "0",
+                            "dataType": {
+                                "type": 17,
+                                "characterMaximumLength": 65535,
+                                "flags": [
+                                    "BINARY",
+                                    "ASCII",
+                                    "UNICODE"
+                                ],
+                                "needsQuotes": true,
+                                "parameterFormatType": "OneOrZero"
+                            },
+                            "inPK": false,
+                            "nullable": false,
+                            "autoIncrement": false
+                        },
+                        {
+                            "title": "Create Table",
+                            "field": "1",
+                            "dataType": {
+                                "type": 17,
+                                "characterMaximumLength": 65535,
+                                "flags": [
+                                    "BINARY",
+                                    "ASCII",
+                                    "UNICODE"
+                                ],
+                                "needsQuotes": true,
+                                "parameterFormatType": "OneOrZero"
+                            },
+                            "inPK": false,
+                            "nullable": false,
+                            "autoIncrement": false
+                        }
+                    ],
+                    "executionInfo": {
+                        "text": "OK, 1 record retrieved in 2.202ms"
+                    },
+                    "totalRowCount": 1,
+                    "hasMoreRows": false,
+                    "currentPage": 0,
+                    "index": 0,
+                    "sql": "SHOW CREATE TABLE film",
+                    "updatable": false
+                }
+            ]
+        },
+        {
+            "state": {
+                "start": 35,
+                "end": 35,
+                "language": "mysql",
+                "currentSet": 1,
+                "statements": [
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 0,
+                            "length": 0
+                        },
+                        "contentStart": 0,
+                        "state": 0
+                    }
+                ]
+            },
+            "data": []
+        },
+        {
+            "state": {
+                "start": 36,
+                "end": 36,
+                "language": "mysql",
+                "currentSet": 1,
+                "statements": [
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 0,
+                            "length": 0
+                        },
+                        "contentStart": 0,
+                        "state": 0
+                    }
+                ]
+            },
+            "data": []
+        },
+        {
+            "state": {
+                "start": 37,
+                "end": 37,
+                "language": "mysql",
+                "currentSet": 1,
+                "statements": [
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 0,
+                            "length": 0
+                        },
+                        "contentStart": 0,
+                        "state": 0
+                    }
+                ]
+            },
+            "data": []
+        },
+        {
+            "state": {
+                "start": 38,
+                "end": 38,
+                "language": "mysql",
+                "currentSet": 1,
+                "statements": [
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 0,
+                            "length": 0
+                        },
+                        "contentStart": 0,
+                        "state": 0
+                    }
+                ]
+            },
+            "data": []
+        },
+        {
+            "state": {
+                "start": 39,
+                "end": 39,
+                "language": "mysql",
+                "currentSet": 1,
+                "statements": [
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 0,
+                            "length": 0
+                        },
+                        "contentStart": 0,
+                        "state": 0
+                    }
+                ]
+            },
+            "data": []
+        },
+        {
+            "state": {
+                "start": 40,
+                "end": 40,
+                "language": "mysql",
+                "currentSet": 1,
+                "statements": [
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 0,
+                            "length": 0
+                        },
+                        "contentStart": 0,
+                        "state": 0
+                    }
+                ]
+            },
+            "data": []
+        }
+    ]
+}

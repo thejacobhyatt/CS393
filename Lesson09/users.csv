@@ -1,0 +1,4 @@
+UserID,Username,Email,FirstName,LastName,BirthDate,JoinDate
+1,johndoe,johndoe@example.com,John,Doe,1985-02-15,2023-01-01
+2,janedoe,janedoe@example.com,Jane,Doe,1990-05-10,2023-01-15
+3,bobsmith,bobsmith@example.com,Bob,Smith,1995-08-20,2023-02-01

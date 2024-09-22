@@ -1,0 +1,4 @@
+RouteID,UserID,RouteName,StartLocation,EndLocation,Distance
+1,1,Park Loop,Central Park Entrance,Central Park Exit,5.0
+2,2,City Tour,Downtown Square,City Park,10.0
+3,1,River Side,River Entrance,River Exit,7.5

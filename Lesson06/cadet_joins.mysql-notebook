@@ -1,0 +1,1565 @@
+{
+    "type": "MySQLNotebook",
+    "version": "1.0",
+    "caption": "DB Notebook",
+    "content": "USE cadets;\nSELECT *\nFROM Cadet;\nSELECT *\nFROM Enrollment;\nSELECT *\nFROM Cadet, Enrollment;\nSELECT *\nFROM Cadet, Enrollment\nWHERE Cadet.cNum = Enrollment.cNum;\nSELECT *\nFROM Cadet \n    INNER JOIN Enrollment \n    ON Cadet.cNum = Enrollment.cNum;\n--\n-- STOP HERE UNTIL NEXT BLOCK IN LESSON --\n--\nSELECT *\nFROM Cadet \n    LEFT JOIN Enrollment \n    ON Cadet.cNum = Enrollment.cNum;\nSELECT *\nFROM Cadet \n    RIGHT JOIN Enrollment \n    ON Cadet.cNum = Enrollment.cNum;\n",
+    "options": {
+        "tabSize": 4,
+        "insertSpaces": true,
+        "indentSize": 4,
+        "defaultEOL": "CRLF",
+        "trimAutoWhitespace": true
+    },
+    "viewState": {
+        "cursorState": [
+            {
+                "inSelectionMode": false,
+                "selectionStart": {
+                    "lineNumber": 20,
+                    "column": 26
+                },
+                "position": {
+                    "lineNumber": 20,
+                    "column": 26
+                }
+            }
+        ],
+        "viewState": {
+            "scrollLeft": 0,
+            "firstPosition": {
+                "lineNumber": 10,
+                "column": 1
+            },
+            "firstPositionDeltaTop": 0
+        },
+        "contributionsState": {
+            "editor.contrib.folding": {},
+            "editor.contrib.wordHighlighter": false
+        }
+    },
+    "contexts": [
+        {
+            "state": {
+                "start": 1,
+                "end": 1,
+                "language": "mysql",
+                "result": {
+                    "type": "text",
+                    "text": [
+                        {
+                            "type": 4,
+                            "index": 0,
+                            "resultId": "fd96cbbd-42db-4ada-d09a-021d956b0807",
+                            "content": "OK, 0 records retrieved in 1.013ms"
+                        }
+                    ]
+                },
+                "currentHeight": 28,
+                "currentSet": 1,
+                "statements": [
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 0,
+                            "length": 11
+                        },
+                        "contentStart": 0,
+                        "state": 0
+                    }
+                ]
+            },
+            "data": []
+        },
+        {
+            "state": {
+                "start": 2,
+                "end": 3,
+                "language": "mysql",
+                "result": {
+                    "type": "resultIds",
+                    "list": [
+                        "94b8f5c5-5066-453f-ba62-94ee27e401f4"
+                    ]
+                },
+                "currentHeight": 218,
+                "currentSet": 1,
+                "statements": [
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 0,
+                            "length": 20
+                        },
+                        "contentStart": 0,
+                        "state": 0
+                    }
+                ]
+            },
+            "data": [
+                {
+                    "tabId": "56aeafd0-4470-4a73-d09b-90c0af928569",
+                    "resultId": "94b8f5c5-5066-453f-ba62-94ee27e401f4",
+                    "rows": [
+                        {
+                            "0": "123",
+                            "1": "John",
+                            "2": "Smith"
+                        },
+                        {
+                            "0": "234",
+                            "1": "Mike",
+                            "2": "Jones"
+                        },
+                        {
+                            "0": "345",
+                            "1": "James",
+                            "2": "Johnson"
+                        },
+                        {
+                            "0": "456",
+                            "1": "Jane",
+                            "2": "Doe"
+                        },
+                        {
+                            "0": "567",
+                            "1": "Janet",
+                            "2": "Jackson"
+                        },
+                        {
+                            "0": "678",
+                            "1": "Janice",
+                            "2": "Hoffman"
+                        }
+                    ],
+                    "columns": [
+                        {
+                            "title": "cNum",
+                            "field": "0",
+                            "dataType": {
+                                "type": 17,
+                                "characterMaximumLength": 65535,
+                                "flags": [
+                                    "BINARY",
+                                    "ASCII",
+                                    "UNICODE"
+                                ],
+                                "needsQuotes": true,
+                                "parameterFormatType": "OneOrZero"
+                            },
+                            "inPK": true,
+                            "nullable": false,
+                            "autoIncrement": false
+                        },
+                        {
+                            "title": "firstName",
+                            "field": "1",
+                            "dataType": {
+                                "type": 17,
+                                "characterMaximumLength": 65535,
+                                "flags": [
+                                    "BINARY",
+                                    "ASCII",
+                                    "UNICODE"
+                                ],
+                                "needsQuotes": true,
+                                "parameterFormatType": "OneOrZero"
+                            },
+                            "inPK": false,
+                            "nullable": true,
+                            "autoIncrement": false,
+                            "default": null
+                        },
+                        {
+                            "title": "lastName",
+                            "field": "2",
+                            "dataType": {
+                                "type": 17,
+                                "characterMaximumLength": 65535,
+                                "flags": [
+                                    "BINARY",
+                                    "ASCII",
+                                    "UNICODE"
+                                ],
+                                "needsQuotes": true,
+                                "parameterFormatType": "OneOrZero"
+                            },
+                            "inPK": false,
+                            "nullable": true,
+                            "autoIncrement": false,
+                            "default": null
+                        }
+                    ],
+                    "executionInfo": {
+                        "text": "OK, 6 records retrieved in 2.094ms"
+                    },
+                    "totalRowCount": 6,
+                    "hasMoreRows": false,
+                    "currentPage": 0,
+                    "index": 0,
+                    "sql": "SELECT *\nFROM Cadet",
+                    "updatable": true,
+                    "fullTableName": "Cadet"
+                }
+            ]
+        },
+        {
+            "state": {
+                "start": 4,
+                "end": 5,
+                "language": "mysql",
+                "result": {
+                    "type": "resultIds",
+                    "list": [
+                        "b09158e2-4efa-44f3-bc5c-7f8a9c8b5344"
+                    ]
+                },
+                "currentHeight": 36,
+                "currentSet": 1,
+                "statements": [
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 0,
+                            "length": 25
+                        },
+                        "contentStart": 0,
+                        "state": 0
+                    }
+                ]
+            },
+            "data": [
+                {
+                    "tabId": "56aeafd0-4470-4a73-d09b-90c0af928569",
+                    "resultId": "b09158e2-4efa-44f3-bc5c-7f8a9c8b5344",
+                    "rows": [
+                        {
+                            "0": "123",
+                            "1": "CS393",
+                            "2": "251"
+                        },
+                        {
+                            "0": "123",
+                            "1": "CY305",
+                            "2": "251"
+                        },
+                        {
+                            "0": "123",
+                            "1": "CY394",
+                            "2": "252"
+                        },
+                        {
+                            "0": "234",
+                            "1": "CS393",
+                            "2": "251"
+                        },
+                        {
+                            "0": "456",
+                            "1": "CS393",
+                            "2": "252"
+                        }
+                    ],
+                    "columns": [
+                        {
+                            "title": "cNum",
+                            "field": "0",
+                            "dataType": {
+                                "type": 17,
+                                "characterMaximumLength": 65535,
+                                "flags": [
+                                    "BINARY",
+                                    "ASCII",
+                                    "UNICODE"
+                                ],
+                                "needsQuotes": true,
+                                "parameterFormatType": "OneOrZero"
+                            },
+                            "inPK": true,
+                            "nullable": false,
+                            "autoIncrement": false
+                        },
+                        {
+                            "title": "classNum",
+                            "field": "1",
+                            "dataType": {
+                                "type": 17,
+                                "characterMaximumLength": 65535,
+                                "flags": [
+                                    "BINARY",
+                                    "ASCII",
+                                    "UNICODE"
+                                ],
+                                "needsQuotes": true,
+                                "parameterFormatType": "OneOrZero"
+                            },
+                            "inPK": true,
+                            "nullable": false,
+                            "autoIncrement": false
+                        },
+                        {
+                            "title": "term",
+                            "field": "2",
+                            "dataType": {
+                                "type": 17,
+                                "characterMaximumLength": 65535,
+                                "flags": [
+                                    "BINARY",
+                                    "ASCII",
+                                    "UNICODE"
+                                ],
+                                "needsQuotes": true,
+                                "parameterFormatType": "OneOrZero"
+                            },
+                            "inPK": true,
+                            "nullable": false,
+                            "autoIncrement": false
+                        }
+                    ],
+                    "executionInfo": {
+                        "text": "OK, 5 records retrieved in 1.854ms"
+                    },
+                    "totalRowCount": 5,
+                    "hasMoreRows": false,
+                    "currentPage": 0,
+                    "index": 0,
+                    "sql": "SELECT *\nFROM Enrollment",
+                    "updatable": true,
+                    "fullTableName": "Enrollment"
+                }
+            ]
+        },
+        {
+            "state": {
+                "start": 6,
+                "end": 7,
+                "language": "mysql",
+                "result": {
+                    "type": "resultIds",
+                    "list": [
+                        "0b9b03f5-f5e5-4b9e-cb8d-b1a0121c779e"
+                    ]
+                },
+                "currentHeight": 36,
+                "currentSet": 1,
+                "statements": [
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 0,
+                            "length": 32
+                        },
+                        "contentStart": 0,
+                        "state": 0
+                    }
+                ]
+            },
+            "data": [
+                {
+                    "tabId": "56aeafd0-4470-4a73-d09b-90c0af928569",
+                    "resultId": "0b9b03f5-f5e5-4b9e-cb8d-b1a0121c779e",
+                    "rows": [
+                        {
+                            "0": "123",
+                            "1": "John",
+                            "2": "Smith",
+                            "3": "456",
+                            "4": "CS393",
+                            "5": "252"
+                        },
+                        {
+                            "0": "123",
+                            "1": "John",
+                            "2": "Smith",
+                            "3": "234",
+                            "4": "CS393",
+                            "5": "251"
+                        },
+                        {
+                            "0": "123",
+                            "1": "John",
+                            "2": "Smith",
+                            "3": "123",
+                            "4": "CY394",
+                            "5": "252"
+                        },
+                        {
+                            "0": "123",
+                            "1": "John",
+                            "2": "Smith",
+                            "3": "123",
+                            "4": "CY305",
+                            "5": "251"
+                        },
+                        {
+                            "0": "123",
+                            "1": "John",
+                            "2": "Smith",
+                            "3": "123",
+                            "4": "CS393",
+                            "5": "251"
+                        },
+                        {
+                            "0": "234",
+                            "1": "Mike",
+                            "2": "Jones",
+                            "3": "456",
+                            "4": "CS393",
+                            "5": "252"
+                        },
+                        {
+                            "0": "234",
+                            "1": "Mike",
+                            "2": "Jones",
+                            "3": "234",
+                            "4": "CS393",
+                            "5": "251"
+                        },
+                        {
+                            "0": "234",
+                            "1": "Mike",
+                            "2": "Jones",
+                            "3": "123",
+                            "4": "CY394",
+                            "5": "252"
+                        },
+                        {
+                            "0": "234",
+                            "1": "Mike",
+                            "2": "Jones",
+                            "3": "123",
+                            "4": "CY305",
+                            "5": "251"
+                        },
+                        {
+                            "0": "234",
+                            "1": "Mike",
+                            "2": "Jones",
+                            "3": "123",
+                            "4": "CS393",
+                            "5": "251"
+                        },
+                        {
+                            "0": "345",
+                            "1": "James",
+                            "2": "Johnson",
+                            "3": "456",
+                            "4": "CS393",
+                            "5": "252"
+                        },
+                        {
+                            "0": "345",
+                            "1": "James",
+                            "2": "Johnson",
+                            "3": "234",
+                            "4": "CS393",
+                            "5": "251"
+                        },
+                        {
+                            "0": "345",
+                            "1": "James",
+                            "2": "Johnson",
+                            "3": "123",
+                            "4": "CY394",
+                            "5": "252"
+                        },
+                        {
+                            "0": "345",
+                            "1": "James",
+                            "2": "Johnson",
+                            "3": "123",
+                            "4": "CY305",
+                            "5": "251"
+                        },
+                        {
+                            "0": "345",
+                            "1": "James",
+                            "2": "Johnson",
+                            "3": "123",
+                            "4": "CS393",
+                            "5": "251"
+                        },
+                        {
+                            "0": "456",
+                            "1": "Jane",
+                            "2": "Doe",
+                            "3": "456",
+                            "4": "CS393",
+                            "5": "252"
+                        },
+                        {
+                            "0": "456",
+                            "1": "Jane",
+                            "2": "Doe",
+                            "3": "234",
+                            "4": "CS393",
+                            "5": "251"
+                        },
+                        {
+                            "0": "456",
+                            "1": "Jane",
+                            "2": "Doe",
+                            "3": "123",
+                            "4": "CY394",
+                            "5": "252"
+                        },
+                        {
+                            "0": "456",
+                            "1": "Jane",
+                            "2": "Doe",
+                            "3": "123",
+                            "4": "CY305",
+                            "5": "251"
+                        },
+                        {
+                            "0": "456",
+                            "1": "Jane",
+                            "2": "Doe",
+                            "3": "123",
+                            "4": "CS393",
+                            "5": "251"
+                        },
+                        {
+                            "0": "567",
+                            "1": "Janet",
+                            "2": "Jackson",
+                            "3": "456",
+                            "4": "CS393",
+                            "5": "252"
+                        },
+                        {
+                            "0": "567",
+                            "1": "Janet",
+                            "2": "Jackson",
+                            "3": "234",
+                            "4": "CS393",
+                            "5": "251"
+                        },
+                        {
+                            "0": "567",
+                            "1": "Janet",
+                            "2": "Jackson",
+                            "3": "123",
+                            "4": "CY394",
+                            "5": "252"
+                        },
+                        {
+                            "0": "567",
+                            "1": "Janet",
+                            "2": "Jackson",
+                            "3": "123",
+                            "4": "CY305",
+                            "5": "251"
+                        },
+                        {
+                            "0": "567",
+                            "1": "Janet",
+                            "2": "Jackson",
+                            "3": "123",
+                            "4": "CS393",
+                            "5": "251"
+                        },
+                        {
+                            "0": "678",
+                            "1": "Janice",
+                            "2": "Hoffman",
+                            "3": "456",
+                            "4": "CS393",
+                            "5": "252"
+                        },
+                        {
+                            "0": "678",
+                            "1": "Janice",
+                            "2": "Hoffman",
+                            "3": "234",
+                            "4": "CS393",
+                            "5": "251"
+                        },
+                        {
+                            "0": "678",
+                            "1": "Janice",
+                            "2": "Hoffman",
+                            "3": "123",
+                            "4": "CY394",
+                            "5": "252"
+                        },
+                        {
+                            "0": "678",
+                            "1": "Janice",
+                            "2": "Hoffman",
+                            "3": "123",
+                            "4": "CY305",
+                            "5": "251"
+                        },
+                        {
+                            "0": "678",
+                            "1": "Janice",
+                            "2": "Hoffman",
+                            "3": "123",
+                            "4": "CS393",
+                            "5": "251"
+                        }
+                    ],
+                    "columns": [
+                        {
+                            "title": "cNum",
+                            "field": "0",
+                            "dataType": {
+                                "type": 17,
+                                "characterMaximumLength": 65535,
+                                "flags": [
+                                    "BINARY",
+                                    "ASCII",
+                                    "UNICODE"
+                                ],
+                                "needsQuotes": true,
+                                "parameterFormatType": "OneOrZero"
+                            },
+                            "inPK": false,
+                            "nullable": false,
+                            "autoIncrement": false
+                        },
+                        {
+                            "title": "firstName",
+                            "field": "1",
+                            "dataType": {
+                                "type": 17,
+                                "characterMaximumLength": 65535,
+                                "flags": [
+                                    "BINARY",
+                                    "ASCII",
+                                    "UNICODE"
+                                ],
+                                "needsQuotes": true,
+                                "parameterFormatType": "OneOrZero"
+                            },
+                            "inPK": false,
+                            "nullable": false,
+                            "autoIncrement": false
+                        },
+                        {
+                            "title": "lastName",
+                            "field": "2",
+                            "dataType": {
+                                "type": 17,
+                                "characterMaximumLength": 65535,
+                                "flags": [
+                                    "BINARY",
+                                    "ASCII",
+                                    "UNICODE"
+                                ],
+                                "needsQuotes": true,
+                                "parameterFormatType": "OneOrZero"
+                            },
+                            "inPK": false,
+                            "nullable": false,
+                            "autoIncrement": false
+                        },
+                        {
+                            "title": "cNum",
+                            "field": "3",
+                            "dataType": {
+                                "type": 17,
+                                "characterMaximumLength": 65535,
+                                "flags": [
+                                    "BINARY",
+                                    "ASCII",
+                                    "UNICODE"
+                                ],
+                                "needsQuotes": true,
+                                "parameterFormatType": "OneOrZero"
+                            },
+                            "inPK": false,
+                            "nullable": false,
+                            "autoIncrement": false
+                        },
+                        {
+                            "title": "classNum",
+                            "field": "4",
+                            "dataType": {
+                                "type": 17,
+                                "characterMaximumLength": 65535,
+                                "flags": [
+                                    "BINARY",
+                                    "ASCII",
+                                    "UNICODE"
+                                ],
+                                "needsQuotes": true,
+                                "parameterFormatType": "OneOrZero"
+                            },
+                            "inPK": false,
+                            "nullable": false,
+                            "autoIncrement": false
+                        },
+                        {
+                            "title": "term",
+                            "field": "5",
+                            "dataType": {
+                                "type": 17,
+                                "characterMaximumLength": 65535,
+                                "flags": [
+                                    "BINARY",
+                                    "ASCII",
+                                    "UNICODE"
+                                ],
+                                "needsQuotes": true,
+                                "parameterFormatType": "OneOrZero"
+                            },
+                            "inPK": false,
+                            "nullable": false,
+                            "autoIncrement": false
+                        }
+                    ],
+                    "executionInfo": {
+                        "text": "OK, 30 records retrieved in 1.994ms"
+                    },
+                    "totalRowCount": 30,
+                    "hasMoreRows": false,
+                    "currentPage": 0,
+                    "index": 0,
+                    "sql": "SELECT *\nFROM Cadet, Enrollment",
+                    "updatable": false,
+                    "fullTableName": ""
+                }
+            ]
+        },
+        {
+            "state": {
+                "start": 8,
+                "end": 10,
+                "language": "mysql",
+                "result": {
+                    "type": "resultIds",
+                    "list": [
+                        "e99c6b36-3ad2-41ec-b7e3-afe9902af6c8"
+                    ]
+                },
+                "currentHeight": 36,
+                "currentSet": 1,
+                "statements": [
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 0,
+                            "length": 67
+                        },
+                        "contentStart": 0,
+                        "state": 0
+                    }
+                ]
+            },
+            "data": [
+                {
+                    "tabId": "56aeafd0-4470-4a73-d09b-90c0af928569",
+                    "resultId": "e99c6b36-3ad2-41ec-b7e3-afe9902af6c8",
+                    "rows": [
+                        {
+                            "0": "123",
+                            "1": "John",
+                            "2": "Smith",
+                            "3": "123",
+                            "4": "CS393",
+                            "5": "251"
+                        },
+                        {
+                            "0": "123",
+                            "1": "John",
+                            "2": "Smith",
+                            "3": "123",
+                            "4": "CY305",
+                            "5": "251"
+                        },
+                        {
+                            "0": "123",
+                            "1": "John",
+                            "2": "Smith",
+                            "3": "123",
+                            "4": "CY394",
+                            "5": "252"
+                        },
+                        {
+                            "0": "234",
+                            "1": "Mike",
+                            "2": "Jones",
+                            "3": "234",
+                            "4": "CS393",
+                            "5": "251"
+                        },
+                        {
+                            "0": "456",
+                            "1": "Jane",
+                            "2": "Doe",
+                            "3": "456",
+                            "4": "CS393",
+                            "5": "252"
+                        }
+                    ],
+                    "columns": [
+                        {
+                            "title": "cNum",
+                            "field": "0",
+                            "dataType": {
+                                "type": 17,
+                                "characterMaximumLength": 65535,
+                                "flags": [
+                                    "BINARY",
+                                    "ASCII",
+                                    "UNICODE"
+                                ],
+                                "needsQuotes": true,
+                                "parameterFormatType": "OneOrZero"
+                            },
+                            "inPK": false,
+                            "nullable": false,
+                            "autoIncrement": false
+                        },
+                        {
+                            "title": "firstName",
+                            "field": "1",
+                            "dataType": {
+                                "type": 17,
+                                "characterMaximumLength": 65535,
+                                "flags": [
+                                    "BINARY",
+                                    "ASCII",
+                                    "UNICODE"
+                                ],
+                                "needsQuotes": true,
+                                "parameterFormatType": "OneOrZero"
+                            },
+                            "inPK": false,
+                            "nullable": false,
+                            "autoIncrement": false
+                        },
+                        {
+                            "title": "lastName",
+                            "field": "2",
+                            "dataType": {
+                                "type": 17,
+                                "characterMaximumLength": 65535,
+                                "flags": [
+                                    "BINARY",
+                                    "ASCII",
+                                    "UNICODE"
+                                ],
+                                "needsQuotes": true,
+                                "parameterFormatType": "OneOrZero"
+                            },
+                            "inPK": false,
+                            "nullable": false,
+                            "autoIncrement": false
+                        },
+                        {
+                            "title": "cNum",
+                            "field": "3",
+                            "dataType": {
+                                "type": 17,
+                                "characterMaximumLength": 65535,
+                                "flags": [
+                                    "BINARY",
+                                    "ASCII",
+                                    "UNICODE"
+                                ],
+                                "needsQuotes": true,
+                                "parameterFormatType": "OneOrZero"
+                            },
+                            "inPK": false,
+                            "nullable": false,
+                            "autoIncrement": false
+                        },
+                        {
+                            "title": "classNum",
+                            "field": "4",
+                            "dataType": {
+                                "type": 17,
+                                "characterMaximumLength": 65535,
+                                "flags": [
+                                    "BINARY",
+                                    "ASCII",
+                                    "UNICODE"
+                                ],
+                                "needsQuotes": true,
+                                "parameterFormatType": "OneOrZero"
+                            },
+                            "inPK": false,
+                            "nullable": false,
+                            "autoIncrement": false
+                        },
+                        {
+                            "title": "term",
+                            "field": "5",
+                            "dataType": {
+                                "type": 17,
+                                "characterMaximumLength": 65535,
+                                "flags": [
+                                    "BINARY",
+                                    "ASCII",
+                                    "UNICODE"
+                                ],
+                                "needsQuotes": true,
+                                "parameterFormatType": "OneOrZero"
+                            },
+                            "inPK": false,
+                            "nullable": false,
+                            "autoIncrement": false
+                        }
+                    ],
+                    "executionInfo": {
+                        "text": "OK, 5 records retrieved in 1.99ms"
+                    },
+                    "totalRowCount": 5,
+                    "hasMoreRows": false,
+                    "currentPage": 0,
+                    "index": 0,
+                    "sql": "SELECT *\nFROM Cadet, Enrollment\nWHERE Cadet.cNum = Enrollment.cNum",
+                    "updatable": false,
+                    "fullTableName": ""
+                }
+            ]
+        },
+        {
+            "state": {
+                "start": 11,
+                "end": 14,
+                "language": "mysql",
+                "result": {
+                    "type": "resultIds",
+                    "list": [
+                        "64d5b2b2-954b-4d5a-fea5-871b17769818"
+                    ]
+                },
+                "currentHeight": 192,
+                "currentSet": 1,
+                "statements": [
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 0,
+                            "length": 84
+                        },
+                        "contentStart": 0,
+                        "state": 0
+                    }
+                ]
+            },
+            "data": [
+                {
+                    "tabId": "56aeafd0-4470-4a73-d09b-90c0af928569",
+                    "resultId": "64d5b2b2-954b-4d5a-fea5-871b17769818",
+                    "rows": [
+                        {
+                            "0": "123",
+                            "1": "John",
+                            "2": "Smith",
+                            "3": "123",
+                            "4": "CS393",
+                            "5": "251"
+                        },
+                        {
+                            "0": "123",
+                            "1": "John",
+                            "2": "Smith",
+                            "3": "123",
+                            "4": "CY305",
+                            "5": "251"
+                        },
+                        {
+                            "0": "123",
+                            "1": "John",
+                            "2": "Smith",
+                            "3": "123",
+                            "4": "CY394",
+                            "5": "252"
+                        },
+                        {
+                            "0": "234",
+                            "1": "Mike",
+                            "2": "Jones",
+                            "3": "234",
+                            "4": "CS393",
+                            "5": "251"
+                        },
+                        {
+                            "0": "456",
+                            "1": "Jane",
+                            "2": "Doe",
+                            "3": "456",
+                            "4": "CS393",
+                            "5": "252"
+                        }
+                    ],
+                    "columns": [
+                        {
+                            "title": "cNum",
+                            "field": "0",
+                            "dataType": {
+                                "type": 17,
+                                "characterMaximumLength": 65535,
+                                "flags": [
+                                    "BINARY",
+                                    "ASCII",
+                                    "UNICODE"
+                                ],
+                                "needsQuotes": true,
+                                "parameterFormatType": "OneOrZero"
+                            },
+                            "inPK": false,
+                            "nullable": false,
+                            "autoIncrement": false
+                        },
+                        {
+                            "title": "firstName",
+                            "field": "1",
+                            "dataType": {
+                                "type": 17,
+                                "characterMaximumLength": 65535,
+                                "flags": [
+                                    "BINARY",
+                                    "ASCII",
+                                    "UNICODE"
+                                ],
+                                "needsQuotes": true,
+                                "parameterFormatType": "OneOrZero"
+                            },
+                            "inPK": false,
+                            "nullable": false,
+                            "autoIncrement": false
+                        },
+                        {
+                            "title": "lastName",
+                            "field": "2",
+                            "dataType": {
+                                "type": 17,
+                                "characterMaximumLength": 65535,
+                                "flags": [
+                                    "BINARY",
+                                    "ASCII",
+                                    "UNICODE"
+                                ],
+                                "needsQuotes": true,
+                                "parameterFormatType": "OneOrZero"
+                            },
+                            "inPK": false,
+                            "nullable": false,
+                            "autoIncrement": false
+                        },
+                        {
+                            "title": "cNum",
+                            "field": "3",
+                            "dataType": {
+                                "type": 17,
+                                "characterMaximumLength": 65535,
+                                "flags": [
+                                    "BINARY",
+                                    "ASCII",
+                                    "UNICODE"
+                                ],
+                                "needsQuotes": true,
+                                "parameterFormatType": "OneOrZero"
+                            },
+                            "inPK": false,
+                            "nullable": false,
+                            "autoIncrement": false
+                        },
+                        {
+                            "title": "classNum",
+                            "field": "4",
+                            "dataType": {
+                                "type": 17,
+                                "characterMaximumLength": 65535,
+                                "flags": [
+                                    "BINARY",
+                                    "ASCII",
+                                    "UNICODE"
+                                ],
+                                "needsQuotes": true,
+                                "parameterFormatType": "OneOrZero"
+                            },
+                            "inPK": false,
+                            "nullable": false,
+                            "autoIncrement": false
+                        },
+                        {
+                            "title": "term",
+                            "field": "5",
+                            "dataType": {
+                                "type": 17,
+                                "characterMaximumLength": 65535,
+                                "flags": [
+                                    "BINARY",
+                                    "ASCII",
+                                    "UNICODE"
+                                ],
+                                "needsQuotes": true,
+                                "parameterFormatType": "OneOrZero"
+                            },
+                            "inPK": false,
+                            "nullable": false,
+                            "autoIncrement": false
+                        }
+                    ],
+                    "executionInfo": {
+                        "text": "OK, 5 records retrieved in 2.003ms"
+                    },
+                    "totalRowCount": 5,
+                    "hasMoreRows": false,
+                    "currentPage": 0,
+                    "index": 0,
+                    "sql": "SELECT *\nFROM Cadet \n    INNER JOIN Enrollment \n    ON Cadet.cNum = Enrollment.cNum",
+                    "updatable": false,
+                    "fullTableName": ""
+                }
+            ]
+        },
+        {
+            "state": {
+                "start": 15,
+                "end": 17,
+                "language": "mysql",
+                "currentSet": 1,
+                "statements": [
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 0,
+                            "length": 48
+                        },
+                        "contentStart": 45,
+                        "state": 3
+                    }
+                ]
+            },
+            "data": []
+        },
+        {
+            "state": {
+                "start": 18,
+                "end": 21,
+                "language": "mysql",
+                "result": {
+                    "type": "resultIds",
+                    "list": [
+                        "ee41252e-40c1-4319-fecc-75e26648a0c8"
+                    ]
+                },
+                "currentHeight": 267,
+                "currentSet": 1,
+                "statements": [
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 0,
+                            "length": 83
+                        },
+                        "contentStart": 0,
+                        "state": 0
+                    }
+                ]
+            },
+            "data": [
+                {
+                    "tabId": "56aeafd0-4470-4a73-d09b-90c0af928569",
+                    "resultId": "ee41252e-40c1-4319-fecc-75e26648a0c8",
+                    "rows": [
+                        {
+                            "0": "123",
+                            "1": "John",
+                            "2": "Smith",
+                            "3": "123",
+                            "4": "CS393",
+                            "5": "251"
+                        },
+                        {
+                            "0": "123",
+                            "1": "John",
+                            "2": "Smith",
+                            "3": "123",
+                            "4": "CY305",
+                            "5": "251"
+                        },
+                        {
+                            "0": "123",
+                            "1": "John",
+                            "2": "Smith",
+                            "3": "123",
+                            "4": "CY394",
+                            "5": "252"
+                        },
+                        {
+                            "0": "234",
+                            "1": "Mike",
+                            "2": "Jones",
+                            "3": "234",
+                            "4": "CS393",
+                            "5": "251"
+                        },
+                        {
+                            "0": "345",
+                            "1": "James",
+                            "2": "Johnson",
+                            "3": null,
+                            "4": null,
+                            "5": null
+                        },
+                        {
+                            "0": "456",
+                            "1": "Jane",
+                            "2": "Doe",
+                            "3": "456",
+                            "4": "CS393",
+                            "5": "252"
+                        },
+                        {
+                            "0": "567",
+                            "1": "Janet",
+                            "2": "Jackson",
+                            "3": null,
+                            "4": null,
+                            "5": null
+                        },
+                        {
+                            "0": "678",
+                            "1": "Janice",
+                            "2": "Hoffman",
+                            "3": null,
+                            "4": null,
+                            "5": null
+                        }
+                    ],
+                    "columns": [
+                        {
+                            "title": "cNum",
+                            "field": "0",
+                            "dataType": {
+                                "type": 17,
+                                "characterMaximumLength": 65535,
+                                "flags": [
+                                    "BINARY",
+                                    "ASCII",
+                                    "UNICODE"
+                                ],
+                                "needsQuotes": true,
+                                "parameterFormatType": "OneOrZero"
+                            },
+                            "inPK": false,
+                            "nullable": false,
+                            "autoIncrement": false
+                        },
+                        {
+                            "title": "firstName",
+                            "field": "1",
+                            "dataType": {
+                                "type": 17,
+                                "characterMaximumLength": 65535,
+                                "flags": [
+                                    "BINARY",
+                                    "ASCII",
+                                    "UNICODE"
+                                ],
+                                "needsQuotes": true,
+                                "parameterFormatType": "OneOrZero"
+                            },
+                            "inPK": false,
+                            "nullable": false,
+                            "autoIncrement": false
+                        },
+                        {
+                            "title": "lastName",
+                            "field": "2",
+                            "dataType": {
+                                "type": 17,
+                                "characterMaximumLength": 65535,
+                                "flags": [
+                                    "BINARY",
+                                    "ASCII",
+                                    "UNICODE"
+                                ],
+                                "needsQuotes": true,
+                                "parameterFormatType": "OneOrZero"
+                            },
+                            "inPK": false,
+                            "nullable": false,
+                            "autoIncrement": false
+                        },
+                        {
+                            "title": "cNum",
+                            "field": "3",
+                            "dataType": {
+                                "type": 17,
+                                "characterMaximumLength": 65535,
+                                "flags": [
+                                    "BINARY",
+                                    "ASCII",
+                                    "UNICODE"
+                                ],
+                                "needsQuotes": true,
+                                "parameterFormatType": "OneOrZero"
+                            },
+                            "inPK": false,
+                            "nullable": false,
+                            "autoIncrement": false
+                        },
+                        {
+                            "title": "classNum",
+                            "field": "4",
+                            "dataType": {
+                                "type": 17,
+                                "characterMaximumLength": 65535,
+                                "flags": [
+                                    "BINARY",
+                                    "ASCII",
+                                    "UNICODE"
+                                ],
+                                "needsQuotes": true,
+                                "parameterFormatType": "OneOrZero"
+                            },
+                            "inPK": false,
+                            "nullable": false,
+                            "autoIncrement": false
+                        },
+                        {
+                            "title": "term",
+                            "field": "5",
+                            "dataType": {
+                                "type": 17,
+                                "characterMaximumLength": 65535,
+                                "flags": [
+                                    "BINARY",
+                                    "ASCII",
+                                    "UNICODE"
+                                ],
+                                "needsQuotes": true,
+                                "parameterFormatType": "OneOrZero"
+                            },
+                            "inPK": false,
+                            "nullable": false,
+                            "autoIncrement": false
+                        }
+                    ],
+                    "executionInfo": {
+                        "text": "OK, 8 records retrieved in 1.004ms"
+                    },
+                    "totalRowCount": 8,
+                    "hasMoreRows": false,
+                    "currentPage": 0,
+                    "index": 0,
+                    "sql": "SELECT *\nFROM Cadet \n    LEFT JOIN Enrollment \n    ON Cadet.cNum = Enrollment.cNum",
+                    "updatable": false,
+                    "fullTableName": ""
+                }
+            ]
+        },
+        {
+            "state": {
+                "start": 22,
+                "end": 25,
+                "language": "mysql",
+                "result": {
+                    "type": "resultIds",
+                    "list": [
+                        "0067dcd4-ba20-4153-d40e-d9c87ad0b00d"
+                    ]
+                },
+                "currentHeight": 192,
+                "currentSet": 1,
+                "statements": [
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 0,
+                            "length": 84
+                        },
+                        "contentStart": 0,
+                        "state": 0
+                    }
+                ]
+            },
+            "data": [
+                {
+                    "tabId": "56aeafd0-4470-4a73-d09b-90c0af928569",
+                    "resultId": "0067dcd4-ba20-4153-d40e-d9c87ad0b00d",
+                    "rows": [
+                        {
+                            "0": "123",
+                            "1": "John",
+                            "2": "Smith",
+                            "3": "123",
+                            "4": "CS393",
+                            "5": "251"
+                        },
+                        {
+                            "0": "123",
+                            "1": "John",
+                            "2": "Smith",
+                            "3": "123",
+                            "4": "CY305",
+                            "5": "251"
+                        },
+                        {
+                            "0": "123",
+                            "1": "John",
+                            "2": "Smith",
+                            "3": "123",
+                            "4": "CY394",
+                            "5": "252"
+                        },
+                        {
+                            "0": "234",
+                            "1": "Mike",
+                            "2": "Jones",
+                            "3": "234",
+                            "4": "CS393",
+                            "5": "251"
+                        },
+                        {
+                            "0": "456",
+                            "1": "Jane",
+                            "2": "Doe",
+                            "3": "456",
+                            "4": "CS393",
+                            "5": "252"
+                        }
+                    ],
+                    "columns": [
+                        {
+                            "title": "cNum",
+                            "field": "0",
+                            "dataType": {
+                                "type": 17,
+                                "characterMaximumLength": 65535,
+                                "flags": [
+                                    "BINARY",
+                                    "ASCII",
+                                    "UNICODE"
+                                ],
+                                "needsQuotes": true,
+                                "parameterFormatType": "OneOrZero"
+                            },
+                            "inPK": false,
+                            "nullable": false,
+                            "autoIncrement": false
+                        },
+                        {
+                            "title": "firstName",
+                            "field": "1",
+                            "dataType": {
+                                "type": 17,
+                                "characterMaximumLength": 65535,
+                                "flags": [
+                                    "BINARY",
+                                    "ASCII",
+                                    "UNICODE"
+                                ],
+                                "needsQuotes": true,
+                                "parameterFormatType": "OneOrZero"
+                            },
+                            "inPK": false,
+                            "nullable": false,
+                            "autoIncrement": false
+                        },
+                        {
+                            "title": "lastName",
+                            "field": "2",
+                            "dataType": {
+                                "type": 17,
+                                "characterMaximumLength": 65535,
+                                "flags": [
+                                    "BINARY",
+                                    "ASCII",
+                                    "UNICODE"
+                                ],
+                                "needsQuotes": true,
+                                "parameterFormatType": "OneOrZero"
+                            },
+                            "inPK": false,
+                            "nullable": false,
+                            "autoIncrement": false
+                        },
+                        {
+                            "title": "cNum",
+                            "field": "3",
+                            "dataType": {
+                                "type": 17,
+                                "characterMaximumLength": 65535,
+                                "flags": [
+                                    "BINARY",
+                                    "ASCII",
+                                    "UNICODE"
+                                ],
+                                "needsQuotes": true,
+                                "parameterFormatType": "OneOrZero"
+                            },
+                            "inPK": false,
+                            "nullable": false,
+                            "autoIncrement": false
+                        },
+                        {
+                            "title": "classNum",
+                            "field": "4",
+                            "dataType": {
+                                "type": 17,
+                                "characterMaximumLength": 65535,
+                                "flags": [
+                                    "BINARY",
+                                    "ASCII",
+                                    "UNICODE"
+                                ],
+                                "needsQuotes": true,
+                                "parameterFormatType": "OneOrZero"
+                            },
+                            "inPK": false,
+                            "nullable": false,
+                            "autoIncrement": false
+                        },
+                        {
+                            "title": "term",
+                            "field": "5",
+                            "dataType": {
+                                "type": 17,
+                                "characterMaximumLength": 65535,
+                                "flags": [
+                                    "BINARY",
+                                    "ASCII",
+                                    "UNICODE"
+                                ],
+                                "needsQuotes": true,
+                                "parameterFormatType": "OneOrZero"
+                            },
+                            "inPK": false,
+                            "nullable": false,
+                            "autoIncrement": false
+                        }
+                    ],
+                    "executionInfo": {
+                        "text": "OK, 5 records retrieved in 2.035ms"
+                    },
+                    "totalRowCount": 5,
+                    "hasMoreRows": false,
+                    "currentPage": 0,
+                    "index": 0,
+                    "sql": "SELECT *\nFROM Cadet \n    RIGHT JOIN Enrollment \n    ON Cadet.cNum = Enrollment.cNum",
+                    "updatable": false,
+                    "fullTableName": ""
+                }
+            ]
+        },
+        {
+            "state": {
+                "start": 26,
+                "end": 26,
+                "language": "mysql",
+                "currentSet": 1,
+                "statements": [
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 0,
+                            "length": 0
+                        },
+                        "contentStart": 0,
+                        "state": 0
+                    }
+                ]
+            },
+            "data": []
+        }
+    ]
+}

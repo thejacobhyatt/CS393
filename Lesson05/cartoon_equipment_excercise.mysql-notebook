@@ -1,0 +1,2988 @@
+{
+    "type": "MySQLNotebook",
+    "version": "1.0",
+    "caption": "DB Notebook",
+    "content": "\\about\nUSE cartoon_equipment;\nSELECT * \nFROM vendor;\nSELECT vendorId, vendorName, vendorCity\nFROM vendor;\nSELECT DISTINCT vendorCountry\nFROM vendor;\nSELECT DISTINCT vendorCountry AS 'Vendor Country'\nFROM vendor;\nSELECT * \nFROM vendor\nORDER BY vendorCountry DESC, vendorName;\nSELECT * \nFROM vendor\nWHERE vendorCountry = \"usa\";\nSELECT * \nFROM vendor\nWHERE vendorAddress LIKE \"%street\"; -- anything that ends with the word street\nSELECT vendorName\nFROM vendor\nWHERE vendorName LIKE \"%a%\";\nSELECT * \nFROM vendor\nWHERE vendorState IS NULL;\nSELECT * \nFROM product;\nSELECT * \nFROM product\nWHERE productPrice >= 10;\nSELECT * \nFROM customerorder\nWHERE orderDate < \"2005-10-01\";\nSELECT * \nFROM customerorder\nWHERE orderDate BETWEEN \"2005-10-01\" AND '2005-10-3';\nSELECT *\nFROM product\nWHERE productId LIKE 'ANV%';\n-- give me the anvils and tnt products that are less than $7\nSELECT *\nFROM product\nWHERE (productId LIKE 'ANV%' \n    OR productId LIKE 'TNT%')\n    AND productPrice < 7;\n\n\n\n\n\n\n\n\n\n\n\n\n",
+    "options": {
+        "tabSize": 4,
+        "insertSpaces": true,
+        "indentSize": 4,
+        "defaultEOL": "CRLF",
+        "trimAutoWhitespace": true
+    },
+    "viewState": {
+        "cursorState": [
+            {
+                "inSelectionMode": false,
+                "selectionStart": {
+                    "lineNumber": 49,
+                    "column": 1
+                },
+                "position": {
+                    "lineNumber": 49,
+                    "column": 1
+                }
+            }
+        ],
+        "viewState": {
+            "scrollLeft": 0,
+            "firstPosition": {
+                "lineNumber": 40,
+                "column": 1
+            },
+            "firstPositionDeltaTop": 63
+        },
+        "contributionsState": {
+            "editor.contrib.folding": {},
+            "editor.contrib.wordHighlighter": false
+        }
+    },
+    "contexts": [
+        {
+            "state": {
+                "start": 1,
+                "end": 1,
+                "language": "mysql",
+                "result": {
+                    "type": "text",
+                    "text": [
+                        {
+                            "type": 2,
+                            "content": "Welcome to the MySQL Shell - DB Notebook.\n\nPress Ctrl+Enter to execute the code block.\n\nExecute \\sql to switch to SQL, \\js to JavaScript and \\ts to TypeScript mode.\nExecute \\help or \\? for help;",
+                            "language": "ansi"
+                        }
+                    ]
+                },
+                "currentHeight": 28,
+                "currentSet": 1,
+                "statements": [
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 0,
+                            "length": 6
+                        },
+                        "contentStart": 0,
+                        "state": 0
+                    }
+                ]
+            },
+            "data": []
+        },
+        {
+            "state": {
+                "start": 2,
+                "end": 2,
+                "language": "mysql",
+                "result": {
+                    "type": "text",
+                    "text": [
+                        {
+                            "type": 4,
+                            "index": 0,
+                            "resultId": "5aa3b691-5747-4bda-9739-174b25d2a588",
+                            "content": "OK, 0 records retrieved in 2.004ms"
+                        }
+                    ]
+                },
+                "currentHeight": 28,
+                "currentSet": 1,
+                "statements": [
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 0,
+                            "length": 22
+                        },
+                        "contentStart": 0,
+                        "state": 0
+                    }
+                ]
+            },
+            "data": []
+        },
+        {
+            "state": {
+                "start": 3,
+                "end": 4,
+                "language": "mysql",
+                "result": {
+                    "type": "resultIds",
+                    "list": [
+                        "58916637-af72-49ac-b14b-201626ccae2c"
+                    ]
+                },
+                "currentHeight": 36,
+                "currentSet": 1,
+                "statements": [
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 0,
+                            "length": 22
+                        },
+                        "contentStart": 0,
+                        "state": 0
+                    }
+                ]
+            },
+            "data": [
+                {
+                    "tabId": "aa9640b2-5ac0-455d-b80a-515403178734",
+                    "resultId": "58916637-af72-49ac-b14b-201626ccae2c",
+                    "rows": [
+                        {
+                            "0": 1001,
+                            "1": "Anvils R Us",
+                            "2": "123 Main Street",
+                            "3": "Southfield",
+                            "4": "MI",
+                            "5": "48075",
+                            "6": "USA"
+                        },
+                        {
+                            "0": 1002,
+                            "1": "LT Supplies",
+                            "2": "500 Park Street",
+                            "3": "Anytown",
+                            "4": "OH",
+                            "5": "44333",
+                            "6": "USA"
+                        },
+                        {
+                            "0": 1003,
+                            "1": "ACME",
+                            "2": "555 High Street",
+                            "3": "Los Angeles",
+                            "4": "CA",
+                            "5": "90046",
+                            "6": "USA"
+                        },
+                        {
+                            "0": 1004,
+                            "1": "Furball Inc.",
+                            "2": "1000 5th Avenue",
+                            "3": "New York",
+                            "4": "NY",
+                            "5": "11111",
+                            "6": "USA"
+                        },
+                        {
+                            "0": 1005,
+                            "1": "Jet Set",
+                            "2": "42 Galaxy Road",
+                            "3": "London",
+                            "4": null,
+                            "5": "N16 6PS",
+                            "6": "England"
+                        },
+                        {
+                            "0": 1006,
+                            "1": "Jouets Et Ours",
+                            "2": "1 Rue Amusement",
+                            "3": "Paris",
+                            "4": null,
+                            "5": "45678",
+                            "6": "France"
+                        }
+                    ],
+                    "columns": [
+                        {
+                            "title": "vendorId",
+                            "field": "0",
+                            "dataType": {
+                                "type": 4,
+                                "flags": [
+                                    "SIGNED",
+                                    "ZEROFILL"
+                                ],
+                                "numericPrecision": 10,
+                                "parameterFormatType": "OneOrZero",
+                                "synonyms": [
+                                    "INTEGER",
+                                    "INT4"
+                                ]
+                            },
+                            "inPK": true,
+                            "nullable": false,
+                            "autoIncrement": true
+                        },
+                        {
+                            "title": "vendorName",
+                            "field": "1",
+                            "dataType": {
+                                "type": 17,
+                                "characterMaximumLength": 65535,
+                                "flags": [
+                                    "BINARY",
+                                    "ASCII",
+                                    "UNICODE"
+                                ],
+                                "needsQuotes": true,
+                                "parameterFormatType": "OneOrZero"
+                            },
+                            "inPK": false,
+                            "nullable": false,
+                            "autoIncrement": false
+                        },
+                        {
+                            "title": "vendorAddress",
+                            "field": "2",
+                            "dataType": {
+                                "type": 17,
+                                "characterMaximumLength": 65535,
+                                "flags": [
+                                    "BINARY",
+                                    "ASCII",
+                                    "UNICODE"
+                                ],
+                                "needsQuotes": true,
+                                "parameterFormatType": "OneOrZero"
+                            },
+                            "inPK": false,
+                            "nullable": true,
+                            "autoIncrement": false,
+                            "default": null
+                        },
+                        {
+                            "title": "vendorCity",
+                            "field": "3",
+                            "dataType": {
+                                "type": 17,
+                                "characterMaximumLength": 65535,
+                                "flags": [
+                                    "BINARY",
+                                    "ASCII",
+                                    "UNICODE"
+                                ],
+                                "needsQuotes": true,
+                                "parameterFormatType": "OneOrZero"
+                            },
+                            "inPK": false,
+                            "nullable": true,
+                            "autoIncrement": false,
+                            "default": null
+                        },
+                        {
+                            "title": "vendorState",
+                            "field": "4",
+                            "dataType": {
+                                "type": 17,
+                                "characterMaximumLength": 65535,
+                                "flags": [
+                                    "BINARY",
+                                    "ASCII",
+                                    "UNICODE"
+                                ],
+                                "needsQuotes": true,
+                                "parameterFormatType": "OneOrZero"
+                            },
+                            "inPK": false,
+                            "nullable": true,
+                            "autoIncrement": false,
+                            "default": null
+                        },
+                        {
+                            "title": "vendorZip",
+                            "field": "5",
+                            "dataType": {
+                                "type": 17,
+                                "characterMaximumLength": 65535,
+                                "flags": [
+                                    "BINARY",
+                                    "ASCII",
+                                    "UNICODE"
+                                ],
+                                "needsQuotes": true,
+                                "parameterFormatType": "OneOrZero"
+                            },
+                            "inPK": false,
+                            "nullable": true,
+                            "autoIncrement": false,
+                            "default": null
+                        },
+                        {
+                            "title": "vendorCountry",
+                            "field": "6",
+                            "dataType": {
+                                "type": 17,
+                                "characterMaximumLength": 65535,
+                                "flags": [
+                                    "BINARY",
+                                    "ASCII",
+                                    "UNICODE"
+                                ],
+                                "needsQuotes": true,
+                                "parameterFormatType": "OneOrZero"
+                            },
+                            "inPK": false,
+                            "nullable": true,
+                            "autoIncrement": false,
+                            "default": null
+                        }
+                    ],
+                    "executionInfo": {
+                        "text": "OK, 6 records retrieved in 2.994ms"
+                    },
+                    "totalRowCount": 6,
+                    "hasMoreRows": false,
+                    "currentPage": 0,
+                    "index": 0,
+                    "sql": "SELECT * \nFROM vendor",
+                    "updatable": true,
+                    "fullTableName": "vendor"
+                }
+            ]
+        },
+        {
+            "state": {
+                "start": 5,
+                "end": 6,
+                "language": "mysql",
+                "result": {
+                    "type": "resultIds",
+                    "list": [
+                        "6356ac35-c6ba-4533-89ab-10a164fda71a"
+                    ]
+                },
+                "currentHeight": 36,
+                "currentSet": 1,
+                "statements": [
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 0,
+                            "length": 52
+                        },
+                        "contentStart": 0,
+                        "state": 0
+                    }
+                ]
+            },
+            "data": [
+                {
+                    "tabId": "aa9640b2-5ac0-455d-b80a-515403178734",
+                    "resultId": "6356ac35-c6ba-4533-89ab-10a164fda71a",
+                    "rows": [
+                        {
+                            "0": 1001,
+                            "1": "Anvils R Us",
+                            "2": "Southfield"
+                        },
+                        {
+                            "0": 1002,
+                            "1": "LT Supplies",
+                            "2": "Anytown"
+                        },
+                        {
+                            "0": 1003,
+                            "1": "ACME",
+                            "2": "Los Angeles"
+                        },
+                        {
+                            "0": 1004,
+                            "1": "Furball Inc.",
+                            "2": "New York"
+                        },
+                        {
+                            "0": 1005,
+                            "1": "Jet Set",
+                            "2": "London"
+                        },
+                        {
+                            "0": 1006,
+                            "1": "Jouets Et Ours",
+                            "2": "Paris"
+                        }
+                    ],
+                    "columns": [
+                        {
+                            "title": "vendorId",
+                            "field": "0",
+                            "dataType": {
+                                "type": 4,
+                                "flags": [
+                                    "SIGNED",
+                                    "ZEROFILL"
+                                ],
+                                "numericPrecision": 10,
+                                "parameterFormatType": "OneOrZero",
+                                "synonyms": [
+                                    "INTEGER",
+                                    "INT4"
+                                ]
+                            },
+                            "inPK": true,
+                            "nullable": false,
+                            "autoIncrement": true
+                        },
+                        {
+                            "title": "vendorName",
+                            "field": "1",
+                            "dataType": {
+                                "type": 17,
+                                "characterMaximumLength": 65535,
+                                "flags": [
+                                    "BINARY",
+                                    "ASCII",
+                                    "UNICODE"
+                                ],
+                                "needsQuotes": true,
+                                "parameterFormatType": "OneOrZero"
+                            },
+                            "inPK": false,
+                            "nullable": false,
+                            "autoIncrement": false
+                        },
+                        {
+                            "title": "vendorCity",
+                            "field": "2",
+                            "dataType": {
+                                "type": 17,
+                                "characterMaximumLength": 65535,
+                                "flags": [
+                                    "BINARY",
+                                    "ASCII",
+                                    "UNICODE"
+                                ],
+                                "needsQuotes": true,
+                                "parameterFormatType": "OneOrZero"
+                            },
+                            "inPK": false,
+                            "nullable": true,
+                            "autoIncrement": false,
+                            "default": null
+                        }
+                    ],
+                    "executionInfo": {
+                        "text": "OK, 6 records retrieved in 1.046ms"
+                    },
+                    "totalRowCount": 6,
+                    "hasMoreRows": false,
+                    "currentPage": 0,
+                    "index": 0,
+                    "sql": "SELECT vendorId, vendorName, vendorCity\nFROM vendor",
+                    "updatable": true,
+                    "fullTableName": "vendor"
+                }
+            ]
+        },
+        {
+            "state": {
+                "start": 7,
+                "end": 8,
+                "language": "mysql",
+                "result": {
+                    "type": "resultIds",
+                    "list": [
+                        "aaa78443-7857-4bdb-cf2c-9687a72df5fd"
+                    ]
+                },
+                "currentHeight": 36,
+                "currentSet": 1,
+                "statements": [
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 0,
+                            "length": 42
+                        },
+                        "contentStart": 0,
+                        "state": 0
+                    }
+                ]
+            },
+            "data": [
+                {
+                    "tabId": "aa9640b2-5ac0-455d-b80a-515403178734",
+                    "resultId": "aaa78443-7857-4bdb-cf2c-9687a72df5fd",
+                    "rows": [
+                        {
+                            "0": "USA"
+                        },
+                        {
+                            "0": "England"
+                        },
+                        {
+                            "0": "France"
+                        }
+                    ],
+                    "columns": [
+                        {
+                            "title": "vendorCountry",
+                            "field": "0",
+                            "dataType": {
+                                "type": 17,
+                                "characterMaximumLength": 65535,
+                                "flags": [
+                                    "BINARY",
+                                    "ASCII",
+                                    "UNICODE"
+                                ],
+                                "needsQuotes": true,
+                                "parameterFormatType": "OneOrZero"
+                            },
+                            "inPK": false,
+                            "nullable": false,
+                            "autoIncrement": false
+                        }
+                    ],
+                    "executionInfo": {
+                        "text": "OK, 3 records retrieved in 2.001ms"
+                    },
+                    "totalRowCount": 3,
+                    "hasMoreRows": false,
+                    "currentPage": 0,
+                    "index": 0,
+                    "sql": "SELECT DISTINCT vendorCountry\nFROM vendor",
+                    "updatable": false,
+                    "fullTableName": ""
+                }
+            ]
+        },
+        {
+            "state": {
+                "start": 9,
+                "end": 10,
+                "language": "mysql",
+                "result": {
+                    "type": "resultIds",
+                    "list": [
+                        "174815dc-c7d7-4207-e77b-b4be6c2f9f33"
+                    ]
+                },
+                "currentHeight": 142,
+                "currentSet": 1,
+                "statements": [
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 0,
+                            "length": 62
+                        },
+                        "contentStart": 0,
+                        "state": 0
+                    }
+                ]
+            },
+            "data": [
+                {
+                    "tabId": "aa9640b2-5ac0-455d-b80a-515403178734",
+                    "resultId": "174815dc-c7d7-4207-e77b-b4be6c2f9f33",
+                    "rows": [
+                        {
+                            "0": "USA"
+                        },
+                        {
+                            "0": "England"
+                        },
+                        {
+                            "0": "France"
+                        }
+                    ],
+                    "columns": [
+                        {
+                            "title": "Vendor Country",
+                            "field": "0",
+                            "dataType": {
+                                "type": 17,
+                                "characterMaximumLength": 65535,
+                                "flags": [
+                                    "BINARY",
+                                    "ASCII",
+                                    "UNICODE"
+                                ],
+                                "needsQuotes": true,
+                                "parameterFormatType": "OneOrZero"
+                            },
+                            "inPK": false,
+                            "nullable": false,
+                            "autoIncrement": false
+                        }
+                    ],
+                    "executionInfo": {
+                        "text": "OK, 3 records retrieved in 0.899ms"
+                    },
+                    "totalRowCount": 3,
+                    "hasMoreRows": false,
+                    "currentPage": 0,
+                    "index": 0,
+                    "sql": "SELECT DISTINCT vendorCountry AS 'Vendor Country'\nFROM vendor",
+                    "updatable": false,
+                    "fullTableName": ""
+                }
+            ]
+        },
+        {
+            "state": {
+                "start": 11,
+                "end": 13,
+                "language": "mysql",
+                "result": {
+                    "type": "resultIds",
+                    "list": [
+                        "eec52d4a-5001-4123-bb42-909d50936d62"
+                    ]
+                },
+                "currentHeight": 36,
+                "currentSet": 1,
+                "statements": [
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 0,
+                            "length": 62
+                        },
+                        "contentStart": 0,
+                        "state": 0
+                    }
+                ]
+            },
+            "data": [
+                {
+                    "tabId": "aa9640b2-5ac0-455d-b80a-515403178734",
+                    "resultId": "eec52d4a-5001-4123-bb42-909d50936d62",
+                    "rows": [
+                        {
+                            "0": 1003,
+                            "1": "ACME",
+                            "2": "555 High Street",
+                            "3": "Los Angeles",
+                            "4": "CA",
+                            "5": "90046",
+                            "6": "USA"
+                        },
+                        {
+                            "0": 1001,
+                            "1": "Anvils R Us",
+                            "2": "123 Main Street",
+                            "3": "Southfield",
+                            "4": "MI",
+                            "5": "48075",
+                            "6": "USA"
+                        },
+                        {
+                            "0": 1004,
+                            "1": "Furball Inc.",
+                            "2": "1000 5th Avenue",
+                            "3": "New York",
+                            "4": "NY",
+                            "5": "11111",
+                            "6": "USA"
+                        },
+                        {
+                            "0": 1002,
+                            "1": "LT Supplies",
+                            "2": "500 Park Street",
+                            "3": "Anytown",
+                            "4": "OH",
+                            "5": "44333",
+                            "6": "USA"
+                        },
+                        {
+                            "0": 1006,
+                            "1": "Jouets Et Ours",
+                            "2": "1 Rue Amusement",
+                            "3": "Paris",
+                            "4": null,
+                            "5": "45678",
+                            "6": "France"
+                        },
+                        {
+                            "0": 1005,
+                            "1": "Jet Set",
+                            "2": "42 Galaxy Road",
+                            "3": "London",
+                            "4": null,
+                            "5": "N16 6PS",
+                            "6": "England"
+                        }
+                    ],
+                    "columns": [
+                        {
+                            "title": "vendorId",
+                            "field": "0",
+                            "dataType": {
+                                "type": 4,
+                                "flags": [
+                                    "SIGNED",
+                                    "ZEROFILL"
+                                ],
+                                "numericPrecision": 10,
+                                "parameterFormatType": "OneOrZero",
+                                "synonyms": [
+                                    "INTEGER",
+                                    "INT4"
+                                ]
+                            },
+                            "inPK": true,
+                            "nullable": false,
+                            "autoIncrement": true
+                        },
+                        {
+                            "title": "vendorName",
+                            "field": "1",
+                            "dataType": {
+                                "type": 17,
+                                "characterMaximumLength": 65535,
+                                "flags": [
+                                    "BINARY",
+                                    "ASCII",
+                                    "UNICODE"
+                                ],
+                                "needsQuotes": true,
+                                "parameterFormatType": "OneOrZero"
+                            },
+                            "inPK": false,
+                            "nullable": false,
+                            "autoIncrement": false
+                        },
+                        {
+                            "title": "vendorAddress",
+                            "field": "2",
+                            "dataType": {
+                                "type": 17,
+                                "characterMaximumLength": 65535,
+                                "flags": [
+                                    "BINARY",
+                                    "ASCII",
+                                    "UNICODE"
+                                ],
+                                "needsQuotes": true,
+                                "parameterFormatType": "OneOrZero"
+                            },
+                            "inPK": false,
+                            "nullable": true,
+                            "autoIncrement": false,
+                            "default": null
+                        },
+                        {
+                            "title": "vendorCity",
+                            "field": "3",
+                            "dataType": {
+                                "type": 17,
+                                "characterMaximumLength": 65535,
+                                "flags": [
+                                    "BINARY",
+                                    "ASCII",
+                                    "UNICODE"
+                                ],
+                                "needsQuotes": true,
+                                "parameterFormatType": "OneOrZero"
+                            },
+                            "inPK": false,
+                            "nullable": true,
+                            "autoIncrement": false,
+                            "default": null
+                        },
+                        {
+                            "title": "vendorState",
+                            "field": "4",
+                            "dataType": {
+                                "type": 17,
+                                "characterMaximumLength": 65535,
+                                "flags": [
+                                    "BINARY",
+                                    "ASCII",
+                                    "UNICODE"
+                                ],
+                                "needsQuotes": true,
+                                "parameterFormatType": "OneOrZero"
+                            },
+                            "inPK": false,
+                            "nullable": true,
+                            "autoIncrement": false,
+                            "default": null
+                        },
+                        {
+                            "title": "vendorZip",
+                            "field": "5",
+                            "dataType": {
+                                "type": 17,
+                                "characterMaximumLength": 65535,
+                                "flags": [
+                                    "BINARY",
+                                    "ASCII",
+                                    "UNICODE"
+                                ],
+                                "needsQuotes": true,
+                                "parameterFormatType": "OneOrZero"
+                            },
+                            "inPK": false,
+                            "nullable": true,
+                            "autoIncrement": false,
+                            "default": null
+                        },
+                        {
+                            "title": "vendorCountry",
+                            "field": "6",
+                            "dataType": {
+                                "type": 17,
+                                "characterMaximumLength": 65535,
+                                "flags": [
+                                    "BINARY",
+                                    "ASCII",
+                                    "UNICODE"
+                                ],
+                                "needsQuotes": true,
+                                "parameterFormatType": "OneOrZero"
+                            },
+                            "inPK": false,
+                            "nullable": true,
+                            "autoIncrement": false,
+                            "default": null
+                        }
+                    ],
+                    "executionInfo": {
+                        "text": "OK, 6 records retrieved in 1.992ms"
+                    },
+                    "totalRowCount": 6,
+                    "hasMoreRows": false,
+                    "currentPage": 0,
+                    "index": 0,
+                    "sql": "SELECT * \nFROM vendor\nORDER BY vendorCountry DESC, vendorName",
+                    "updatable": true,
+                    "fullTableName": "vendor"
+                }
+            ]
+        },
+        {
+            "state": {
+                "start": 14,
+                "end": 16,
+                "language": "mysql",
+                "result": {
+                    "type": "resultIds",
+                    "list": [
+                        "1b3ed1e4-a5c2-4979-82c2-37fa1c5d6f36"
+                    ]
+                },
+                "currentHeight": 36,
+                "currentSet": 1,
+                "statements": [
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 0,
+                            "length": 50
+                        },
+                        "contentStart": 0,
+                        "state": 0
+                    }
+                ]
+            },
+            "data": [
+                {
+                    "tabId": "aa9640b2-5ac0-455d-b80a-515403178734",
+                    "resultId": "1b3ed1e4-a5c2-4979-82c2-37fa1c5d6f36",
+                    "rows": [
+                        {
+                            "0": 1001,
+                            "1": "Anvils R Us",
+                            "2": "123 Main Street",
+                            "3": "Southfield",
+                            "4": "MI",
+                            "5": "48075",
+                            "6": "USA"
+                        },
+                        {
+                            "0": 1002,
+                            "1": "LT Supplies",
+                            "2": "500 Park Street",
+                            "3": "Anytown",
+                            "4": "OH",
+                            "5": "44333",
+                            "6": "USA"
+                        },
+                        {
+                            "0": 1003,
+                            "1": "ACME",
+                            "2": "555 High Street",
+                            "3": "Los Angeles",
+                            "4": "CA",
+                            "5": "90046",
+                            "6": "USA"
+                        },
+                        {
+                            "0": 1004,
+                            "1": "Furball Inc.",
+                            "2": "1000 5th Avenue",
+                            "3": "New York",
+                            "4": "NY",
+                            "5": "11111",
+                            "6": "USA"
+                        }
+                    ],
+                    "columns": [
+                        {
+                            "title": "vendorId",
+                            "field": "0",
+                            "dataType": {
+                                "type": 4,
+                                "flags": [
+                                    "SIGNED",
+                                    "ZEROFILL"
+                                ],
+                                "numericPrecision": 10,
+                                "parameterFormatType": "OneOrZero",
+                                "synonyms": [
+                                    "INTEGER",
+                                    "INT4"
+                                ]
+                            },
+                            "inPK": false,
+                            "nullable": false,
+                            "autoIncrement": false
+                        },
+                        {
+                            "title": "vendorName",
+                            "field": "1",
+                            "dataType": {
+                                "type": 17,
+                                "characterMaximumLength": 65535,
+                                "flags": [
+                                    "BINARY",
+                                    "ASCII",
+                                    "UNICODE"
+                                ],
+                                "needsQuotes": true,
+                                "parameterFormatType": "OneOrZero"
+                            },
+                            "inPK": false,
+                            "nullable": false,
+                            "autoIncrement": false
+                        },
+                        {
+                            "title": "vendorAddress",
+                            "field": "2",
+                            "dataType": {
+                                "type": 17,
+                                "characterMaximumLength": 65535,
+                                "flags": [
+                                    "BINARY",
+                                    "ASCII",
+                                    "UNICODE"
+                                ],
+                                "needsQuotes": true,
+                                "parameterFormatType": "OneOrZero"
+                            },
+                            "inPK": false,
+                            "nullable": false,
+                            "autoIncrement": false
+                        },
+                        {
+                            "title": "vendorCity",
+                            "field": "3",
+                            "dataType": {
+                                "type": 17,
+                                "characterMaximumLength": 65535,
+                                "flags": [
+                                    "BINARY",
+                                    "ASCII",
+                                    "UNICODE"
+                                ],
+                                "needsQuotes": true,
+                                "parameterFormatType": "OneOrZero"
+                            },
+                            "inPK": false,
+                            "nullable": false,
+                            "autoIncrement": false
+                        },
+                        {
+                            "title": "vendorState",
+                            "field": "4",
+                            "dataType": {
+                                "type": 17,
+                                "characterMaximumLength": 65535,
+                                "flags": [
+                                    "BINARY",
+                                    "ASCII",
+                                    "UNICODE"
+                                ],
+                                "needsQuotes": true,
+                                "parameterFormatType": "OneOrZero"
+                            },
+                            "inPK": false,
+                            "nullable": false,
+                            "autoIncrement": false
+                        },
+                        {
+                            "title": "vendorZip",
+                            "field": "5",
+                            "dataType": {
+                                "type": 17,
+                                "characterMaximumLength": 65535,
+                                "flags": [
+                                    "BINARY",
+                                    "ASCII",
+                                    "UNICODE"
+                                ],
+                                "needsQuotes": true,
+                                "parameterFormatType": "OneOrZero"
+                            },
+                            "inPK": false,
+                            "nullable": false,
+                            "autoIncrement": false
+                        },
+                        {
+                            "title": "vendorCountry",
+                            "field": "6",
+                            "dataType": {
+                                "type": 17,
+                                "characterMaximumLength": 65535,
+                                "flags": [
+                                    "BINARY",
+                                    "ASCII",
+                                    "UNICODE"
+                                ],
+                                "needsQuotes": true,
+                                "parameterFormatType": "OneOrZero"
+                            },
+                            "inPK": false,
+                            "nullable": false,
+                            "autoIncrement": false
+                        }
+                    ],
+                    "executionInfo": {
+                        "text": "OK, 4 records retrieved in 0.998ms"
+                    },
+                    "totalRowCount": 4,
+                    "hasMoreRows": false,
+                    "currentPage": 0,
+                    "index": 0,
+                    "sql": "SELECT * \nFROM vendor\nWHERE vendorCountry = \"usa\"",
+                    "updatable": false
+                }
+            ]
+        },
+        {
+            "state": {
+                "start": 17,
+                "end": 19,
+                "language": "mysql",
+                "result": {
+                    "type": "resultIds",
+                    "list": [
+                        "8f4bf052-47a1-4bce-8d7e-acda5f2cb8d5"
+                    ]
+                },
+                "currentHeight": 36,
+                "currentSet": 1,
+                "statements": [
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 0,
+                            "length": 57
+                        },
+                        "contentStart": 0,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 57,
+                            "length": 43
+                        },
+                        "contentStart": 57,
+                        "state": 1
+                    }
+                ]
+            },
+            "data": [
+                {
+                    "tabId": "aa9640b2-5ac0-455d-b80a-515403178734",
+                    "resultId": "8f4bf052-47a1-4bce-8d7e-acda5f2cb8d5",
+                    "rows": [
+                        {
+                            "0": 1001,
+                            "1": "Anvils R Us",
+                            "2": "123 Main Street",
+                            "3": "Southfield",
+                            "4": "MI",
+                            "5": "48075",
+                            "6": "USA"
+                        },
+                        {
+                            "0": 1002,
+                            "1": "LT Supplies",
+                            "2": "500 Park Street",
+                            "3": "Anytown",
+                            "4": "OH",
+                            "5": "44333",
+                            "6": "USA"
+                        },
+                        {
+                            "0": 1003,
+                            "1": "ACME",
+                            "2": "555 High Street",
+                            "3": "Los Angeles",
+                            "4": "CA",
+                            "5": "90046",
+                            "6": "USA"
+                        }
+                    ],
+                    "columns": [
+                        {
+                            "title": "vendorId",
+                            "field": "0",
+                            "dataType": {
+                                "type": 4,
+                                "flags": [
+                                    "SIGNED",
+                                    "ZEROFILL"
+                                ],
+                                "numericPrecision": 10,
+                                "parameterFormatType": "OneOrZero",
+                                "synonyms": [
+                                    "INTEGER",
+                                    "INT4"
+                                ]
+                            },
+                            "inPK": false,
+                            "nullable": false,
+                            "autoIncrement": false
+                        },
+                        {
+                            "title": "vendorName",
+                            "field": "1",
+                            "dataType": {
+                                "type": 17,
+                                "characterMaximumLength": 65535,
+                                "flags": [
+                                    "BINARY",
+                                    "ASCII",
+                                    "UNICODE"
+                                ],
+                                "needsQuotes": true,
+                                "parameterFormatType": "OneOrZero"
+                            },
+                            "inPK": false,
+                            "nullable": false,
+                            "autoIncrement": false
+                        },
+                        {
+                            "title": "vendorAddress",
+                            "field": "2",
+                            "dataType": {
+                                "type": 17,
+                                "characterMaximumLength": 65535,
+                                "flags": [
+                                    "BINARY",
+                                    "ASCII",
+                                    "UNICODE"
+                                ],
+                                "needsQuotes": true,
+                                "parameterFormatType": "OneOrZero"
+                            },
+                            "inPK": false,
+                            "nullable": false,
+                            "autoIncrement": false
+                        },
+                        {
+                            "title": "vendorCity",
+                            "field": "3",
+                            "dataType": {
+                                "type": 17,
+                                "characterMaximumLength": 65535,
+                                "flags": [
+                                    "BINARY",
+                                    "ASCII",
+                                    "UNICODE"
+                                ],
+                                "needsQuotes": true,
+                                "parameterFormatType": "OneOrZero"
+                            },
+                            "inPK": false,
+                            "nullable": false,
+                            "autoIncrement": false
+                        },
+                        {
+                            "title": "vendorState",
+                            "field": "4",
+                            "dataType": {
+                                "type": 17,
+                                "characterMaximumLength": 65535,
+                                "flags": [
+                                    "BINARY",
+                                    "ASCII",
+                                    "UNICODE"
+                                ],
+                                "needsQuotes": true,
+                                "parameterFormatType": "OneOrZero"
+                            },
+                            "inPK": false,
+                            "nullable": false,
+                            "autoIncrement": false
+                        },
+                        {
+                            "title": "vendorZip",
+                            "field": "5",
+                            "dataType": {
+                                "type": 17,
+                                "characterMaximumLength": 65535,
+                                "flags": [
+                                    "BINARY",
+                                    "ASCII",
+                                    "UNICODE"
+                                ],
+                                "needsQuotes": true,
+                                "parameterFormatType": "OneOrZero"
+                            },
+                            "inPK": false,
+                            "nullable": false,
+                            "autoIncrement": false
+                        },
+                        {
+                            "title": "vendorCountry",
+                            "field": "6",
+                            "dataType": {
+                                "type": 17,
+                                "characterMaximumLength": 65535,
+                                "flags": [
+                                    "BINARY",
+                                    "ASCII",
+                                    "UNICODE"
+                                ],
+                                "needsQuotes": true,
+                                "parameterFormatType": "OneOrZero"
+                            },
+                            "inPK": false,
+                            "nullable": false,
+                            "autoIncrement": false
+                        }
+                    ],
+                    "executionInfo": {
+                        "text": "OK, 3 records retrieved in 2ms"
+                    },
+                    "totalRowCount": 3,
+                    "hasMoreRows": false,
+                    "currentPage": 0,
+                    "index": 0,
+                    "sql": "SELECT * \nFROM vendor\nWHERE vendorAddress LIKE \"%street\"",
+                    "updatable": false
+                }
+            ]
+        },
+        {
+            "state": {
+                "start": 20,
+                "end": 22,
+                "language": "mysql",
+                "result": {
+                    "type": "resultIds",
+                    "list": [
+                        "77778e65-0b97-4c59-81cb-cf2a09ac460a"
+                    ]
+                },
+                "currentHeight": 36,
+                "currentSet": 1,
+                "statements": [
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 0,
+                            "length": 58
+                        },
+                        "contentStart": 0,
+                        "state": 0
+                    }
+                ]
+            },
+            "data": [
+                {
+                    "tabId": "aa9640b2-5ac0-455d-b80a-515403178734",
+                    "resultId": "77778e65-0b97-4c59-81cb-cf2a09ac460a",
+                    "rows": [
+                        {
+                            "0": "Anvils R Us"
+                        },
+                        {
+                            "0": "ACME"
+                        },
+                        {
+                            "0": "Furball Inc."
+                        }
+                    ],
+                    "columns": [
+                        {
+                            "title": "vendorName",
+                            "field": "0",
+                            "dataType": {
+                                "type": 17,
+                                "characterMaximumLength": 65535,
+                                "flags": [
+                                    "BINARY",
+                                    "ASCII",
+                                    "UNICODE"
+                                ],
+                                "needsQuotes": true,
+                                "parameterFormatType": "OneOrZero"
+                            },
+                            "inPK": false,
+                            "nullable": false,
+                            "autoIncrement": false
+                        }
+                    ],
+                    "executionInfo": {
+                        "text": "OK, 3 records retrieved in 0.994ms"
+                    },
+                    "totalRowCount": 3,
+                    "hasMoreRows": false,
+                    "currentPage": 0,
+                    "index": 0,
+                    "sql": "SELECT vendorName\nFROM vendor\nWHERE vendorName LIKE \"%a%\"",
+                    "updatable": false
+                }
+            ]
+        },
+        {
+            "state": {
+                "start": 23,
+                "end": 25,
+                "language": "mysql",
+                "result": {
+                    "type": "resultIds",
+                    "list": [
+                        "7899b013-c5a7-402e-a1a9-192e6bb7015b"
+                    ]
+                },
+                "currentHeight": 36,
+                "currentSet": 1,
+                "statements": [
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 0,
+                            "length": 48
+                        },
+                        "contentStart": 0,
+                        "state": 0
+                    }
+                ]
+            },
+            "data": [
+                {
+                    "tabId": "aa9640b2-5ac0-455d-b80a-515403178734",
+                    "resultId": "7899b013-c5a7-402e-a1a9-192e6bb7015b",
+                    "rows": [
+                        {
+                            "0": 1005,
+                            "1": "Jet Set",
+                            "2": "42 Galaxy Road",
+                            "3": "London",
+                            "4": null,
+                            "5": "N16 6PS",
+                            "6": "England"
+                        },
+                        {
+                            "0": 1006,
+                            "1": "Jouets Et Ours",
+                            "2": "1 Rue Amusement",
+                            "3": "Paris",
+                            "4": null,
+                            "5": "45678",
+                            "6": "France"
+                        }
+                    ],
+                    "columns": [
+                        {
+                            "title": "vendorId",
+                            "field": "0",
+                            "dataType": {
+                                "type": 4,
+                                "flags": [
+                                    "SIGNED",
+                                    "ZEROFILL"
+                                ],
+                                "numericPrecision": 10,
+                                "parameterFormatType": "OneOrZero",
+                                "synonyms": [
+                                    "INTEGER",
+                                    "INT4"
+                                ]
+                            },
+                            "inPK": true,
+                            "nullable": false,
+                            "autoIncrement": true
+                        },
+                        {
+                            "title": "vendorName",
+                            "field": "1",
+                            "dataType": {
+                                "type": 17,
+                                "characterMaximumLength": 65535,
+                                "flags": [
+                                    "BINARY",
+                                    "ASCII",
+                                    "UNICODE"
+                                ],
+                                "needsQuotes": true,
+                                "parameterFormatType": "OneOrZero"
+                            },
+                            "inPK": false,
+                            "nullable": false,
+                            "autoIncrement": false
+                        },
+                        {
+                            "title": "vendorAddress",
+                            "field": "2",
+                            "dataType": {
+                                "type": 17,
+                                "characterMaximumLength": 65535,
+                                "flags": [
+                                    "BINARY",
+                                    "ASCII",
+                                    "UNICODE"
+                                ],
+                                "needsQuotes": true,
+                                "parameterFormatType": "OneOrZero"
+                            },
+                            "inPK": false,
+                            "nullable": true,
+                            "autoIncrement": false,
+                            "default": null
+                        },
+                        {
+                            "title": "vendorCity",
+                            "field": "3",
+                            "dataType": {
+                                "type": 17,
+                                "characterMaximumLength": 65535,
+                                "flags": [
+                                    "BINARY",
+                                    "ASCII",
+                                    "UNICODE"
+                                ],
+                                "needsQuotes": true,
+                                "parameterFormatType": "OneOrZero"
+                            },
+                            "inPK": false,
+                            "nullable": true,
+                            "autoIncrement": false,
+                            "default": null
+                        },
+                        {
+                            "title": "vendorState",
+                            "field": "4",
+                            "dataType": {
+                                "type": 17,
+                                "characterMaximumLength": 65535,
+                                "flags": [
+                                    "BINARY",
+                                    "ASCII",
+                                    "UNICODE"
+                                ],
+                                "needsQuotes": true,
+                                "parameterFormatType": "OneOrZero"
+                            },
+                            "inPK": false,
+                            "nullable": true,
+                            "autoIncrement": false,
+                            "default": null
+                        },
+                        {
+                            "title": "vendorZip",
+                            "field": "5",
+                            "dataType": {
+                                "type": 17,
+                                "characterMaximumLength": 65535,
+                                "flags": [
+                                    "BINARY",
+                                    "ASCII",
+                                    "UNICODE"
+                                ],
+                                "needsQuotes": true,
+                                "parameterFormatType": "OneOrZero"
+                            },
+                            "inPK": false,
+                            "nullable": true,
+                            "autoIncrement": false,
+                            "default": null
+                        },
+                        {
+                            "title": "vendorCountry",
+                            "field": "6",
+                            "dataType": {
+                                "type": 17,
+                                "characterMaximumLength": 65535,
+                                "flags": [
+                                    "BINARY",
+                                    "ASCII",
+                                    "UNICODE"
+                                ],
+                                "needsQuotes": true,
+                                "parameterFormatType": "OneOrZero"
+                            },
+                            "inPK": false,
+                            "nullable": true,
+                            "autoIncrement": false,
+                            "default": null
+                        }
+                    ],
+                    "executionInfo": {
+                        "text": "OK, 2 records retrieved in 0.999ms"
+                    },
+                    "totalRowCount": 2,
+                    "hasMoreRows": false,
+                    "currentPage": 0,
+                    "index": 0,
+                    "sql": "SELECT * \nFROM vendor\nWHERE vendorState IS NULL",
+                    "updatable": true,
+                    "fullTableName": "vendor"
+                }
+            ]
+        },
+        {
+            "state": {
+                "start": 26,
+                "end": 27,
+                "language": "mysql",
+                "result": {
+                    "type": "resultIds",
+                    "list": [
+                        "0e0173ff-c7d7-46e3-8391-7bf30715869a"
+                    ]
+                },
+                "currentHeight": 36,
+                "currentSet": 1,
+                "statements": [
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 0,
+                            "length": 23
+                        },
+                        "contentStart": 0,
+                        "state": 0
+                    }
+                ]
+            },
+            "data": [
+                {
+                    "tabId": "aa9640b2-5ac0-455d-b80a-515403178734",
+                    "resultId": "0e0173ff-c7d7-46e3-8391-7bf30715869a",
+                    "rows": [
+                        {
+                            "0": "ANV01",
+                            "1": 1001,
+                            "2": ".5 ton anvil",
+                            "3": "5.99",
+                            "4": ".5 ton anvil, black, complete with handy hook"
+                        },
+                        {
+                            "0": "ANV02",
+                            "1": 1001,
+                            "2": "1 ton anvil",
+                            "3": "9.99",
+                            "4": "1 ton anvil, black, complete with handy hook and carrying case"
+                        },
+                        {
+                            "0": "ANV03",
+                            "1": 1001,
+                            "2": "2 ton anvil",
+                            "3": "14.99",
+                            "4": "2 ton anvil, black, complete with handy hook and carrying case"
+                        },
+                        {
+                            "0": "DTNTR",
+                            "1": 1003,
+                            "2": "Detonator",
+                            "3": "13.00",
+                            "4": "Detonator (plunger powered), fuses not included"
+                        },
+                        {
+                            "0": "FB",
+                            "1": 1003,
+                            "2": "Bird seed",
+                            "3": "10.00",
+                            "4": "Large bag (suitable for road runners)"
+                        },
+                        {
+                            "0": "FC",
+                            "1": 1003,
+                            "2": "Carrots",
+                            "3": "2.50",
+                            "4": "Carrots (rabbit hunting season only)"
+                        },
+                        {
+                            "0": "FU1",
+                            "1": 1002,
+                            "2": "Fuses",
+                            "3": "3.42",
+                            "4": "1 dozen, extra long"
+                        },
+                        {
+                            "0": "JP1000",
+                            "1": 1005,
+                            "2": "JetPack 1000",
+                            "3": "35.00",
+                            "4": "JetPack 1000, intended for single use"
+                        },
+                        {
+                            "0": "JP2000",
+                            "1": 1005,
+                            "2": "JetPack 2000",
+                            "3": "55.00",
+                            "4": "JetPack 2000, multi-use"
+                        },
+                        {
+                            "0": "OL1",
+                            "1": 1002,
+                            "2": "Oil can",
+                            "3": "8.99",
+                            "4": "Oil can, red"
+                        },
+                        {
+                            "0": "SAFE",
+                            "1": 1003,
+                            "2": "Safe",
+                            "3": "50.00",
+                            "4": "Safe with combination lock"
+                        },
+                        {
+                            "0": "SLING",
+                            "1": 1003,
+                            "2": "Sling",
+                            "3": "4.49",
+                            "4": "Sling, one size fits all"
+                        },
+                        {
+                            "0": "TNT1",
+                            "1": 1003,
+                            "2": "TNT (1 stick)",
+                            "3": "2.50",
+                            "4": "TNT, red, single stick"
+                        },
+                        {
+                            "0": "TNT2",
+                            "1": 1003,
+                            "2": "TNT (5 sticks)",
+                            "3": "10.00",
+                            "4": "TNT, red, pack of 10 sticks"
+                        }
+                    ],
+                    "columns": [
+                        {
+                            "title": "productId",
+                            "field": "0",
+                            "dataType": {
+                                "type": 17,
+                                "characterMaximumLength": 65535,
+                                "flags": [
+                                    "BINARY",
+                                    "ASCII",
+                                    "UNICODE"
+                                ],
+                                "needsQuotes": true,
+                                "parameterFormatType": "OneOrZero"
+                            },
+                            "inPK": true,
+                            "nullable": false,
+                            "autoIncrement": false
+                        },
+                        {
+                            "title": "vendorId",
+                            "field": "1",
+                            "dataType": {
+                                "type": 4,
+                                "flags": [
+                                    "SIGNED",
+                                    "ZEROFILL"
+                                ],
+                                "numericPrecision": 10,
+                                "parameterFormatType": "OneOrZero",
+                                "synonyms": [
+                                    "INTEGER",
+                                    "INT4"
+                                ]
+                            },
+                            "inPK": false,
+                            "nullable": false,
+                            "autoIncrement": false
+                        },
+                        {
+                            "title": "productName",
+                            "field": "2",
+                            "dataType": {
+                                "type": 17,
+                                "characterMaximumLength": 65535,
+                                "flags": [
+                                    "BINARY",
+                                    "ASCII",
+                                    "UNICODE"
+                                ],
+                                "needsQuotes": true,
+                                "parameterFormatType": "OneOrZero"
+                            },
+                            "inPK": false,
+                            "nullable": false,
+                            "autoIncrement": false
+                        },
+                        {
+                            "title": "productPrice",
+                            "field": "3",
+                            "dataType": {
+                                "type": 10,
+                                "flags": [
+                                    "UNSIGNED",
+                                    "ZEROFILL"
+                                ],
+                                "numericPrecision": 65,
+                                "numericScale": 30,
+                                "parameterFormatType": "TwoOrOneOrZero",
+                                "synonyms": [
+                                    "FIXED",
+                                    "NUMERIC",
+                                    "DEC"
+                                ]
+                            },
+                            "inPK": false,
+                            "nullable": false,
+                            "autoIncrement": false
+                        },
+                        {
+                            "title": "productDescription",
+                            "field": "4",
+                            "dataType": {
+                                "type": 17,
+                                "characterMaximumLength": 65535,
+                                "flags": [
+                                    "BINARY",
+                                    "ASCII",
+                                    "UNICODE"
+                                ],
+                                "needsQuotes": true,
+                                "parameterFormatType": "OneOrZero"
+                            },
+                            "inPK": false,
+                            "nullable": true,
+                            "autoIncrement": false,
+                            "default": null
+                        }
+                    ],
+                    "executionInfo": {
+                        "text": "OK, 14 records retrieved in 0.983ms"
+                    },
+                    "totalRowCount": 14,
+                    "hasMoreRows": false,
+                    "currentPage": 0,
+                    "index": 0,
+                    "sql": "SELECT * \nFROM product",
+                    "updatable": true,
+                    "fullTableName": "product"
+                }
+            ]
+        },
+        {
+            "state": {
+                "start": 28,
+                "end": 30,
+                "language": "mysql",
+                "result": {
+                    "type": "resultIds",
+                    "list": [
+                        "d375d690-96af-47f8-b4da-5a4d75db9eed"
+                    ]
+                },
+                "currentHeight": 36,
+                "currentSet": 1,
+                "statements": [
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 0,
+                            "length": 48
+                        },
+                        "contentStart": 0,
+                        "state": 0
+                    }
+                ]
+            },
+            "data": [
+                {
+                    "tabId": "aa9640b2-5ac0-455d-b80a-515403178734",
+                    "resultId": "d375d690-96af-47f8-b4da-5a4d75db9eed",
+                    "rows": [
+                        {
+                            "0": "ANV03",
+                            "1": 1001,
+                            "2": "2 ton anvil",
+                            "3": "14.99",
+                            "4": "2 ton anvil, black, complete with handy hook and carrying case"
+                        },
+                        {
+                            "0": "DTNTR",
+                            "1": 1003,
+                            "2": "Detonator",
+                            "3": "13.00",
+                            "4": "Detonator (plunger powered), fuses not included"
+                        },
+                        {
+                            "0": "FB",
+                            "1": 1003,
+                            "2": "Bird seed",
+                            "3": "10.00",
+                            "4": "Large bag (suitable for road runners)"
+                        },
+                        {
+                            "0": "JP1000",
+                            "1": 1005,
+                            "2": "JetPack 1000",
+                            "3": "35.00",
+                            "4": "JetPack 1000, intended for single use"
+                        },
+                        {
+                            "0": "JP2000",
+                            "1": 1005,
+                            "2": "JetPack 2000",
+                            "3": "55.00",
+                            "4": "JetPack 2000, multi-use"
+                        },
+                        {
+                            "0": "SAFE",
+                            "1": 1003,
+                            "2": "Safe",
+                            "3": "50.00",
+                            "4": "Safe with combination lock"
+                        },
+                        {
+                            "0": "TNT2",
+                            "1": 1003,
+                            "2": "TNT (5 sticks)",
+                            "3": "10.00",
+                            "4": "TNT, red, pack of 10 sticks"
+                        }
+                    ],
+                    "columns": [
+                        {
+                            "title": "productId",
+                            "field": "0",
+                            "dataType": {
+                                "type": 17,
+                                "characterMaximumLength": 65535,
+                                "flags": [
+                                    "BINARY",
+                                    "ASCII",
+                                    "UNICODE"
+                                ],
+                                "needsQuotes": true,
+                                "parameterFormatType": "OneOrZero"
+                            },
+                            "inPK": true,
+                            "nullable": false,
+                            "autoIncrement": false
+                        },
+                        {
+                            "title": "vendorId",
+                            "field": "1",
+                            "dataType": {
+                                "type": 4,
+                                "flags": [
+                                    "SIGNED",
+                                    "ZEROFILL"
+                                ],
+                                "numericPrecision": 10,
+                                "parameterFormatType": "OneOrZero",
+                                "synonyms": [
+                                    "INTEGER",
+                                    "INT4"
+                                ]
+                            },
+                            "inPK": false,
+                            "nullable": false,
+                            "autoIncrement": false
+                        },
+                        {
+                            "title": "productName",
+                            "field": "2",
+                            "dataType": {
+                                "type": 17,
+                                "characterMaximumLength": 65535,
+                                "flags": [
+                                    "BINARY",
+                                    "ASCII",
+                                    "UNICODE"
+                                ],
+                                "needsQuotes": true,
+                                "parameterFormatType": "OneOrZero"
+                            },
+                            "inPK": false,
+                            "nullable": false,
+                            "autoIncrement": false
+                        },
+                        {
+                            "title": "productPrice",
+                            "field": "3",
+                            "dataType": {
+                                "type": 10,
+                                "flags": [
+                                    "UNSIGNED",
+                                    "ZEROFILL"
+                                ],
+                                "numericPrecision": 65,
+                                "numericScale": 30,
+                                "parameterFormatType": "TwoOrOneOrZero",
+                                "synonyms": [
+                                    "FIXED",
+                                    "NUMERIC",
+                                    "DEC"
+                                ]
+                            },
+                            "inPK": false,
+                            "nullable": false,
+                            "autoIncrement": false
+                        },
+                        {
+                            "title": "productDescription",
+                            "field": "4",
+                            "dataType": {
+                                "type": 17,
+                                "characterMaximumLength": 65535,
+                                "flags": [
+                                    "BINARY",
+                                    "ASCII",
+                                    "UNICODE"
+                                ],
+                                "needsQuotes": true,
+                                "parameterFormatType": "OneOrZero"
+                            },
+                            "inPK": false,
+                            "nullable": true,
+                            "autoIncrement": false,
+                            "default": null
+                        }
+                    ],
+                    "executionInfo": {
+                        "text": "OK, 7 records retrieved in 0.982ms"
+                    },
+                    "totalRowCount": 7,
+                    "hasMoreRows": false,
+                    "currentPage": 0,
+                    "index": 0,
+                    "sql": "SELECT * \nFROM product\nWHERE productPrice >= 10",
+                    "updatable": true,
+                    "fullTableName": "product"
+                }
+            ]
+        },
+        {
+            "state": {
+                "start": 31,
+                "end": 33,
+                "language": "mysql",
+                "result": {
+                    "type": "resultIds",
+                    "list": [
+                        "2fa4cd26-cc33-48dc-9916-a6e844dbb426"
+                    ]
+                },
+                "currentHeight": 36,
+                "currentSet": 1,
+                "statements": [
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 0,
+                            "length": 60
+                        },
+                        "contentStart": 0,
+                        "state": 0
+                    }
+                ]
+            },
+            "data": [
+                {
+                    "tabId": "aa9640b2-5ac0-455d-b80a-515403178734",
+                    "resultId": "2fa4cd26-cc33-48dc-9916-a6e844dbb426",
+                    "rows": [
+                        {
+                            "0": 20005,
+                            "1": "2005-09-01 00:00:00",
+                            "2": 10001
+                        },
+                        {
+                            "0": 20006,
+                            "1": "2005-09-12 00:00:00",
+                            "2": 10003
+                        },
+                        {
+                            "0": 20007,
+                            "1": "2005-09-30 00:00:00",
+                            "2": 10004
+                        }
+                    ],
+                    "columns": [
+                        {
+                            "title": "orderNumber",
+                            "field": "0",
+                            "dataType": {
+                                "type": 4,
+                                "flags": [
+                                    "SIGNED",
+                                    "ZEROFILL"
+                                ],
+                                "numericPrecision": 10,
+                                "parameterFormatType": "OneOrZero",
+                                "synonyms": [
+                                    "INTEGER",
+                                    "INT4"
+                                ]
+                            },
+                            "inPK": false,
+                            "nullable": false,
+                            "autoIncrement": false
+                        },
+                        {
+                            "title": "orderDate",
+                            "field": "1",
+                            "dataType": {
+                                "type": 26,
+                                "dateTimePrecision": 8,
+                                "needsQuotes": true,
+                                "parameterFormatType": "OneOrZero"
+                            },
+                            "inPK": false,
+                            "nullable": false,
+                            "autoIncrement": false
+                        },
+                        {
+                            "title": "customerId",
+                            "field": "2",
+                            "dataType": {
+                                "type": 4,
+                                "flags": [
+                                    "SIGNED",
+                                    "ZEROFILL"
+                                ],
+                                "numericPrecision": 10,
+                                "parameterFormatType": "OneOrZero",
+                                "synonyms": [
+                                    "INTEGER",
+                                    "INT4"
+                                ]
+                            },
+                            "inPK": false,
+                            "nullable": false,
+                            "autoIncrement": false
+                        }
+                    ],
+                    "executionInfo": {
+                        "text": "OK, 3 records retrieved in 0.96ms"
+                    },
+                    "totalRowCount": 3,
+                    "hasMoreRows": false,
+                    "currentPage": 0,
+                    "index": 0,
+                    "sql": "SELECT * \nFROM customerorder\nWHERE orderDate < \"2005-10-01\"",
+                    "updatable": false
+                }
+            ]
+        },
+        {
+            "state": {
+                "start": 34,
+                "end": 36,
+                "language": "mysql",
+                "result": {
+                    "type": "resultIds",
+                    "list": [
+                        "4996ccd7-226e-4a9d-c53b-1545f806cfb9"
+                    ]
+                },
+                "currentHeight": 36,
+                "currentSet": 1,
+                "statements": [
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 0,
+                            "length": 82
+                        },
+                        "contentStart": 0,
+                        "state": 0
+                    }
+                ]
+            },
+            "data": [
+                {
+                    "tabId": "aa9640b2-5ac0-455d-b80a-515403178734",
+                    "resultId": "4996ccd7-226e-4a9d-c53b-1545f806cfb9",
+                    "rows": [
+                        {
+                            "0": 20008,
+                            "1": "2005-10-03 00:00:00",
+                            "2": 10005
+                        }
+                    ],
+                    "columns": [
+                        {
+                            "title": "orderNumber",
+                            "field": "0",
+                            "dataType": {
+                                "type": 4,
+                                "flags": [
+                                    "SIGNED",
+                                    "ZEROFILL"
+                                ],
+                                "numericPrecision": 10,
+                                "parameterFormatType": "OneOrZero",
+                                "synonyms": [
+                                    "INTEGER",
+                                    "INT4"
+                                ]
+                            },
+                            "inPK": false,
+                            "nullable": false,
+                            "autoIncrement": false
+                        },
+                        {
+                            "title": "orderDate",
+                            "field": "1",
+                            "dataType": {
+                                "type": 26,
+                                "dateTimePrecision": 8,
+                                "needsQuotes": true,
+                                "parameterFormatType": "OneOrZero"
+                            },
+                            "inPK": false,
+                            "nullable": false,
+                            "autoIncrement": false
+                        },
+                        {
+                            "title": "customerId",
+                            "field": "2",
+                            "dataType": {
+                                "type": 4,
+                                "flags": [
+                                    "SIGNED",
+                                    "ZEROFILL"
+                                ],
+                                "numericPrecision": 10,
+                                "parameterFormatType": "OneOrZero",
+                                "synonyms": [
+                                    "INTEGER",
+                                    "INT4"
+                                ]
+                            },
+                            "inPK": false,
+                            "nullable": false,
+                            "autoIncrement": false
+                        }
+                    ],
+                    "executionInfo": {
+                        "text": "OK, 1 record retrieved in 0.998ms"
+                    },
+                    "totalRowCount": 1,
+                    "hasMoreRows": false,
+                    "currentPage": 0,
+                    "index": 0,
+                    "sql": "SELECT * \nFROM customerorder\nWHERE orderDate BETWEEN \"2005-10-01\" AND '2005-10-3'",
+                    "updatable": false
+                }
+            ]
+        },
+        {
+            "state": {
+                "start": 37,
+                "end": 39,
+                "language": "mysql",
+                "result": {
+                    "type": "resultIds",
+                    "list": [
+                        "80deed7a-ae3c-4cb2-bd4f-131bcd4eb74c"
+                    ]
+                },
+                "currentHeight": 142,
+                "currentSet": 1,
+                "statements": [
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 0,
+                            "length": 50
+                        },
+                        "contentStart": 0,
+                        "state": 0
+                    }
+                ]
+            },
+            "data": [
+                {
+                    "tabId": "aa9640b2-5ac0-455d-b80a-515403178734",
+                    "resultId": "80deed7a-ae3c-4cb2-bd4f-131bcd4eb74c",
+                    "rows": [
+                        {
+                            "0": "ANV01",
+                            "1": 1001,
+                            "2": ".5 ton anvil",
+                            "3": "5.99",
+                            "4": ".5 ton anvil, black, complete with handy hook"
+                        },
+                        {
+                            "0": "ANV02",
+                            "1": 1001,
+                            "2": "1 ton anvil",
+                            "3": "9.99",
+                            "4": "1 ton anvil, black, complete with handy hook and carrying case"
+                        },
+                        {
+                            "0": "ANV03",
+                            "1": 1001,
+                            "2": "2 ton anvil",
+                            "3": "14.99",
+                            "4": "2 ton anvil, black, complete with handy hook and carrying case"
+                        }
+                    ],
+                    "columns": [
+                        {
+                            "title": "productId",
+                            "field": "0",
+                            "dataType": {
+                                "type": 17,
+                                "characterMaximumLength": 65535,
+                                "flags": [
+                                    "BINARY",
+                                    "ASCII",
+                                    "UNICODE"
+                                ],
+                                "needsQuotes": true,
+                                "parameterFormatType": "OneOrZero"
+                            },
+                            "inPK": true,
+                            "nullable": false,
+                            "autoIncrement": false
+                        },
+                        {
+                            "title": "vendorId",
+                            "field": "1",
+                            "dataType": {
+                                "type": 4,
+                                "flags": [
+                                    "SIGNED",
+                                    "ZEROFILL"
+                                ],
+                                "numericPrecision": 10,
+                                "parameterFormatType": "OneOrZero",
+                                "synonyms": [
+                                    "INTEGER",
+                                    "INT4"
+                                ]
+                            },
+                            "inPK": false,
+                            "nullable": false,
+                            "autoIncrement": false
+                        },
+                        {
+                            "title": "productName",
+                            "field": "2",
+                            "dataType": {
+                                "type": 17,
+                                "characterMaximumLength": 65535,
+                                "flags": [
+                                    "BINARY",
+                                    "ASCII",
+                                    "UNICODE"
+                                ],
+                                "needsQuotes": true,
+                                "parameterFormatType": "OneOrZero"
+                            },
+                            "inPK": false,
+                            "nullable": false,
+                            "autoIncrement": false
+                        },
+                        {
+                            "title": "productPrice",
+                            "field": "3",
+                            "dataType": {
+                                "type": 10,
+                                "flags": [
+                                    "UNSIGNED",
+                                    "ZEROFILL"
+                                ],
+                                "numericPrecision": 65,
+                                "numericScale": 30,
+                                "parameterFormatType": "TwoOrOneOrZero",
+                                "synonyms": [
+                                    "FIXED",
+                                    "NUMERIC",
+                                    "DEC"
+                                ]
+                            },
+                            "inPK": false,
+                            "nullable": false,
+                            "autoIncrement": false
+                        },
+                        {
+                            "title": "productDescription",
+                            "field": "4",
+                            "dataType": {
+                                "type": 17,
+                                "characterMaximumLength": 65535,
+                                "flags": [
+                                    "BINARY",
+                                    "ASCII",
+                                    "UNICODE"
+                                ],
+                                "needsQuotes": true,
+                                "parameterFormatType": "OneOrZero"
+                            },
+                            "inPK": false,
+                            "nullable": true,
+                            "autoIncrement": false,
+                            "default": null
+                        }
+                    ],
+                    "executionInfo": {
+                        "text": "OK, 3 records retrieved in 0.977ms"
+                    },
+                    "totalRowCount": 3,
+                    "hasMoreRows": false,
+                    "currentPage": 0,
+                    "index": 0,
+                    "sql": "SELECT *\nFROM product\nWHERE productId LIKE 'ANV%'",
+                    "updatable": true,
+                    "fullTableName": "product"
+                }
+            ]
+        },
+        {
+            "state": {
+                "start": 40,
+                "end": 45,
+                "language": "mysql",
+                "result": {
+                    "type": "resultIds",
+                    "list": [
+                        "b7fdc4ce-d376-47bb-87eb-ca1b8f8d4275"
+                    ]
+                },
+                "currentHeight": 117,
+                "currentSet": 1,
+                "statements": [
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 0,
+                            "length": 168
+                        },
+                        "contentStart": 61,
+                        "state": 0
+                    }
+                ]
+            },
+            "data": [
+                {
+                    "tabId": "aa9640b2-5ac0-455d-b80a-515403178734",
+                    "resultId": "b7fdc4ce-d376-47bb-87eb-ca1b8f8d4275",
+                    "rows": [
+                        {
+                            "0": "ANV01",
+                            "1": 1001,
+                            "2": ".5 ton anvil",
+                            "3": "5.99",
+                            "4": ".5 ton anvil, black, complete with handy hook"
+                        },
+                        {
+                            "0": "TNT1",
+                            "1": 1003,
+                            "2": "TNT (1 stick)",
+                            "3": "2.50",
+                            "4": "TNT, red, single stick"
+                        }
+                    ],
+                    "columns": [
+                        {
+                            "title": "productId",
+                            "field": "0",
+                            "dataType": {
+                                "type": 17,
+                                "characterMaximumLength": 65535,
+                                "flags": [
+                                    "BINARY",
+                                    "ASCII",
+                                    "UNICODE"
+                                ],
+                                "needsQuotes": true,
+                                "parameterFormatType": "OneOrZero"
+                            },
+                            "inPK": true,
+                            "nullable": false,
+                            "autoIncrement": false
+                        },
+                        {
+                            "title": "vendorId",
+                            "field": "1",
+                            "dataType": {
+                                "type": 4,
+                                "flags": [
+                                    "SIGNED",
+                                    "ZEROFILL"
+                                ],
+                                "numericPrecision": 10,
+                                "parameterFormatType": "OneOrZero",
+                                "synonyms": [
+                                    "INTEGER",
+                                    "INT4"
+                                ]
+                            },
+                            "inPK": false,
+                            "nullable": false,
+                            "autoIncrement": false
+                        },
+                        {
+                            "title": "productName",
+                            "field": "2",
+                            "dataType": {
+                                "type": 17,
+                                "characterMaximumLength": 65535,
+                                "flags": [
+                                    "BINARY",
+                                    "ASCII",
+                                    "UNICODE"
+                                ],
+                                "needsQuotes": true,
+                                "parameterFormatType": "OneOrZero"
+                            },
+                            "inPK": false,
+                            "nullable": false,
+                            "autoIncrement": false
+                        },
+                        {
+                            "title": "productPrice",
+                            "field": "3",
+                            "dataType": {
+                                "type": 10,
+                                "flags": [
+                                    "UNSIGNED",
+                                    "ZEROFILL"
+                                ],
+                                "numericPrecision": 65,
+                                "numericScale": 30,
+                                "parameterFormatType": "TwoOrOneOrZero",
+                                "synonyms": [
+                                    "FIXED",
+                                    "NUMERIC",
+                                    "DEC"
+                                ]
+                            },
+                            "inPK": false,
+                            "nullable": false,
+                            "autoIncrement": false
+                        },
+                        {
+                            "title": "productDescription",
+                            "field": "4",
+                            "dataType": {
+                                "type": 17,
+                                "characterMaximumLength": 65535,
+                                "flags": [
+                                    "BINARY",
+                                    "ASCII",
+                                    "UNICODE"
+                                ],
+                                "needsQuotes": true,
+                                "parameterFormatType": "OneOrZero"
+                            },
+                            "inPK": false,
+                            "nullable": true,
+                            "autoIncrement": false,
+                            "default": null
+                        }
+                    ],
+                    "executionInfo": {
+                        "text": "OK, 2 records retrieved in 1.008ms"
+                    },
+                    "totalRowCount": 2,
+                    "hasMoreRows": false,
+                    "currentPage": 0,
+                    "index": 0,
+                    "sql": "-- give me the anvils and tnt products that are less than $7\nSELECT *\nFROM product\nWHERE (productId LIKE 'ANV%' \n    OR productId LIKE 'TNT%')\n    AND productPrice < 7",
+                    "updatable": true,
+                    "fullTableName": "product"
+                }
+            ]
+        },
+        {
+            "state": {
+                "start": 46,
+                "end": 46,
+                "language": "mysql",
+                "result": {
+                    "type": "resultIds",
+                    "list": [
+                        "9941e78b-494f-4ba4-b876-36fd4975f151"
+                    ]
+                },
+                "currentHeight": 352,
+                "currentSet": 1,
+                "statements": [
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 0,
+                            "length": 0
+                        },
+                        "contentStart": 0,
+                        "state": 3
+                    }
+                ]
+            },
+            "data": [
+                {
+                    "tabId": "aa9640b2-5ac0-455d-b80a-515403178734",
+                    "resultId": "9941e78b-494f-4ba4-b876-36fd4975f151",
+                    "rows": [
+                        {
+                            "0": "ANV01",
+                            "1": 1001,
+                            "2": ".5 ton anvil",
+                            "3": "5.99",
+                            "4": ".5 ton anvil, black, complete with handy hook"
+                        },
+                        {
+                            "0": "ANV02",
+                            "1": 1001,
+                            "2": "1 ton anvil",
+                            "3": "9.99",
+                            "4": "1 ton anvil, black, complete with handy hook and carrying case"
+                        },
+                        {
+                            "0": "ANV03",
+                            "1": 1001,
+                            "2": "2 ton anvil",
+                            "3": "14.99",
+                            "4": "2 ton anvil, black, complete with handy hook and carrying case"
+                        },
+                        {
+                            "0": "DTNTR",
+                            "1": 1003,
+                            "2": "Detonator",
+                            "3": "13.00",
+                            "4": "Detonator (plunger powered), fuses not included"
+                        },
+                        {
+                            "0": "FB",
+                            "1": 1003,
+                            "2": "Bird seed",
+                            "3": "10.00",
+                            "4": "Large bag (suitable for road runners)"
+                        },
+                        {
+                            "0": "FC",
+                            "1": 1003,
+                            "2": "Carrots",
+                            "3": "2.50",
+                            "4": "Carrots (rabbit hunting season only)"
+                        },
+                        {
+                            "0": "FU1",
+                            "1": 1002,
+                            "2": "Fuses",
+                            "3": "3.42",
+                            "4": "1 dozen, extra long"
+                        },
+                        {
+                            "0": "JP1000",
+                            "1": 1005,
+                            "2": "JetPack 1000",
+                            "3": "35.00",
+                            "4": "JetPack 1000, intended for single use"
+                        },
+                        {
+                            "0": "JP2000",
+                            "1": 1005,
+                            "2": "JetPack 2000",
+                            "3": "55.00",
+                            "4": "JetPack 2000, multi-use"
+                        },
+                        {
+                            "0": "OL1",
+                            "1": 1002,
+                            "2": "Oil can",
+                            "3": "8.99",
+                            "4": "Oil can, red"
+                        },
+                        {
+                            "0": "SAFE",
+                            "1": 1003,
+                            "2": "Safe",
+                            "3": "50.00",
+                            "4": "Safe with combination lock"
+                        },
+                        {
+                            "0": "SLING",
+                            "1": 1003,
+                            "2": "Sling",
+                            "3": "4.49",
+                            "4": "Sling, one size fits all"
+                        },
+                        {
+                            "0": "TNT1",
+                            "1": 1003,
+                            "2": "TNT (1 stick)",
+                            "3": "2.50",
+                            "4": "TNT, red, single stick"
+                        },
+                        {
+                            "0": "TNT2",
+                            "1": 1003,
+                            "2": "TNT (5 sticks)",
+                            "3": "10.00",
+                            "4": "TNT, red, pack of 10 sticks"
+                        }
+                    ],
+                    "columns": [
+                        {
+                            "title": "productId",
+                            "field": "0",
+                            "dataType": {
+                                "type": 17,
+                                "characterMaximumLength": 65535,
+                                "flags": [
+                                    "BINARY",
+                                    "ASCII",
+                                    "UNICODE"
+                                ],
+                                "needsQuotes": true,
+                                "parameterFormatType": "OneOrZero"
+                            },
+                            "inPK": true,
+                            "nullable": false,
+                            "autoIncrement": false
+                        },
+                        {
+                            "title": "vendorId",
+                            "field": "1",
+                            "dataType": {
+                                "type": 4,
+                                "flags": [
+                                    "SIGNED",
+                                    "ZEROFILL"
+                                ],
+                                "numericPrecision": 10,
+                                "parameterFormatType": "OneOrZero",
+                                "synonyms": [
+                                    "INTEGER",
+                                    "INT4"
+                                ]
+                            },
+                            "inPK": false,
+                            "nullable": false,
+                            "autoIncrement": false
+                        },
+                        {
+                            "title": "productName",
+                            "field": "2",
+                            "dataType": {
+                                "type": 17,
+                                "characterMaximumLength": 65535,
+                                "flags": [
+                                    "BINARY",
+                                    "ASCII",
+                                    "UNICODE"
+                                ],
+                                "needsQuotes": true,
+                                "parameterFormatType": "OneOrZero"
+                            },
+                            "inPK": false,
+                            "nullable": false,
+                            "autoIncrement": false
+                        },
+                        {
+                            "title": "productPrice",
+                            "field": "3",
+                            "dataType": {
+                                "type": 10,
+                                "flags": [
+                                    "UNSIGNED",
+                                    "ZEROFILL"
+                                ],
+                                "numericPrecision": 65,
+                                "numericScale": 30,
+                                "parameterFormatType": "TwoOrOneOrZero",
+                                "synonyms": [
+                                    "FIXED",
+                                    "NUMERIC",
+                                    "DEC"
+                                ]
+                            },
+                            "inPK": false,
+                            "nullable": false,
+                            "autoIncrement": false
+                        },
+                        {
+                            "title": "productDescription",
+                            "field": "4",
+                            "dataType": {
+                                "type": 17,
+                                "characterMaximumLength": 65535,
+                                "flags": [
+                                    "BINARY",
+                                    "ASCII",
+                                    "UNICODE"
+                                ],
+                                "needsQuotes": true,
+                                "parameterFormatType": "OneOrZero"
+                            },
+                            "inPK": false,
+                            "nullable": true,
+                            "autoIncrement": false,
+                            "default": null
+                        }
+                    ],
+                    "executionInfo": {
+                        "text": "OK, 14 records retrieved in 2.006ms"
+                    },
+                    "totalRowCount": 14,
+                    "hasMoreRows": false,
+                    "currentPage": 0,
+                    "index": 0,
+                    "sql": "SELECT * FROM product",
+                    "updatable": true,
+                    "fullTableName": "product"
+                }
+            ]
+        },
+        {
+            "state": {
+                "start": 47,
+                "end": 47,
+                "language": "mysql",
+                "currentSet": 1,
+                "statements": [
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 0,
+                            "length": 0
+                        },
+                        "contentStart": 0,
+                        "state": 0
+                    }
+                ]
+            },
+            "data": []
+        },
+        {
+            "state": {
+                "start": 48,
+                "end": 48,
+                "language": "mysql",
+                "currentSet": 1,
+                "statements": [
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 0,
+                            "length": 0
+                        },
+                        "contentStart": 0,
+                        "state": 0
+                    }
+                ]
+            },
+            "data": []
+        },
+        {
+            "state": {
+                "start": 49,
+                "end": 49,
+                "language": "mysql",
+                "currentSet": 1,
+                "statements": [
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 0,
+                            "length": 0
+                        },
+                        "contentStart": 0,
+                        "state": 0
+                    }
+                ]
+            },
+            "data": []
+        },
+        {
+            "state": {
+                "start": 50,
+                "end": 50,
+                "language": "mysql",
+                "currentSet": 1,
+                "statements": [
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 0,
+                            "length": 0
+                        },
+                        "contentStart": 0,
+                        "state": 0
+                    }
+                ]
+            },
+            "data": []
+        },
+        {
+            "state": {
+                "start": 51,
+                "end": 51,
+                "language": "mysql",
+                "currentSet": 1,
+                "statements": [
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 0,
+                            "length": 0
+                        },
+                        "contentStart": 0,
+                        "state": 0
+                    }
+                ]
+            },
+            "data": []
+        },
+        {
+            "state": {
+                "start": 52,
+                "end": 52,
+                "language": "mysql",
+                "currentSet": 1,
+                "statements": [
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 0,
+                            "length": 0
+                        },
+                        "contentStart": 0,
+                        "state": 0
+                    }
+                ]
+            },
+            "data": []
+        },
+        {
+            "state": {
+                "start": 53,
+                "end": 53,
+                "language": "mysql",
+                "currentSet": 1,
+                "statements": [
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 0,
+                            "length": 0
+                        },
+                        "contentStart": 0,
+                        "state": 0
+                    }
+                ]
+            },
+            "data": []
+        },
+        {
+            "state": {
+                "start": 54,
+                "end": 54,
+                "language": "mysql",
+                "currentSet": 1,
+                "statements": [
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 0,
+                            "length": 0
+                        },
+                        "contentStart": 0,
+                        "state": 0
+                    }
+                ]
+            },
+            "data": []
+        },
+        {
+            "state": {
+                "start": 55,
+                "end": 55,
+                "language": "mysql",
+                "currentSet": 1,
+                "statements": [
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 0,
+                            "length": 0
+                        },
+                        "contentStart": 0,
+                        "state": 0
+                    }
+                ]
+            },
+            "data": []
+        },
+        {
+            "state": {
+                "start": 56,
+                "end": 56,
+                "language": "mysql",
+                "currentSet": 1,
+                "statements": [
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 0,
+                            "length": 0
+                        },
+                        "contentStart": 0,
+                        "state": 0
+                    }
+                ]
+            },
+            "data": []
+        },
+        {
+            "state": {
+                "start": 57,
+                "end": 57,
+                "language": "mysql",
+                "currentSet": 1,
+                "statements": [
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 0,
+                            "length": 0
+                        },
+                        "contentStart": 0,
+                        "state": 0
+                    }
+                ]
+            },
+            "data": []
+        },
+        {
+            "state": {
+                "start": 58,
+                "end": 58,
+                "language": "mysql",
+                "currentSet": 1,
+                "statements": [
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 0,
+                            "length": 0
+                        },
+                        "contentStart": 0,
+                        "state": 0
+                    }
+                ]
+            },
+            "data": []
+        }
+    ]
+}

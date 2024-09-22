@@ -1,0 +1,2525 @@
+{
+    "type": "MySQLNotebook",
+    "version": "1.0",
+    "caption": "DB Notebook",
+    "content": "USE blog;\nSHOW TABLES;\nSELECT * FROM author;\n-- Display the title, author's last time, and author's email for each post\nSELECT title, lastname, email\nFROM post INNER JOIN author\n    ON author.id = post.authorId;\n-- Display the same as above from authors born in 2000 or later, sorted by birthdate\nSELECT title, lastname, email\nFROM post INNER JOIN author\n    ON author.id = post.authorId\nWHERE author.birthdate >= '2000-1-1'\nORDER BY birthdate;\n-- Display the same as above from authors whose first name starts with J\nSELECT title, lastname, email\nFROM post INNER JOIN author\n    ON author.id = post.authorId\nWHERE author.firstname LIKE 'J%';\n-- Display the same as above for only authors without posts\nSELECT title, lastname, email\nFROM post RIGHT JOIN author\n    ON author.id = post.authorId\nWHERE title IS NULL;\n-- Display the same as above for only posts without authors\nSELECT title, lastname, email\nFROM author RIGHT JOIN post\n    ON author.id = post.authorId\nWHERE post.authorId is null;\n-- Display the same as above for all authors (whether they have a post or not) whose first name starts with J\nSELECT title, lastname, email\nFROM author RIGHT JOIN post\n    ON author.id = post.authorId\nWHERE author.firstname LIKE 'J%';\n\n-- \n-- STOP HERE --\n-- \n-- Display all (distinct) author ids from the Author table\nSELECT DISTINCT id\nFROM author;\n-- Display all (distinct) author ids from the Sponsorship table\nSELECT DISTINCT authorSponsored\nFROM sponsorship;\n-- Display all (distinct) author ids from the Post table\nSELECT DISTINCT authorId\nFROM post;\n-- Union author ids from Sponsorship / Post\nSELECT DISTINCT authorSponsored\nFROM sponsorship\nUNION\nSELECT DISTINCT authorId\nFROM post;\n-- Union ALL author ids from Sponsorship / Post\nSELECT DISTINCT authorSponsored\nFROM sponsorship\nUNION ALL\nSELECT DISTINCT authorId\nFROM post;\n-- Intersect author ids from Sponsorship / Post\nSELECT DISTINCT authorId\nFROM post\nINTERSECT\nSELECT DISTINCT authorSponsored\nFROM sponsorship;\n-- Intersect ALL author ids from Sponsorship / Post\nSELECT DISTINCT authorSponsored\nFROM sponsorship\nINTERSECT ALL\nSELECT DISTINCT authorId\nFROM post;\n-- Except author ids from Sponsorship / Post\nSELECT DISTINCT authorSponsored\nFROM sponsorship\nEXCEPT\nSELECT DISTINCT authorId\nFROM post;\n-- Except ALL author ids from Sponsorship / Post\nSELECT DISTINCT authorSponsored\nFROM sponsorship\nEXCEPT ALL\nSELECT DISTINCT authorId\nFROM post;\n-- Except author ids from Post / Sponsorship\nSELECT DISTINCT authorId\nFROM post\nEXCEPT\nSELECT DISTINCT authorSponsored\nFROM sponsorship;\n-- Except ALL author ids from Post / Sponsorship\nSELECT DISTINCT authorId\nFROM post\nEXCEPT ALL\nSELECT DISTINCT authorSponsored\nFROM sponsorship;\n\n",
+    "options": {
+        "tabSize": 4,
+        "indentSize": 4,
+        "insertSpaces": true,
+        "defaultEOL": "LF",
+        "trimAutoWhitespace": true
+    },
+    "viewState": {
+        "cursorState": [
+            {
+                "inSelectionMode": false,
+                "selectionStart": {
+                    "lineNumber": 46,
+                    "column": 11
+                },
+                "position": {
+                    "lineNumber": 46,
+                    "column": 11
+                }
+            }
+        ],
+        "viewState": {
+            "scrollLeft": 0,
+            "firstPosition": {
+                "lineNumber": 41,
+                "column": 1
+            },
+            "firstPositionDeltaTop": 340
+        },
+        "contributionsState": {
+            "editor.contrib.folding": {},
+            "editor.contrib.wordHighlighter": false
+        }
+    },
+    "contexts": [
+        {
+            "state": {
+                "start": 1,
+                "end": 3,
+                "language": "mysql",
+                "result": {
+                    "type": "resultIds",
+                    "list": [
+                        "42b25383-6e65-4960-e011-28679ecc973f",
+                        "b640273e-0004-4869-9dfe-16b6750623b7",
+                        "9eb17eb8-6d0c-4188-b7fd-a399cda46eec"
+                    ]
+                },
+                "currentHeight": 36,
+                "currentSet": 2,
+                "statements": [
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 0,
+                            "length": 9
+                        },
+                        "contentStart": 0,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 9,
+                            "length": 13
+                        },
+                        "contentStart": 10,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 22,
+                            "length": 22
+                        },
+                        "contentStart": 23,
+                        "state": 0
+                    }
+                ]
+            },
+            "data": [
+                {
+                    "tabId": "b35aeced-65bb-498c-e181-505f74919dc4",
+                    "resultId": "42b25383-6e65-4960-e011-28679ecc973f",
+                    "rows": [
+                        {
+                            "0": "author"
+                        },
+                        {
+                            "0": "post"
+                        },
+                        {
+                            "0": "sponsorship"
+                        }
+                    ],
+                    "columns": [
+                        {
+                            "title": "Tables_in_blog",
+                            "field": "0",
+                            "dataType": {
+                                "type": 17,
+                                "characterMaximumLength": 65535,
+                                "flags": [
+                                    "BINARY",
+                                    "ASCII",
+                                    "UNICODE"
+                                ],
+                                "needsQuotes": true,
+                                "parameterFormatType": "OneOrZero"
+                            },
+                            "inPK": false,
+                            "nullable": false,
+                            "autoIncrement": false
+                        }
+                    ],
+                    "executionInfo": {
+                        "text": "OK, 3 records retrieved in 3.021ms"
+                    },
+                    "totalRowCount": 3,
+                    "hasMoreRows": false,
+                    "currentPage": 0,
+                    "index": 1,
+                    "sql": "\nSHOW TABLES",
+                    "updatable": false
+                },
+                {
+                    "tabId": "b35aeced-65bb-498c-e181-505f74919dc4",
+                    "resultId": "b640273e-0004-4869-9dfe-16b6750623b7",
+                    "rows": [
+                        {
+                            "0": 1,
+                            "1": "Johnathon",
+                            "2": "Ward",
+                            "3": "droberts@example.org",
+                            "4": "2009-06-26",
+                            "5": "1997-07-02 19:08:46"
+                        },
+                        {
+                            "0": 2,
+                            "1": "Dan",
+                            "2": "McLaughlin",
+                            "3": "parker.felipa@example.org",
+                            "4": "1984-10-30",
+                            "5": "2005-04-10 14:34:57"
+                        },
+                        {
+                            "0": 3,
+                            "1": "Cooper",
+                            "2": "Rolfson",
+                            "3": "torrey17@example.com",
+                            "4": "2015-12-03",
+                            "5": "1987-04-15 09:01:55"
+                        },
+                        {
+                            "0": 4,
+                            "1": "Rhiannon",
+                            "2": "Jerde",
+                            "3": "deborah.sipes@example.org",
+                            "4": "2011-05-26",
+                            "5": "2016-03-04 20:49:53"
+                        },
+                        {
+                            "0": 5,
+                            "1": "Jeremie",
+                            "2": "Crist",
+                            "3": "bashirian.hilda@example.org",
+                            "4": "2016-02-16",
+                            "5": "2011-01-17 13:51:25"
+                        },
+                        {
+                            "0": 6,
+                            "1": "Vanessa",
+                            "2": "Beahan",
+                            "3": "alena.bergstrom@example.com",
+                            "4": "1998-12-12",
+                            "5": "1984-06-04 16:25:00"
+                        },
+                        {
+                            "0": 7,
+                            "1": "Opal",
+                            "2": "Schulist",
+                            "3": "orpha.ryan@example.com",
+                            "4": "2016-05-10",
+                            "5": "1998-08-11 06:37:26"
+                        },
+                        {
+                            "0": 8,
+                            "1": "Brionna",
+                            "2": "Hamill",
+                            "3": "cartwright.kenyatta@example.net",
+                            "4": "1995-09-30",
+                            "5": "2019-04-26 16:36:02"
+                        },
+                        {
+                            "0": 9,
+                            "1": "Marta",
+                            "2": "McKenzie",
+                            "3": "nichole.johns@example.com",
+                            "4": "1974-08-28",
+                            "5": "2010-01-14 02:45:47"
+                        },
+                        {
+                            "0": 10,
+                            "1": "Kasey",
+                            "2": "Runolfsson",
+                            "3": "lakin.lelia@example.org",
+                            "4": "1977-04-27",
+                            "5": "1995-07-17 03:02:45"
+                        },
+                        {
+                            "0": 11,
+                            "1": "Scottie",
+                            "2": "Nolan",
+                            "3": "zeffertz@example.org",
+                            "4": "2017-07-12",
+                            "5": "1988-01-03 01:42:23"
+                        },
+                        {
+                            "0": 12,
+                            "1": "Alvera",
+                            "2": "Abernathy",
+                            "3": "reyna70@example.com",
+                            "4": "2020-03-19",
+                            "5": "1981-08-05 19:00:02"
+                        },
+                        {
+                            "0": 13,
+                            "1": "Ivy",
+                            "2": "Bahringer",
+                            "3": "wehner.marilyne@example.com",
+                            "4": "2008-09-09",
+                            "5": "2016-09-17 12:44:10"
+                        },
+                        {
+                            "0": 14,
+                            "1": "Mya",
+                            "2": "Hettinger",
+                            "3": "gconsidine@example.net",
+                            "4": "1985-02-20",
+                            "5": "1982-01-23 07:07:12"
+                        },
+                        {
+                            "0": 15,
+                            "1": "Payton",
+                            "2": "Ortiz",
+                            "3": "jamie80@example.org",
+                            "4": "1976-09-26",
+                            "5": "1992-03-23 15:24:32"
+                        },
+                        {
+                            "0": 16,
+                            "1": "Ansel",
+                            "2": "Hahn",
+                            "3": "boehm.helmer@example.net",
+                            "4": "1995-08-02",
+                            "5": "1975-10-11 07:47:57"
+                        },
+                        {
+                            "0": 17,
+                            "1": "Kyra",
+                            "2": "Langosh",
+                            "3": "katheryn.jones@example.org",
+                            "4": "1984-09-28",
+                            "5": "1991-02-26 17:26:37"
+                        },
+                        {
+                            "0": 18,
+                            "1": "Harry",
+                            "2": "Hyatt",
+                            "3": "hailey32@example.com",
+                            "4": "1978-11-05",
+                            "5": "1991-01-17 22:26:17"
+                        },
+                        {
+                            "0": 19,
+                            "1": "Shany",
+                            "2": "Lueilwitz",
+                            "3": "oledner@example.net",
+                            "4": "2005-06-14",
+                            "5": "1982-01-27 04:15:48"
+                        },
+                        {
+                            "0": 20,
+                            "1": "Anika",
+                            "2": "Hagenes",
+                            "3": "lou34@example.org",
+                            "4": "2006-02-25",
+                            "5": "2002-05-18 03:57:09"
+                        },
+                        {
+                            "0": 21,
+                            "1": "Kristina",
+                            "2": "Brown",
+                            "3": "zoila23@example.org",
+                            "4": "2021-07-12",
+                            "5": "1974-04-23 18:57:53"
+                        },
+                        {
+                            "0": 22,
+                            "1": "Morris",
+                            "2": "Beier",
+                            "3": "wiza.sam@example.net",
+                            "4": "1989-02-24",
+                            "5": "2001-03-10 02:03:46"
+                        },
+                        {
+                            "0": 23,
+                            "1": "Missouri",
+                            "2": "Kshlerin",
+                            "3": "upacocha@example.net",
+                            "4": "1975-08-20",
+                            "5": "1981-04-25 10:54:15"
+                        },
+                        {
+                            "0": 24,
+                            "1": "Damon",
+                            "2": "Stroman",
+                            "3": "arvilla.lang@example.org",
+                            "4": "1993-08-16",
+                            "5": "1976-11-04 11:18:14"
+                        },
+                        {
+                            "0": 25,
+                            "1": "Josefina",
+                            "2": "Price",
+                            "3": "usanford@example.com",
+                            "4": "1973-08-28",
+                            "5": "2002-06-20 14:45:51"
+                        },
+                        {
+                            "0": 26,
+                            "1": "Jamaal",
+                            "2": "Okuneva",
+                            "3": "ankunding.margarette@example.org",
+                            "4": "1984-03-06",
+                            "5": "2013-12-01 12:15:03"
+                        },
+                        {
+                            "0": 27,
+                            "1": "Holly",
+                            "2": "Weber",
+                            "3": "burdette35@example.org",
+                            "4": "1992-08-16",
+                            "5": "1975-05-22 11:14:04"
+                        },
+                        {
+                            "0": 28,
+                            "1": "Jane",
+                            "2": "Franecki",
+                            "3": "annamae19@example.net",
+                            "4": "2000-02-16",
+                            "5": "1980-07-30 08:35:31"
+                        },
+                        {
+                            "0": 29,
+                            "1": "Elenor",
+                            "2": "Mann",
+                            "3": "seamus.kulas@example.net",
+                            "4": "2007-05-21",
+                            "5": "1995-10-06 04:34:17"
+                        },
+                        {
+                            "0": 30,
+                            "1": "Donna",
+                            "2": "Stroman",
+                            "3": "ymarquardt@example.net",
+                            "4": "1977-10-29",
+                            "5": "1994-10-30 03:08:52"
+                        },
+                        {
+                            "0": 31,
+                            "1": "Krista",
+                            "2": "Jacobi",
+                            "3": "elizabeth.mann@example.net",
+                            "4": "1995-09-17",
+                            "5": "2019-07-24 06:09:39"
+                        },
+                        {
+                            "0": 32,
+                            "1": "Mariam",
+                            "2": "Marks",
+                            "3": "harber.rickey@example.net",
+                            "4": "1997-06-26",
+                            "5": "2009-07-29 10:49:35"
+                        },
+                        {
+                            "0": 33,
+                            "1": "Donato",
+                            "2": "Jast",
+                            "3": "orogahn@example.com",
+                            "4": "2020-09-13",
+                            "5": "2013-02-23 01:55:25"
+                        },
+                        {
+                            "0": 34,
+                            "1": "Tomasa",
+                            "2": "Kuhlman",
+                            "3": "napoleon.king@example.com",
+                            "4": "1979-03-09",
+                            "5": "2021-12-29 23:18:42"
+                        },
+                        {
+                            "0": 35,
+                            "1": "Alejandra",
+                            "2": "Bahringer",
+                            "3": "mueller.lafayette@example.org",
+                            "4": "1995-12-17",
+                            "5": "2008-03-31 12:26:39"
+                        },
+                        {
+                            "0": 36,
+                            "1": "Green",
+                            "2": "Reichert",
+                            "3": "zella.huels@example.org",
+                            "4": "2013-11-09",
+                            "5": "1981-01-23 11:21:20"
+                        },
+                        {
+                            "0": 37,
+                            "1": "Aglae",
+                            "2": "Williamson",
+                            "3": "qquigley@example.com",
+                            "4": "1973-06-19",
+                            "5": "2001-11-20 11:47:45"
+                        },
+                        {
+                            "0": 38,
+                            "1": "Nova",
+                            "2": "Rolfson",
+                            "3": "windler.alison@example.org",
+                            "4": "1998-03-26",
+                            "5": "2003-07-14 21:04:06"
+                        },
+                        {
+                            "0": 39,
+                            "1": "Juanita",
+                            "2": "Pouros",
+                            "3": "kuhn.jarvis@example.net",
+                            "4": "2010-03-16",
+                            "5": "1983-12-28 01:02:23"
+                        },
+                        {
+                            "0": 40,
+                            "1": "Jerod",
+                            "2": "King",
+                            "3": "brown.williamson@example.com",
+                            "4": "1978-08-14",
+                            "5": "1991-06-10 17:31:11"
+                        },
+                        {
+                            "0": 41,
+                            "1": "Mireille",
+                            "2": "Kutch",
+                            "3": "mcclure.johnny@example.com",
+                            "4": "1984-05-11",
+                            "5": "2004-11-18 08:11:04"
+                        },
+                        {
+                            "0": 42,
+                            "1": "Tristin",
+                            "2": "Gislason",
+                            "3": "cassidy.jones@example.org",
+                            "4": "2019-12-31",
+                            "5": "1986-02-27 05:42:50"
+                        },
+                        {
+                            "0": 43,
+                            "1": "Rebecca",
+                            "2": "O'Connell",
+                            "3": "jarvis53@example.com",
+                            "4": "2008-12-09",
+                            "5": "2002-01-09 11:14:30"
+                        },
+                        {
+                            "0": 44,
+                            "1": "Hoyt",
+                            "2": "Lakin",
+                            "3": "volkman.elody@example.net",
+                            "4": "2016-08-19",
+                            "5": "2000-07-11 17:26:45"
+                        },
+                        {
+                            "0": 45,
+                            "1": "Gust",
+                            "2": "Bergstrom",
+                            "3": "thurman23@example.org",
+                            "4": "1996-11-01",
+                            "5": "1999-01-30 07:53:49"
+                        },
+                        {
+                            "0": 46,
+                            "1": "Luz",
+                            "2": "Ondricka",
+                            "3": "jailyn.jakubowski@example.org",
+                            "4": "1971-07-07",
+                            "5": "1981-06-04 19:33:46"
+                        },
+                        {
+                            "0": 47,
+                            "1": "Santino",
+                            "2": "Bernier",
+                            "3": "audrey.satterfield@example.net",
+                            "4": "1993-03-10",
+                            "5": "1994-08-27 22:42:55"
+                        },
+                        {
+                            "0": 48,
+                            "1": "Alvis",
+                            "2": "Carter",
+                            "3": "zachary.blanda@example.org",
+                            "4": "2022-06-14",
+                            "5": "2004-09-16 03:30:20"
+                        },
+                        {
+                            "0": 49,
+                            "1": "Emmitt",
+                            "2": "Ebert",
+                            "3": "cfarrell@example.net",
+                            "4": "2004-01-09",
+                            "5": "2010-01-31 07:21:06"
+                        },
+                        {
+                            "0": 50,
+                            "1": "Clay",
+                            "2": "Crist",
+                            "3": "rowan97@example.net",
+                            "4": "2014-07-06",
+                            "5": "1993-09-23 08:51:47"
+                        }
+                    ],
+                    "columns": [
+                        {
+                            "title": "id",
+                            "field": "0",
+                            "dataType": {
+                                "type": 4,
+                                "flags": [
+                                    "SIGNED",
+                                    "ZEROFILL"
+                                ],
+                                "numericPrecision": 10,
+                                "parameterFormatType": "OneOrZero",
+                                "synonyms": [
+                                    "INTEGER",
+                                    "INT4"
+                                ]
+                            },
+                            "inPK": true,
+                            "nullable": false,
+                            "autoIncrement": true
+                        },
+                        {
+                            "title": "firstName",
+                            "field": "1",
+                            "dataType": {
+                                "type": 17,
+                                "characterMaximumLength": 65535,
+                                "flags": [
+                                    "BINARY",
+                                    "ASCII",
+                                    "UNICODE"
+                                ],
+                                "needsQuotes": true,
+                                "parameterFormatType": "OneOrZero"
+                            },
+                            "inPK": false,
+                            "nullable": false,
+                            "autoIncrement": false
+                        },
+                        {
+                            "title": "lastName",
+                            "field": "2",
+                            "dataType": {
+                                "type": 17,
+                                "characterMaximumLength": 65535,
+                                "flags": [
+                                    "BINARY",
+                                    "ASCII",
+                                    "UNICODE"
+                                ],
+                                "needsQuotes": true,
+                                "parameterFormatType": "OneOrZero"
+                            },
+                            "inPK": false,
+                            "nullable": false,
+                            "autoIncrement": false
+                        },
+                        {
+                            "title": "email",
+                            "field": "3",
+                            "dataType": {
+                                "type": 17,
+                                "characterMaximumLength": 65535,
+                                "flags": [
+                                    "BINARY",
+                                    "ASCII",
+                                    "UNICODE"
+                                ],
+                                "needsQuotes": true,
+                                "parameterFormatType": "OneOrZero"
+                            },
+                            "inPK": false,
+                            "nullable": false,
+                            "autoIncrement": false
+                        },
+                        {
+                            "title": "birthdate",
+                            "field": "4",
+                            "dataType": {
+                                "type": 27,
+                                "needsQuotes": true
+                            },
+                            "inPK": false,
+                            "nullable": false,
+                            "autoIncrement": false
+                        },
+                        {
+                            "title": "added",
+                            "field": "5",
+                            "dataType": {
+                                "type": 26,
+                                "dateTimePrecision": 8,
+                                "needsQuotes": true,
+                                "parameterFormatType": "OneOrZero"
+                            },
+                            "inPK": false,
+                            "nullable": false,
+                            "autoIncrement": false,
+                            "default": "CURRENT_TIMESTAMP"
+                        }
+                    ],
+                    "executionInfo": {
+                        "text": "OK, 50 records retrieved in 2.006ms"
+                    },
+                    "totalRowCount": 50,
+                    "hasMoreRows": false,
+                    "currentPage": 0,
+                    "index": 2,
+                    "sql": "\nSELECT * FROM author",
+                    "updatable": true,
+                    "fullTableName": "author"
+                },
+                {
+                    "tabId": "b35aeced-65bb-498c-e181-505f74919dc4",
+                    "resultId": "9eb17eb8-6d0c-4188-b7fd-a399cda46eec",
+                    "rows": [],
+                    "executionInfo": {
+                        "text": "OK, 0 records retrieved in 1.983ms",
+                        "type": 4
+                    },
+                    "totalRowCount": 0,
+                    "hasMoreRows": false,
+                    "currentPage": 0,
+                    "index": 0,
+                    "sql": "USE blog",
+                    "updatable": false
+                }
+            ]
+        },
+        {
+            "state": {
+                "start": 4,
+                "end": 7,
+                "language": "mysql",
+                "result": {
+                    "type": "resultIds",
+                    "list": [
+                        "1acfd115-bdba-4520-dece-ada127f82a80"
+                    ]
+                },
+                "currentHeight": 36,
+                "currentSet": 1,
+                "statements": [
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 0,
+                            "length": 166
+                        },
+                        "contentStart": 75,
+                        "state": 0
+                    }
+                ]
+            },
+            "data": [
+                {
+                    "tabId": "b35aeced-65bb-498c-e181-505f74919dc4",
+                    "resultId": "1acfd115-bdba-4520-dece-ada127f82a80",
+                    "rows": [
+                        {
+                            "0": "Sed deserunt aut excepturi atque ad vel.",
+                            "1": "Ward",
+                            "2": "droberts@example.org"
+                        },
+                        {
+                            "0": "Voluptatem voluptatem qui omnis rem reprehenderit distinctio molestiae.",
+                            "1": "McLaughlin",
+                            "2": "parker.felipa@example.org"
+                        },
+                        {
+                            "0": "Rerum dolor molestias odio id a neque ipsa.",
+                            "1": "Rolfson",
+                            "2": "torrey17@example.com"
+                        },
+                        {
+                            "0": "Sint aut quia ad animi voluptas iure.",
+                            "1": "Jerde",
+                            "2": "deborah.sipes@example.org"
+                        },
+                        {
+                            "0": "Sit eaque blanditiis perferendis molestias.",
+                            "1": "Runolfsson",
+                            "2": "lakin.lelia@example.org"
+                        },
+                        {
+                            "0": "Debitis sunt magnam eum rerum.",
+                            "1": "Nolan",
+                            "2": "zeffertz@example.org"
+                        },
+                        {
+                            "0": "Voluptates et voluptates aut facere facilis earum voluptates.",
+                            "1": "Abernathy",
+                            "2": "reyna70@example.com"
+                        },
+                        {
+                            "0": "Fugit esse similique pariatur qui in quia omnis.",
+                            "1": "Bahringer",
+                            "2": "wehner.marilyne@example.com"
+                        },
+                        {
+                            "0": "Vitae officia illo culpa fugit nulla alias.",
+                            "1": "Hettinger",
+                            "2": "gconsidine@example.net"
+                        },
+                        {
+                            "0": "Ratione reprehenderit cumque sed libero soluta quisquam aliquid.",
+                            "1": "Ortiz",
+                            "2": "jamie80@example.org"
+                        },
+                        {
+                            "0": "Aperiam qui repudiandae natus nihil.",
+                            "1": "Hahn",
+                            "2": "boehm.helmer@example.net"
+                        },
+                        {
+                            "0": "Reprehenderit facilis impedit quos sed illo vitae harum eos.",
+                            "1": "Langosh",
+                            "2": "katheryn.jones@example.org"
+                        },
+                        {
+                            "0": "Quidem libero in laborum repellendus non inventore sunt.",
+                            "1": "Hyatt",
+                            "2": "hailey32@example.com"
+                        },
+                        {
+                            "0": "Rerum molestias quos quos reprehenderit aut.",
+                            "1": "Lueilwitz",
+                            "2": "oledner@example.net"
+                        },
+                        {
+                            "0": "Dolore dicta eaque architecto consectetur a quia voluptatem iusto.",
+                            "1": "Hagenes",
+                            "2": "lou34@example.org"
+                        },
+                        {
+                            "0": "Et est aspernatur vitae inventore.",
+                            "1": "Brown",
+                            "2": "zoila23@example.org"
+                        },
+                        {
+                            "0": "Facere fugit excepturi et aperiam inventore quidem.",
+                            "1": "Beier",
+                            "2": "wiza.sam@example.net"
+                        },
+                        {
+                            "0": "Ex quidem et in quia ab omnis neque.",
+                            "1": "Stroman",
+                            "2": "arvilla.lang@example.org"
+                        },
+                        {
+                            "0": "Libero et et ut deleniti qui deserunt.",
+                            "1": "Price",
+                            "2": "usanford@example.com"
+                        },
+                        {
+                            "0": "Saepe officia ipsam perspiciatis delectus consequatur qui aut.",
+                            "1": "Okuneva",
+                            "2": "ankunding.margarette@example.org"
+                        },
+                        {
+                            "0": "A itaque accusantium ut et est accusantium iure.",
+                            "1": "Weber",
+                            "2": "burdette35@example.org"
+                        },
+                        {
+                            "0": "Pariatur autem qui suscipit nobis.",
+                            "1": "Mann",
+                            "2": "seamus.kulas@example.net"
+                        },
+                        {
+                            "0": "Ut non incidunt nemo qui ullam cupiditate dolor.",
+                            "1": "Stroman",
+                            "2": "ymarquardt@example.net"
+                        },
+                        {
+                            "0": "Accusantium fuga qui saepe eligendi.",
+                            "1": "Jacobi",
+                            "2": "elizabeth.mann@example.net"
+                        },
+                        {
+                            "0": "Esse facilis nam expedita molestias.",
+                            "1": "Marks",
+                            "2": "harber.rickey@example.net"
+                        },
+                        {
+                            "0": "Tempora itaque occaecati quibusdam.",
+                            "1": "Jast",
+                            "2": "orogahn@example.com"
+                        },
+                        {
+                            "0": "Dignissimos delectus sit suscipit et omnis ipsum saepe.",
+                            "1": "Kuhlman",
+                            "2": "napoleon.king@example.com"
+                        },
+                        {
+                            "0": "Labore voluptates rerum voluptatum nihil beatae dolor.",
+                            "1": "Bahringer",
+                            "2": "mueller.lafayette@example.org"
+                        },
+                        {
+                            "0": "Quo non odio dolores reiciendis modi ut.",
+                            "1": "Reichert",
+                            "2": "zella.huels@example.org"
+                        },
+                        {
+                            "0": "Cum ullam esse ea asperiores.",
+                            "1": "Williamson",
+                            "2": "qquigley@example.com"
+                        },
+                        {
+                            "0": "Eius ducimus eum possimus delectus odit repellendus quas.",
+                            "1": "Rolfson",
+                            "2": "windler.alison@example.org"
+                        },
+                        {
+                            "0": "Alias illo odit corrupti laudantium temporibus accusantium harum.",
+                            "1": "King",
+                            "2": "brown.williamson@example.com"
+                        },
+                        {
+                            "0": "Molestias vitae deserunt voluptatem commodi cupiditate.",
+                            "1": "Kutch",
+                            "2": "mcclure.johnny@example.com"
+                        },
+                        {
+                            "0": "Deserunt voluptas omnis quo architecto dicta quibusdam alias ut.",
+                            "1": "Gislason",
+                            "2": "cassidy.jones@example.org"
+                        },
+                        {
+                            "0": "Impedit voluptatem ipsum voluptas maxime aut et voluptate consequatur.",
+                            "1": "O'Connell",
+                            "2": "jarvis53@example.com"
+                        },
+                        {
+                            "0": "Vitae voluptatem omnis ut consequatur ea autem inventore.",
+                            "1": "Bergstrom",
+                            "2": "thurman23@example.org"
+                        },
+                        {
+                            "0": "Quia aut soluta provident ea molestiae.",
+                            "1": "Ondricka",
+                            "2": "jailyn.jakubowski@example.org"
+                        },
+                        {
+                            "0": "Ea ut at unde deleniti libero adipisci ut.",
+                            "1": "Bernier",
+                            "2": "audrey.satterfield@example.net"
+                        },
+                        {
+                            "0": "Et suscipit natus accusantium ut.",
+                            "1": "Carter",
+                            "2": "zachary.blanda@example.org"
+                        },
+                        {
+                            "0": "At nisi incidunt nobis quia dolores.",
+                            "1": "Ebert",
+                            "2": "cfarrell@example.net"
+                        },
+                        {
+                            "0": "Aut temporibus vitae aut et quibusdam.",
+                            "1": "Crist",
+                            "2": "rowan97@example.net"
+                        },
+                        {
+                            "0": "Sint aut est est quibusdam tempore delectus vero.",
+                            "1": "Ward",
+                            "2": "droberts@example.org"
+                        },
+                        {
+                            "0": "Quos et aliquam voluptas et tempora consequatur dolores et.",
+                            "1": "McLaughlin",
+                            "2": "parker.felipa@example.org"
+                        },
+                        {
+                            "0": "Neque debitis et sint.",
+                            "1": "Rolfson",
+                            "2": "torrey17@example.com"
+                        },
+                        {
+                            "0": "Asperiores saepe adipisci ut eos.",
+                            "1": "Jerde",
+                            "2": "deborah.sipes@example.org"
+                        },
+                        {
+                            "0": "Accusamus nemo voluptatem omnis quos molestiae rerum alias.",
+                            "1": "Crist",
+                            "2": "bashirian.hilda@example.org"
+                        },
+                        {
+                            "0": "Molestiae reiciendis sit quaerat eos nulla aut.",
+                            "1": "Beahan",
+                            "2": "alena.bergstrom@example.com"
+                        },
+                        {
+                            "0": "Sit non qui sint ut qui incidunt.",
+                            "1": "Schulist",
+                            "2": "orpha.ryan@example.com"
+                        },
+                        {
+                            "0": "Id hic qui voluptatem esse architecto quis mollitia.",
+                            "1": "Hamill",
+                            "2": "cartwright.kenyatta@example.net"
+                        },
+                        {
+                            "0": "Veritatis omnis eum dignissimos ullam.",
+                            "1": "McKenzie",
+                            "2": "nichole.johns@example.com"
+                        },
+                        {
+                            "0": "Possimus nisi consequatur sint perspiciatis est.",
+                            "1": "Runolfsson",
+                            "2": "lakin.lelia@example.org"
+                        },
+                        {
+                            "0": "Quo quas aliquam magni cumque sint quam molestias.",
+                            "1": "Nolan",
+                            "2": "zeffertz@example.org"
+                        },
+                        {
+                            "0": "Ducimus cumque expedita amet excepturi aut magnam.",
+                            "1": "Abernathy",
+                            "2": "reyna70@example.com"
+                        },
+                        {
+                            "0": "Doloribus quia non eum eum laudantium.",
+                            "1": "Bahringer",
+                            "2": "wehner.marilyne@example.com"
+                        },
+                        {
+                            "0": "Nisi quia dolores sed voluptas quisquam est.",
+                            "1": "Hettinger",
+                            "2": "gconsidine@example.net"
+                        },
+                        {
+                            "0": "Suscipit laudantium nulla possimus aut.",
+                            "1": "Ortiz",
+                            "2": "jamie80@example.org"
+                        },
+                        {
+                            "0": "Quisquam deleniti minima non.",
+                            "1": "Hahn",
+                            "2": "boehm.helmer@example.net"
+                        },
+                        {
+                            "0": "Eum maiores asperiores ut et excepturi nulla officia veritatis.",
+                            "1": "Langosh",
+                            "2": "katheryn.jones@example.org"
+                        },
+                        {
+                            "0": "Eveniet sint tempora porro.",
+                            "1": "Hyatt",
+                            "2": "hailey32@example.com"
+                        },
+                        {
+                            "0": "Provident consequatur minima dicta et maiores.",
+                            "1": "Lueilwitz",
+                            "2": "oledner@example.net"
+                        },
+                        {
+                            "0": "Ab modi ea voluptates qui tempore.",
+                            "1": "Hagenes",
+                            "2": "lou34@example.org"
+                        },
+                        {
+                            "0": "Fuga et quasi pariatur aliquid quas.",
+                            "1": "Brown",
+                            "2": "zoila23@example.org"
+                        },
+                        {
+                            "0": "Eius sapiente eaque vel id sunt reprehenderit.",
+                            "1": "Beier",
+                            "2": "wiza.sam@example.net"
+                        },
+                        {
+                            "0": "Ipsum omnis ex numquam nemo nesciunt sed.",
+                            "1": "Stroman",
+                            "2": "arvilla.lang@example.org"
+                        },
+                        {
+                            "0": "Voluptates et sed nobis quasi nesciunt itaque expedita qui.",
+                            "1": "Price",
+                            "2": "usanford@example.com"
+                        },
+                        {
+                            "0": "Repellat iure iste quaerat alias ut et.",
+                            "1": "Okuneva",
+                            "2": "ankunding.margarette@example.org"
+                        },
+                        {
+                            "0": "Qui autem dolor sunt neque.",
+                            "1": "Weber",
+                            "2": "burdette35@example.org"
+                        },
+                        {
+                            "0": "Necessitatibus veniam sint omnis nesciunt qui ea aliquid.",
+                            "1": "Mann",
+                            "2": "seamus.kulas@example.net"
+                        },
+                        {
+                            "0": "Est et iure neque est.",
+                            "1": "Stroman",
+                            "2": "ymarquardt@example.net"
+                        },
+                        {
+                            "0": "Laudantium eos et eveniet qui quis.",
+                            "1": "Jacobi",
+                            "2": "elizabeth.mann@example.net"
+                        },
+                        {
+                            "0": "Harum sit expedita possimus tenetur et.",
+                            "1": "Marks",
+                            "2": "harber.rickey@example.net"
+                        },
+                        {
+                            "0": "Et quisquam voluptas ut aliquid neque.",
+                            "1": "Jast",
+                            "2": "orogahn@example.com"
+                        },
+                        {
+                            "0": "Blanditiis asperiores officia reprehenderit beatae iste.",
+                            "1": "Kuhlman",
+                            "2": "napoleon.king@example.com"
+                        },
+                        {
+                            "0": "Maiores sunt quis impedit id.",
+                            "1": "Bahringer",
+                            "2": "mueller.lafayette@example.org"
+                        },
+                        {
+                            "0": "Hic provident aliquam qui nihil.",
+                            "1": "Reichert",
+                            "2": "zella.huels@example.org"
+                        },
+                        {
+                            "0": "Distinctio ea dolorem rerum aliquam quo.",
+                            "1": "Williamson",
+                            "2": "qquigley@example.com"
+                        },
+                        {
+                            "0": "Tempora id corrupti error eius ut cupiditate rerum.",
+                            "1": "Rolfson",
+                            "2": "windler.alison@example.org"
+                        },
+                        {
+                            "0": "Non iusto nisi quam nemo qui enim dolorem repellendus.",
+                            "1": "King",
+                            "2": "brown.williamson@example.com"
+                        },
+                        {
+                            "0": "Repudiandae repellat qui ex eligendi repellendus consequatur.",
+                            "1": "Kutch",
+                            "2": "mcclure.johnny@example.com"
+                        },
+                        {
+                            "0": "Vel quasi asperiores ut itaque.",
+                            "1": "Gislason",
+                            "2": "cassidy.jones@example.org"
+                        },
+                        {
+                            "0": "Minus beatae molestiae illo qui inventore voluptatibus libero.",
+                            "1": "O'Connell",
+                            "2": "jarvis53@example.com"
+                        },
+                        {
+                            "0": "Sunt mollitia nostrum molestiae eligendi molestiae dolore.",
+                            "1": "Lakin",
+                            "2": "volkman.elody@example.net"
+                        },
+                        {
+                            "0": "Quam culpa quisquam distinctio cum non.",
+                            "1": "Bergstrom",
+                            "2": "thurman23@example.org"
+                        },
+                        {
+                            "0": "Vel beatae sapiente est officiis.",
+                            "1": "Ondricka",
+                            "2": "jailyn.jakubowski@example.org"
+                        },
+                        {
+                            "0": "Qui omnis impedit minima fugit dolores voluptas.",
+                            "1": "Bernier",
+                            "2": "audrey.satterfield@example.net"
+                        },
+                        {
+                            "0": "Voluptas et voluptates tenetur.",
+                            "1": "Carter",
+                            "2": "zachary.blanda@example.org"
+                        },
+                        {
+                            "0": "Voluptatum quisquam nihil iste consequuntur qui dicta et.",
+                            "1": "Ebert",
+                            "2": "cfarrell@example.net"
+                        },
+                        {
+                            "0": "Voluptas molestias aut at doloremque quibusdam et explicabo.",
+                            "1": "Crist",
+                            "2": "rowan97@example.net"
+                        }
+                    ],
+                    "columns": [
+                        {
+                            "title": "title",
+                            "field": "0",
+                            "dataType": {
+                                "type": 17,
+                                "characterMaximumLength": 65535,
+                                "flags": [
+                                    "BINARY",
+                                    "ASCII",
+                                    "UNICODE"
+                                ],
+                                "needsQuotes": true,
+                                "parameterFormatType": "OneOrZero"
+                            },
+                            "inPK": false,
+                            "nullable": false,
+                            "autoIncrement": false
+                        },
+                        {
+                            "title": "lastname",
+                            "field": "1",
+                            "dataType": {
+                                "type": 17,
+                                "characterMaximumLength": 65535,
+                                "flags": [
+                                    "BINARY",
+                                    "ASCII",
+                                    "UNICODE"
+                                ],
+                                "needsQuotes": true,
+                                "parameterFormatType": "OneOrZero"
+                            },
+                            "inPK": false,
+                            "nullable": false,
+                            "autoIncrement": false
+                        },
+                        {
+                            "title": "email",
+                            "field": "2",
+                            "dataType": {
+                                "type": 17,
+                                "characterMaximumLength": 65535,
+                                "flags": [
+                                    "BINARY",
+                                    "ASCII",
+                                    "UNICODE"
+                                ],
+                                "needsQuotes": true,
+                                "parameterFormatType": "OneOrZero"
+                            },
+                            "inPK": false,
+                            "nullable": false,
+                            "autoIncrement": false
+                        }
+                    ],
+                    "executionInfo": {
+                        "text": "OK, 88 records retrieved in 1.996ms"
+                    },
+                    "totalRowCount": 88,
+                    "hasMoreRows": false,
+                    "currentPage": 0,
+                    "index": 0,
+                    "sql": "-- Display the title, author's last time, and author's email for each post\nSELECT title, lastname, email\nFROM post INNER JOIN author\n    ON author.id = post.authorId",
+                    "updatable": false,
+                    "fullTableName": ""
+                }
+            ]
+        },
+        {
+            "state": {
+                "start": 8,
+                "end": 13,
+                "language": "mysql",
+                "result": {
+                    "type": "resultIds",
+                    "list": [
+                        "bdbd0995-3386-400a-e74b-1d756bcdfb84"
+                    ]
+                },
+                "currentHeight": 36,
+                "currentSet": 1,
+                "statements": [
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 0,
+                            "length": 232
+                        },
+                        "contentStart": 85,
+                        "state": 0
+                    }
+                ]
+            },
+            "data": [
+                {
+                    "tabId": "b35aeced-65bb-498c-e181-505f74919dc4",
+                    "resultId": "bdbd0995-3386-400a-e74b-1d756bcdfb84",
+                    "rows": [
+                        {
+                            "0": "At nisi incidunt nobis quia dolores.",
+                            "1": "Ebert",
+                            "2": "cfarrell@example.net"
+                        },
+                        {
+                            "0": "Voluptatum quisquam nihil iste consequuntur qui dicta et.",
+                            "1": "Ebert",
+                            "2": "cfarrell@example.net"
+                        },
+                        {
+                            "0": "Rerum molestias quos quos reprehenderit aut.",
+                            "1": "Lueilwitz",
+                            "2": "oledner@example.net"
+                        },
+                        {
+                            "0": "Provident consequatur minima dicta et maiores.",
+                            "1": "Lueilwitz",
+                            "2": "oledner@example.net"
+                        },
+                        {
+                            "0": "Dolore dicta eaque architecto consectetur a quia voluptatem iusto.",
+                            "1": "Hagenes",
+                            "2": "lou34@example.org"
+                        },
+                        {
+                            "0": "Ab modi ea voluptates qui tempore.",
+                            "1": "Hagenes",
+                            "2": "lou34@example.org"
+                        },
+                        {
+                            "0": "Necessitatibus veniam sint omnis nesciunt qui ea aliquid.",
+                            "1": "Mann",
+                            "2": "seamus.kulas@example.net"
+                        },
+                        {
+                            "0": "Pariatur autem qui suscipit nobis.",
+                            "1": "Mann",
+                            "2": "seamus.kulas@example.net"
+                        },
+                        {
+                            "0": "Fugit esse similique pariatur qui in quia omnis.",
+                            "1": "Bahringer",
+                            "2": "wehner.marilyne@example.com"
+                        },
+                        {
+                            "0": "Doloribus quia non eum eum laudantium.",
+                            "1": "Bahringer",
+                            "2": "wehner.marilyne@example.com"
+                        },
+                        {
+                            "0": "Minus beatae molestiae illo qui inventore voluptatibus libero.",
+                            "1": "O'Connell",
+                            "2": "jarvis53@example.com"
+                        },
+                        {
+                            "0": "Impedit voluptatem ipsum voluptas maxime aut et voluptate consequatur.",
+                            "1": "O'Connell",
+                            "2": "jarvis53@example.com"
+                        },
+                        {
+                            "0": "Sed deserunt aut excepturi atque ad vel.",
+                            "1": "Ward",
+                            "2": "droberts@example.org"
+                        },
+                        {
+                            "0": "Sint aut est est quibusdam tempore delectus vero.",
+                            "1": "Ward",
+                            "2": "droberts@example.org"
+                        },
+                        {
+                            "0": "Sint aut quia ad animi voluptas iure.",
+                            "1": "Jerde",
+                            "2": "deborah.sipes@example.org"
+                        },
+                        {
+                            "0": "Asperiores saepe adipisci ut eos.",
+                            "1": "Jerde",
+                            "2": "deborah.sipes@example.org"
+                        },
+                        {
+                            "0": "Hic provident aliquam qui nihil.",
+                            "1": "Reichert",
+                            "2": "zella.huels@example.org"
+                        },
+                        {
+                            "0": "Quo non odio dolores reiciendis modi ut.",
+                            "1": "Reichert",
+                            "2": "zella.huels@example.org"
+                        },
+                        {
+                            "0": "Voluptas molestias aut at doloremque quibusdam et explicabo.",
+                            "1": "Crist",
+                            "2": "rowan97@example.net"
+                        },
+                        {
+                            "0": "Aut temporibus vitae aut et quibusdam.",
+                            "1": "Crist",
+                            "2": "rowan97@example.net"
+                        },
+                        {
+                            "0": "Rerum dolor molestias odio id a neque ipsa.",
+                            "1": "Rolfson",
+                            "2": "torrey17@example.com"
+                        },
+                        {
+                            "0": "Neque debitis et sint.",
+                            "1": "Rolfson",
+                            "2": "torrey17@example.com"
+                        },
+                        {
+                            "0": "Accusamus nemo voluptatem omnis quos molestiae rerum alias.",
+                            "1": "Crist",
+                            "2": "bashirian.hilda@example.org"
+                        },
+                        {
+                            "0": "Sit non qui sint ut qui incidunt.",
+                            "1": "Schulist",
+                            "2": "orpha.ryan@example.com"
+                        },
+                        {
+                            "0": "Sunt mollitia nostrum molestiae eligendi molestiae dolore.",
+                            "1": "Lakin",
+                            "2": "volkman.elody@example.net"
+                        },
+                        {
+                            "0": "Quo quas aliquam magni cumque sint quam molestias.",
+                            "1": "Nolan",
+                            "2": "zeffertz@example.org"
+                        },
+                        {
+                            "0": "Debitis sunt magnam eum rerum.",
+                            "1": "Nolan",
+                            "2": "zeffertz@example.org"
+                        },
+                        {
+                            "0": "Deserunt voluptas omnis quo architecto dicta quibusdam alias ut.",
+                            "1": "Gislason",
+                            "2": "cassidy.jones@example.org"
+                        },
+                        {
+                            "0": "Vel quasi asperiores ut itaque.",
+                            "1": "Gislason",
+                            "2": "cassidy.jones@example.org"
+                        },
+                        {
+                            "0": "Ducimus cumque expedita amet excepturi aut magnam.",
+                            "1": "Abernathy",
+                            "2": "reyna70@example.com"
+                        },
+                        {
+                            "0": "Voluptates et voluptates aut facere facilis earum voluptates.",
+                            "1": "Abernathy",
+                            "2": "reyna70@example.com"
+                        },
+                        {
+                            "0": "Tempora itaque occaecati quibusdam.",
+                            "1": "Jast",
+                            "2": "orogahn@example.com"
+                        },
+                        {
+                            "0": "Et quisquam voluptas ut aliquid neque.",
+                            "1": "Jast",
+                            "2": "orogahn@example.com"
+                        },
+                        {
+                            "0": "Et est aspernatur vitae inventore.",
+                            "1": "Brown",
+                            "2": "zoila23@example.org"
+                        },
+                        {
+                            "0": "Fuga et quasi pariatur aliquid quas.",
+                            "1": "Brown",
+                            "2": "zoila23@example.org"
+                        },
+                        {
+                            "0": "Voluptas et voluptates tenetur.",
+                            "1": "Carter",
+                            "2": "zachary.blanda@example.org"
+                        },
+                        {
+                            "0": "Et suscipit natus accusantium ut.",
+                            "1": "Carter",
+                            "2": "zachary.blanda@example.org"
+                        }
+                    ],
+                    "columns": [
+                        {
+                            "title": "title",
+                            "field": "0",
+                            "dataType": {
+                                "type": 17,
+                                "characterMaximumLength": 65535,
+                                "flags": [
+                                    "BINARY",
+                                    "ASCII",
+                                    "UNICODE"
+                                ],
+                                "needsQuotes": true,
+                                "parameterFormatType": "OneOrZero"
+                            },
+                            "inPK": false,
+                            "nullable": false,
+                            "autoIncrement": false
+                        },
+                        {
+                            "title": "lastname",
+                            "field": "1",
+                            "dataType": {
+                                "type": 17,
+                                "characterMaximumLength": 65535,
+                                "flags": [
+                                    "BINARY",
+                                    "ASCII",
+                                    "UNICODE"
+                                ],
+                                "needsQuotes": true,
+                                "parameterFormatType": "OneOrZero"
+                            },
+                            "inPK": false,
+                            "nullable": false,
+                            "autoIncrement": false
+                        },
+                        {
+                            "title": "email",
+                            "field": "2",
+                            "dataType": {
+                                "type": 17,
+                                "characterMaximumLength": 65535,
+                                "flags": [
+                                    "BINARY",
+                                    "ASCII",
+                                    "UNICODE"
+                                ],
+                                "needsQuotes": true,
+                                "parameterFormatType": "OneOrZero"
+                            },
+                            "inPK": false,
+                            "nullable": false,
+                            "autoIncrement": false
+                        }
+                    ],
+                    "executionInfo": {
+                        "text": "OK, 37 records retrieved in 2.005ms"
+                    },
+                    "totalRowCount": 37,
+                    "hasMoreRows": false,
+                    "currentPage": 0,
+                    "index": 0,
+                    "sql": "-- Display the same as above from authors born in 2000 or later, sorted by birthdate\nSELECT title, lastname, email\nFROM post INNER JOIN author\n    ON author.id = post.authorId\nWHERE author.birthdate >= '2000-1-1'\nORDER BY birthdate",
+                    "updatable": false,
+                    "fullTableName": ""
+                }
+            ]
+        },
+        {
+            "state": {
+                "start": 14,
+                "end": 18,
+                "language": "mysql",
+                "result": {
+                    "type": "resultIds",
+                    "list": [
+                        "b4315109-c2d7-4067-cc98-2bb1fe239216"
+                    ]
+                },
+                "currentHeight": 36,
+                "currentSet": 1,
+                "statements": [
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 0,
+                            "length": 197
+                        },
+                        "contentStart": 73,
+                        "state": 0
+                    }
+                ]
+            },
+            "data": [
+                {
+                    "tabId": "b35aeced-65bb-498c-e181-505f74919dc4",
+                    "resultId": "b4315109-c2d7-4067-cc98-2bb1fe239216",
+                    "rows": [
+                        {
+                            "0": "Sed deserunt aut excepturi atque ad vel.",
+                            "1": "Ward",
+                            "2": "droberts@example.org"
+                        },
+                        {
+                            "0": "Libero et et ut deleniti qui deserunt.",
+                            "1": "Price",
+                            "2": "usanford@example.com"
+                        },
+                        {
+                            "0": "Saepe officia ipsam perspiciatis delectus consequatur qui aut.",
+                            "1": "Okuneva",
+                            "2": "ankunding.margarette@example.org"
+                        },
+                        {
+                            "0": "Alias illo odit corrupti laudantium temporibus accusantium harum.",
+                            "1": "King",
+                            "2": "brown.williamson@example.com"
+                        },
+                        {
+                            "0": "Sint aut est est quibusdam tempore delectus vero.",
+                            "1": "Ward",
+                            "2": "droberts@example.org"
+                        },
+                        {
+                            "0": "Accusamus nemo voluptatem omnis quos molestiae rerum alias.",
+                            "1": "Crist",
+                            "2": "bashirian.hilda@example.org"
+                        },
+                        {
+                            "0": "Voluptates et sed nobis quasi nesciunt itaque expedita qui.",
+                            "1": "Price",
+                            "2": "usanford@example.com"
+                        },
+                        {
+                            "0": "Repellat iure iste quaerat alias ut et.",
+                            "1": "Okuneva",
+                            "2": "ankunding.margarette@example.org"
+                        },
+                        {
+                            "0": "Non iusto nisi quam nemo qui enim dolorem repellendus.",
+                            "1": "King",
+                            "2": "brown.williamson@example.com"
+                        }
+                    ],
+                    "columns": [
+                        {
+                            "title": "title",
+                            "field": "0",
+                            "dataType": {
+                                "type": 17,
+                                "characterMaximumLength": 65535,
+                                "flags": [
+                                    "BINARY",
+                                    "ASCII",
+                                    "UNICODE"
+                                ],
+                                "needsQuotes": true,
+                                "parameterFormatType": "OneOrZero"
+                            },
+                            "inPK": false,
+                            "nullable": false,
+                            "autoIncrement": false
+                        },
+                        {
+                            "title": "lastname",
+                            "field": "1",
+                            "dataType": {
+                                "type": 17,
+                                "characterMaximumLength": 65535,
+                                "flags": [
+                                    "BINARY",
+                                    "ASCII",
+                                    "UNICODE"
+                                ],
+                                "needsQuotes": true,
+                                "parameterFormatType": "OneOrZero"
+                            },
+                            "inPK": false,
+                            "nullable": false,
+                            "autoIncrement": false
+                        },
+                        {
+                            "title": "email",
+                            "field": "2",
+                            "dataType": {
+                                "type": 17,
+                                "characterMaximumLength": 65535,
+                                "flags": [
+                                    "BINARY",
+                                    "ASCII",
+                                    "UNICODE"
+                                ],
+                                "needsQuotes": true,
+                                "parameterFormatType": "OneOrZero"
+                            },
+                            "inPK": false,
+                            "nullable": false,
+                            "autoIncrement": false
+                        }
+                    ],
+                    "executionInfo": {
+                        "text": "OK, 9 records retrieved in 1.993ms"
+                    },
+                    "totalRowCount": 9,
+                    "hasMoreRows": false,
+                    "currentPage": 0,
+                    "index": 0,
+                    "sql": "-- Display the same as above from authors whose first name starts with J\nSELECT title, lastname, email\nFROM post INNER JOIN author\n    ON author.id = post.authorId\nWHERE author.firstname LIKE 'J%'",
+                    "updatable": false,
+                    "fullTableName": ""
+                }
+            ]
+        },
+        {
+            "state": {
+                "start": 19,
+                "end": 23,
+                "language": "mysql",
+                "result": {
+                    "type": "resultIds",
+                    "list": [
+                        "74459696-1e74-44e7-f843-f95c0a063963"
+                    ]
+                },
+                "currentHeight": 36,
+                "currentSet": 1,
+                "statements": [
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 0,
+                            "length": 171
+                        },
+                        "contentStart": 60,
+                        "state": 0
+                    }
+                ]
+            },
+            "data": [
+                {
+                    "tabId": "b35aeced-65bb-498c-e181-505f74919dc4",
+                    "resultId": "74459696-1e74-44e7-f843-f95c0a063963",
+                    "rows": [
+                        {
+                            "0": null,
+                            "1": "Kshlerin",
+                            "2": "upacocha@example.net"
+                        },
+                        {
+                            "0": null,
+                            "1": "Franecki",
+                            "2": "annamae19@example.net"
+                        },
+                        {
+                            "0": null,
+                            "1": "Pouros",
+                            "2": "kuhn.jarvis@example.net"
+                        }
+                    ],
+                    "columns": [
+                        {
+                            "title": "title",
+                            "field": "0",
+                            "dataType": {
+                                "type": 17,
+                                "characterMaximumLength": 65535,
+                                "flags": [
+                                    "BINARY",
+                                    "ASCII",
+                                    "UNICODE"
+                                ],
+                                "needsQuotes": true,
+                                "parameterFormatType": "OneOrZero"
+                            },
+                            "inPK": false,
+                            "nullable": false,
+                            "autoIncrement": false
+                        },
+                        {
+                            "title": "lastname",
+                            "field": "1",
+                            "dataType": {
+                                "type": 17,
+                                "characterMaximumLength": 65535,
+                                "flags": [
+                                    "BINARY",
+                                    "ASCII",
+                                    "UNICODE"
+                                ],
+                                "needsQuotes": true,
+                                "parameterFormatType": "OneOrZero"
+                            },
+                            "inPK": false,
+                            "nullable": false,
+                            "autoIncrement": false
+                        },
+                        {
+                            "title": "email",
+                            "field": "2",
+                            "dataType": {
+                                "type": 17,
+                                "characterMaximumLength": 65535,
+                                "flags": [
+                                    "BINARY",
+                                    "ASCII",
+                                    "UNICODE"
+                                ],
+                                "needsQuotes": true,
+                                "parameterFormatType": "OneOrZero"
+                            },
+                            "inPK": false,
+                            "nullable": false,
+                            "autoIncrement": false
+                        }
+                    ],
+                    "executionInfo": {
+                        "text": "OK, 3 records retrieved in 1.056ms"
+                    },
+                    "totalRowCount": 3,
+                    "hasMoreRows": false,
+                    "currentPage": 0,
+                    "index": 0,
+                    "sql": "-- Display the same as above for only authors without posts\nSELECT title, lastname, email\nFROM post RIGHT JOIN author\n    ON author.id = post.authorId\nWHERE title IS NULL",
+                    "updatable": false,
+                    "fullTableName": ""
+                }
+            ]
+        },
+        {
+            "state": {
+                "start": 24,
+                "end": 28,
+                "language": "mysql",
+                "result": {
+                    "type": "resultIds",
+                    "list": [
+                        "40ecbf2c-83b8-427b-e982-f9b39a23a11b"
+                    ]
+                },
+                "currentHeight": 36,
+                "currentSet": 1,
+                "statements": [
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 0,
+                            "length": 179
+                        },
+                        "contentStart": 60,
+                        "state": 0
+                    }
+                ]
+            },
+            "data": [
+                {
+                    "tabId": "b35aeced-65bb-498c-e181-505f74919dc4",
+                    "resultId": "40ecbf2c-83b8-427b-e982-f9b39a23a11b",
+                    "rows": [
+                        {
+                            "0": "Repellendus ad et est autem dolores mollitia.",
+                            "1": null,
+                            "2": null
+                        },
+                        {
+                            "0": "Quia est quod repellat sit et soluta.",
+                            "1": null,
+                            "2": null
+                        },
+                        {
+                            "0": "Enim quam qui ratione quia ipsum.",
+                            "1": null,
+                            "2": null
+                        }
+                    ],
+                    "columns": [
+                        {
+                            "title": "title",
+                            "field": "0",
+                            "dataType": {
+                                "type": 17,
+                                "characterMaximumLength": 65535,
+                                "flags": [
+                                    "BINARY",
+                                    "ASCII",
+                                    "UNICODE"
+                                ],
+                                "needsQuotes": true,
+                                "parameterFormatType": "OneOrZero"
+                            },
+                            "inPK": false,
+                            "nullable": false,
+                            "autoIncrement": false
+                        },
+                        {
+                            "title": "lastname",
+                            "field": "1",
+                            "dataType": {
+                                "type": 17,
+                                "characterMaximumLength": 65535,
+                                "flags": [
+                                    "BINARY",
+                                    "ASCII",
+                                    "UNICODE"
+                                ],
+                                "needsQuotes": true,
+                                "parameterFormatType": "OneOrZero"
+                            },
+                            "inPK": false,
+                            "nullable": false,
+                            "autoIncrement": false
+                        },
+                        {
+                            "title": "email",
+                            "field": "2",
+                            "dataType": {
+                                "type": 17,
+                                "characterMaximumLength": 65535,
+                                "flags": [
+                                    "BINARY",
+                                    "ASCII",
+                                    "UNICODE"
+                                ],
+                                "needsQuotes": true,
+                                "parameterFormatType": "OneOrZero"
+                            },
+                            "inPK": false,
+                            "nullable": false,
+                            "autoIncrement": false
+                        }
+                    ],
+                    "executionInfo": {
+                        "text": "OK, 3 records retrieved in 2.511ms"
+                    },
+                    "totalRowCount": 3,
+                    "hasMoreRows": false,
+                    "currentPage": 0,
+                    "index": 0,
+                    "sql": "-- Display the same as above for only posts without authors\nSELECT title, lastname, email\nFROM author RIGHT JOIN post\n    ON author.id = post.authorId\nWHERE post.authorId is null",
+                    "updatable": false,
+                    "fullTableName": ""
+                }
+            ]
+        },
+        {
+            "state": {
+                "start": 29,
+                "end": 33,
+                "language": "mysql",
+                "result": {
+                    "type": "resultIds",
+                    "list": [
+                        "a88dba8b-45bb-4809-d77d-80fd857f6e50"
+                    ]
+                },
+                "currentHeight": 36,
+                "currentSet": 1,
+                "statements": [
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 0,
+                            "length": 234
+                        },
+                        "contentStart": 110,
+                        "state": 0
+                    }
+                ]
+            },
+            "data": [
+                {
+                    "tabId": "b35aeced-65bb-498c-e181-505f74919dc4",
+                    "resultId": "a88dba8b-45bb-4809-d77d-80fd857f6e50",
+                    "rows": [
+                        {
+                            "0": "Sed deserunt aut excepturi atque ad vel.",
+                            "1": "Ward",
+                            "2": "droberts@example.org"
+                        },
+                        {
+                            "0": "Libero et et ut deleniti qui deserunt.",
+                            "1": "Price",
+                            "2": "usanford@example.com"
+                        },
+                        {
+                            "0": "Saepe officia ipsam perspiciatis delectus consequatur qui aut.",
+                            "1": "Okuneva",
+                            "2": "ankunding.margarette@example.org"
+                        },
+                        {
+                            "0": "Alias illo odit corrupti laudantium temporibus accusantium harum.",
+                            "1": "King",
+                            "2": "brown.williamson@example.com"
+                        },
+                        {
+                            "0": "Sint aut est est quibusdam tempore delectus vero.",
+                            "1": "Ward",
+                            "2": "droberts@example.org"
+                        },
+                        {
+                            "0": "Accusamus nemo voluptatem omnis quos molestiae rerum alias.",
+                            "1": "Crist",
+                            "2": "bashirian.hilda@example.org"
+                        },
+                        {
+                            "0": "Voluptates et sed nobis quasi nesciunt itaque expedita qui.",
+                            "1": "Price",
+                            "2": "usanford@example.com"
+                        },
+                        {
+                            "0": "Repellat iure iste quaerat alias ut et.",
+                            "1": "Okuneva",
+                            "2": "ankunding.margarette@example.org"
+                        },
+                        {
+                            "0": "Non iusto nisi quam nemo qui enim dolorem repellendus.",
+                            "1": "King",
+                            "2": "brown.williamson@example.com"
+                        }
+                    ],
+                    "columns": [
+                        {
+                            "title": "title",
+                            "field": "0",
+                            "dataType": {
+                                "type": 17,
+                                "characterMaximumLength": 65535,
+                                "flags": [
+                                    "BINARY",
+                                    "ASCII",
+                                    "UNICODE"
+                                ],
+                                "needsQuotes": true,
+                                "parameterFormatType": "OneOrZero"
+                            },
+                            "inPK": false,
+                            "nullable": false,
+                            "autoIncrement": false
+                        },
+                        {
+                            "title": "lastname",
+                            "field": "1",
+                            "dataType": {
+                                "type": 17,
+                                "characterMaximumLength": 65535,
+                                "flags": [
+                                    "BINARY",
+                                    "ASCII",
+                                    "UNICODE"
+                                ],
+                                "needsQuotes": true,
+                                "parameterFormatType": "OneOrZero"
+                            },
+                            "inPK": false,
+                            "nullable": false,
+                            "autoIncrement": false
+                        },
+                        {
+                            "title": "email",
+                            "field": "2",
+                            "dataType": {
+                                "type": 17,
+                                "characterMaximumLength": 65535,
+                                "flags": [
+                                    "BINARY",
+                                    "ASCII",
+                                    "UNICODE"
+                                ],
+                                "needsQuotes": true,
+                                "parameterFormatType": "OneOrZero"
+                            },
+                            "inPK": false,
+                            "nullable": false,
+                            "autoIncrement": false
+                        }
+                    ],
+                    "executionInfo": {
+                        "text": "OK, 9 records retrieved in 1.911ms"
+                    },
+                    "totalRowCount": 9,
+                    "hasMoreRows": false,
+                    "currentPage": 0,
+                    "index": 0,
+                    "sql": "-- Display the same as above for all authors (whether they have a post or not) whose first name starts with J\nSELECT title, lastname, email\nFROM author RIGHT JOIN post\n    ON author.id = post.authorId\nWHERE author.firstname LIKE 'J%'",
+                    "updatable": false,
+                    "fullTableName": ""
+                }
+            ]
+        },
+        {
+            "state": {
+                "start": 34,
+                "end": 34,
+                "language": "mysql",
+                "currentSet": 1,
+                "statements": [
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 0,
+                            "length": 0
+                        },
+                        "contentStart": 0,
+                        "state": 0
+                    }
+                ]
+            },
+            "data": []
+        },
+        {
+            "state": {
+                "start": 35,
+                "end": 37,
+                "language": "mysql",
+                "currentSet": 1,
+                "statements": [
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 0,
+                            "length": 23
+                        },
+                        "contentStart": 0,
+                        "state": 1
+                    }
+                ]
+            },
+            "data": []
+        },
+        {
+            "state": {
+                "start": 38,
+                "end": 40,
+                "language": "mysql",
+                "result": {
+                    "type": "resultIds",
+                    "list": [
+                        "b2467a29-3a3d-4cc5-fbb0-545f8b344126"
+                    ]
+                },
+                "currentHeight": 352,
+                "currentSet": 1,
+                "statements": [
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 0,
+                            "length": 90
+                        },
+                        "contentStart": 59,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 90,
+                            "length": 0
+                        },
+                        "contentStart": 89,
+                        "state": 3
+                    }
+                ]
+            },
+            "data": [
+                {
+                    "tabId": "b35aeced-65bb-498c-e181-505f74919dc4",
+                    "resultId": "b2467a29-3a3d-4cc5-fbb0-545f8b344126",
+                    "rows": [
+                        {
+                            "0": 6
+                        },
+                        {
+                            "0": 26
+                        },
+                        {
+                            "0": 28
+                        },
+                        {
+                            "0": 24
+                        },
+                        {
+                            "0": 47
+                        },
+                        {
+                            "0": 5
+                        },
+                        {
+                            "0": 16
+                        },
+                        {
+                            "0": 40
+                        },
+                        {
+                            "0": 27
+                        },
+                        {
+                            "0": 8
+                        },
+                        {
+                            "0": 42
+                        },
+                        {
+                            "0": 49
+                        },
+                        {
+                            "0": 4
+                        },
+                        {
+                            "0": 1
+                        },
+                        {
+                            "0": 31
+                        },
+                        {
+                            "0": 14
+                        },
+                        {
+                            "0": 18
+                        },
+                        {
+                            "0": 32
+                        },
+                        {
+                            "0": 46
+                        },
+                        {
+                            "0": 15
+                        },
+                        {
+                            "0": 43
+                        },
+                        {
+                            "0": 17
+                        },
+                        {
+                            "0": 39
+                        },
+                        {
+                            "0": 10
+                        },
+                        {
+                            "0": 20
+                        },
+                        {
+                            "0": 41
+                        },
+                        {
+                            "0": 35
+                        },
+                        {
+                            "0": 34
+                        },
+                        {
+                            "0": 9
+                        },
+                        {
+                            "0": 19
+                        },
+                        {
+                            "0": 33
+                        },
+                        {
+                            "0": 7
+                        },
+                        {
+                            "0": 2
+                        },
+                        {
+                            "0": 37
+                        },
+                        {
+                            "0": 12
+                        },
+                        {
+                            "0": 50
+                        },
+                        {
+                            "0": 29
+                        },
+                        {
+                            "0": 45
+                        },
+                        {
+                            "0": 3
+                        },
+                        {
+                            "0": 23
+                        },
+                        {
+                            "0": 25
+                        },
+                        {
+                            "0": 44
+                        },
+                        {
+                            "0": 13
+                        },
+                        {
+                            "0": 38
+                        },
+                        {
+                            "0": 22
+                        },
+                        {
+                            "0": 30
+                        },
+                        {
+                            "0": 48
+                        },
+                        {
+                            "0": 11
+                        },
+                        {
+                            "0": 36
+                        },
+                        {
+                            "0": 21
+                        }
+                    ],
+                    "columns": [
+                        {
+                            "title": "id",
+                            "field": "0",
+                            "dataType": {
+                                "type": 4,
+                                "flags": [
+                                    "SIGNED",
+                                    "ZEROFILL"
+                                ],
+                                "numericPrecision": 10,
+                                "parameterFormatType": "OneOrZero",
+                                "synonyms": [
+                                    "INTEGER",
+                                    "INT4"
+                                ]
+                            },
+                            "inPK": false,
+                            "nullable": false,
+                            "autoIncrement": false
+                        }
+                    ],
+                    "executionInfo": {
+                        "text": "OK, 50 records retrieved in 1ms"
+                    },
+                    "totalRowCount": 50,
+                    "hasMoreRows": false,
+                    "currentPage": 0,
+                    "index": 0,
+                    "sql": "-- Display all (distinct) author ids from the Author table\nSELECT DISTINCT id\nFROM author",
+                    "updatable": false,
+                    "fullTableName": ""
+                }
+            ]
+        },
+        {
+            "state": {
+                "start": 41,
+                "end": 43,
+                "language": "mysql",
+                "currentSet": 1,
+                "statements": [
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 0,
+                            "length": 113
+                        },
+                        "contentStart": 64,
+                        "state": 0
+                    }
+                ]
+            },
+            "data": []
+        },
+        {
+            "state": {
+                "start": 44,
+                "end": 46,
+                "language": "mysql",
+                "currentSet": 1,
+                "statements": [
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 0,
+                            "length": 92
+                        },
+                        "contentStart": 57,
+                        "state": 0
+                    }
+                ]
+            },
+            "data": []
+        },
+        {
+            "state": {
+                "start": 47,
+                "end": 52,
+                "language": "mysql",
+                "currentSet": 1,
+                "statements": [
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 0,
+                            "length": 134
+                        },
+                        "contentStart": 44,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 134,
+                            "length": 0
+                        },
+                        "contentStart": 134,
+                        "state": 0
+                    }
+                ]
+            },
+            "data": []
+        },
+        {
+            "state": {
+                "start": 53,
+                "end": 58,
+                "language": "mysql",
+                "currentSet": 1,
+                "statements": [
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 0,
+                            "length": 142
+                        },
+                        "contentStart": 48,
+                        "state": 0
+                    }
+                ]
+            },
+            "data": []
+        },
+        {
+            "state": {
+                "start": 59,
+                "end": 64,
+                "language": "mysql",
+                "currentSet": 1,
+                "statements": [
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 0,
+                            "length": 142
+                        },
+                        "contentStart": 48,
+                        "state": 0
+                    }
+                ]
+            },
+            "data": []
+        },
+        {
+            "state": {
+                "start": 65,
+                "end": 70,
+                "language": "mysql",
+                "currentSet": 1,
+                "statements": [
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 0,
+                            "length": 150
+                        },
+                        "contentStart": 52,
+                        "state": 0
+                    }
+                ]
+            },
+            "data": []
+        },
+        {
+            "state": {
+                "start": 71,
+                "end": 76,
+                "language": "mysql",
+                "currentSet": 1,
+                "statements": [
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 0,
+                            "length": 136
+                        },
+                        "contentStart": 45,
+                        "state": 0
+                    }
+                ]
+            },
+            "data": []
+        },
+        {
+            "state": {
+                "start": 77,
+                "end": 82,
+                "language": "mysql",
+                "currentSet": 1,
+                "statements": [
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 0,
+                            "length": 144
+                        },
+                        "contentStart": 49,
+                        "state": 0
+                    }
+                ]
+            },
+            "data": []
+        },
+        {
+            "state": {
+                "start": 83,
+                "end": 88,
+                "language": "mysql",
+                "currentSet": 1,
+                "statements": [
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 0,
+                            "length": 136
+                        },
+                        "contentStart": 45,
+                        "state": 0
+                    }
+                ]
+            },
+            "data": []
+        },
+        {
+            "state": {
+                "start": 89,
+                "end": 94,
+                "language": "mysql",
+                "currentSet": 1,
+                "statements": [
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 0,
+                            "length": 144
+                        },
+                        "contentStart": 49,
+                        "state": 0
+                    }
+                ]
+            },
+            "data": []
+        },
+        {
+            "state": {
+                "start": 95,
+                "end": 95,
+                "language": "mysql",
+                "currentSet": 1,
+                "statements": [
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 0,
+                            "length": 0
+                        },
+                        "contentStart": 0,
+                        "state": 0
+                    }
+                ]
+            },
+            "data": []
+        },
+        {
+            "state": {
+                "start": 96,
+                "end": 96,
+                "language": "mysql",
+                "currentSet": 1,
+                "statements": [
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 0,
+                            "length": 0
+                        },
+                        "contentStart": 0,
+                        "state": 0
+                    }
+                ]
+            },
+            "data": []
+        }
+    ]
+}
