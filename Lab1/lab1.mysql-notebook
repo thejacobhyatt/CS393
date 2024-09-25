@@ -1,0 +1,3169 @@
+{
+    "type": "MySQLNotebook",
+    "version": "1.0",
+    "caption": "DB Notebook",
+    "content": "USE train;\nSHOW TABLES;\nSELECT * \nFROM traincar;\nCREATE TABLE CargoCar (\n  carId INT UNSIGNED NOT NULL,\n  cargoType VARCHAR(60) NOT NULL,\n  PRIMARY KEY (cargoType),\n  FOREIGN KEY (carId) REFERENCES TrainCar (carId)\n);\nCREATE TABLE CargoType (\n  cargoType VARCHAR(60) NOT NULL,\n  PRIMARY KEY (cargoType),\n  FOREIGN KEY (cargoType) REFERENCES CargoCar (cargoType)\n);\n\n-- Display the cars manufactured by American Railcar before 2010.  Order by year with the most recent year first, then alphabetically by cargo type.\nSELECT *\nFROM traincar\nINNER JOIN cargocar\n    ON traincar.carId = cargocar.carId\nWHERE manufacturer LIKE \"American Railcar\"\nAND yearBuilt < 2010\nORDER BY yearBuilt DESC, cargoType ASC;\n\n-- The logistics company wants to know when each car needs to be serviced next.  A car is due 365 days after their previous service date.  \n-- Show the car id, manufacturer, and new service date.  \nSELECT * , DATE_ADD(dateLastEngineService, INTERVAL 1 YEAR) AS nextEngineService\nFROM enginecar;\n\n-- Display the car id, horsepower, and year built for only engine cars.\nSELECT enginecar.carId, horsePower, yearBuilt\nFROM enginecar\nINNER JOIN traincar\n    ON enginecar.carId = traincar.carId;\n\n-- Show cars that are not part of a train.  List the car id and manufacturer.\nSELECT traincar.carId, manufacturer\nFROM traincar\nLEFT JOIN carintrain\n    ON traincar.carId = carintrain.carId\nWHERE carintrain.carId IS NULL;\n\n-- Show the train id, departure date, and number of location markers that the train travels on its route.  \nSELECT COUNT(route.locationId) AS numberOfLocationMarkers, train.departDate, train.trainId\nFROM train\nLEFT JOIN route\n    ON train.trainId = route.trainId\nGROUP BY train.trainId;\n\n-- Display trains that have at least 29 cars assigned to them.  Order the list by shortest train first.  Display the train id, number of cars, and arrival marker.\nSELECT train.trainId, COUNT(carintrain.carId) AS carCount, train.arrivalMarker\nFROM train\nJOIN carintrain \n    ON train.trainId = carintrain.trainId\nGROUP BY train.trainId\nHAVING COUNT(carintrain.carId) >= 29\nORDER BY carCount ASC;\n\n-- Display a count of trains that have more than 20 cars and that arrived at a location that is SW of 30, 30.  A train is southwest when its lat and long are less than 30, 30.\n-- train.trainId, COUNT(carintrain.carId) AS carCount, train.arrivalMarker, locationmarker.latitude, locationmarker.longitude\nSELECT COUNT(*) AS countOfSWTrains\nFROM (\n    SELECT train.trainId, COUNT(carintrain.carId) AS carCount, train.arrivalMarker, locationmarker.latitude, locationmarker.longitude\n    FROM train\n    JOIN carintrain \n        ON train.trainId = carintrain.trainId\n    JOIN locationmarker\n        ON locationmarker.locationId = train.arrivalmarker\n    WHERE locationmarker.latitude < 30 and locationmarker.longitude < 30\n    GROUP BY train.trainId\n    HAVING COUNT(carintrain.carId) >= 20\n    ORDER BY carCount ASC\n) AS rowCount;\n\n-- The DoD wants to move a substantial amount of equipment.  They need trains that have over 1000 horsepower.  However, they will only consider engines that were last serviced on or after Jan 1st, 2021.  \n-- Display the train Id and departure marker for trains that meet this criteria.\nSELECT DISTINCT train.trainId, train.departMarker\nFROM train\nINNER JOIN carintrain\n    ON train.trainId = carintrain.trainId\nINNER JOIN enginecar\n    ON enginecar.carId = carintrain.carId\nWHERE horsePower > 1000 AND dateLastEngineService > '2021-01-01';\n\n-- You want to see which supervisors are not pulling their weight.  Show the last name and number of shifts that each supervisor has worked.\nSELECT crewsupervisor.lastname AS supervisorLastname, COUNT(crewtotrain.shift) AS shiftNum\nFROM crewmember\nLEFT JOIN crewtotrain\n    ON crewmember.crewId = crewtotrain.crewId\nINNER JOIN crewmember AS crewsupervisor \n    ON crewmember.supervisor = crewsupervisor.crewId\nGROUP BY crewsupervisor.lastname;\n\n\nSELECT DISTINCT supervisor\nFROM crewmember;\n\n\nDESCRIBE locationmarker;\nALTER TABLE locationmarker\nCHANGE xLocation latitude FLOAT NOT NULL,\nCHANGE yLocation longitude FLOAT NOT NULL;\n\nDESCRIBE train;\nALTER TABLE carintrain;\nALTER TABLE traincar\nMODIFY yearBuilt YEAR NOT NULL;\nALTER TABLE train\nMODIFY yearBuilt YEAR NOT NULL;\n\nDESCRIBE traincar;\nALTER TABLE train\nMODIFY scheduledArrival DATETIME,\nADD CONSTRAINT noTimeTravel CHECK (departDate < actualArrival),\nADD CONSTRAINT noTimeTravel2 CHECK (departDate < scheduledArrival),\nADD CONSTRAINT noStayingInSamePlace CHECK (arrivalMarker != departMarker);\nSHOW CREATE TABLE carintrain;\n\nALTER TABLE traincar\nMODIFY yearBuilt YEAR NOT NULL,\nADD CONSTRAINT notBeforeInvention CHECK (yearBuilt > 1804);\nSELECT *\nFROM traincar;\n\nSELECT COUNT(*) AS countOfSWTrains\nFROM (\n    SELECT train.trainId, COUNT(carintrain.carId) AS carCount, train.arrivalMarker, locationmarker.latitude, locationmarker.longitude\n    FROM train\n    JOIN carintrain \n        ON train.trainId = carintrain.trainId\n    JOIN locationmarker\n        ON locationmarker.locationId = train.arrivalmarker\n    WHERE locationmarker.latitude < 30 and locationmarker.longitude < 30\n    GROUP BY train.trainId\n    HAVING COUNT(carintrain.carId) >= 20\n) AS rowCount;\nSELECT *\nFROM traincar\nINNER JOIN cargocar\n    ON traincar.carId = cargocar.carId\nWHERE manufacturer LIKE \"American Railcar\"\nAND yearBuilt < 2010\nORDER BY yearBuilt DESC, cargoType ASC;\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n",
+    "options": {
+        "tabSize": 4,
+        "insertSpaces": true,
+        "indentSize": 4,
+        "defaultEOL": "CRLF",
+        "trimAutoWhitespace": true
+    },
+    "viewState": {
+        "cursorState": [
+            {
+                "inSelectionMode": false,
+                "selectionStart": {
+                    "lineNumber": 118,
+                    "column": 30
+                },
+                "position": {
+                    "lineNumber": 118,
+                    "column": 30
+                }
+            }
+        ],
+        "viewState": {
+            "scrollLeft": 0,
+            "firstPosition": {
+                "lineNumber": 113,
+                "column": 1
+            },
+            "firstPositionDeltaTop": 70
+        },
+        "contributionsState": {
+            "editor.contrib.folding": {},
+            "editor.contrib.wordHighlighter": false
+        }
+    },
+    "contexts": [
+        {
+            "state": {
+                "start": 1,
+                "end": 1,
+                "language": "mysql",
+                "currentSet": 1,
+                "statements": [
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 0,
+                            "length": 10
+                        },
+                        "contentStart": 0,
+                        "state": 0
+                    }
+                ]
+            },
+            "data": []
+        },
+        {
+            "state": {
+                "start": 2,
+                "end": 4,
+                "language": "mysql",
+                "currentSet": 2,
+                "statements": [
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 0,
+                            "length": 12
+                        },
+                        "contentStart": 0,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 12,
+                            "length": 25
+                        },
+                        "contentStart": 13,
+                        "state": 0
+                    }
+                ]
+            },
+            "data": []
+        },
+        {
+            "state": {
+                "start": 5,
+                "end": 10,
+                "language": "mysql",
+                "currentSet": 1,
+                "statements": [
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 0,
+                            "length": 168
+                        },
+                        "contentStart": 0,
+                        "state": 0
+                    }
+                ]
+            },
+            "data": []
+        },
+        {
+            "state": {
+                "start": 11,
+                "end": 15,
+                "language": "mysql",
+                "currentSet": 1,
+                "statements": [
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 0,
+                            "length": 146
+                        },
+                        "contentStart": 0,
+                        "state": 0
+                    }
+                ]
+            },
+            "data": []
+        },
+        {
+            "state": {
+                "start": 16,
+                "end": 16,
+                "language": "mysql",
+                "currentSet": 0,
+                "statements": [
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 0,
+                            "length": 0
+                        },
+                        "contentStart": 0,
+                        "state": 0
+                    }
+                ]
+            },
+            "data": []
+        },
+        {
+            "state": {
+                "start": 17,
+                "end": 24,
+                "language": "mysql",
+                "result": {
+                    "type": "text",
+                    "text": [
+                        {
+                            "type": 4,
+                            "index": 0,
+                            "resultId": "77376434-bc2f-4b5b-8143-ae66959536d1",
+                            "content": "OK, 0 records retrieved in 0.503ms"
+                        }
+                    ]
+                },
+                "currentHeight": 28,
+                "currentSet": 1,
+                "statements": [
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 0,
+                            "length": 334
+                        },
+                        "contentStart": 149,
+                        "state": 0
+                    }
+                ]
+            },
+            "data": []
+        },
+        {
+            "state": {
+                "start": 25,
+                "end": 25,
+                "language": "mysql",
+                "currentSet": 1,
+                "statements": [
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 0,
+                            "length": 0
+                        },
+                        "contentStart": 0,
+                        "state": 0
+                    }
+                ]
+            },
+            "data": []
+        },
+        {
+            "state": {
+                "start": 26,
+                "end": 30,
+                "language": "mysql",
+                "result": {
+                    "type": "resultIds",
+                    "list": [
+                        "244d848c-191f-4527-abd4-514a04df4973"
+                    ]
+                },
+                "currentHeight": 36,
+                "currentSet": 1,
+                "statements": [
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 0,
+                            "length": 294
+                        },
+                        "contentStart": 198,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 294,
+                            "length": 1
+                        },
+                        "contentStart": 293,
+                        "state": 3
+                    }
+                ]
+            },
+            "data": [
+                {
+                    "tabId": "ad9ce891-d780-4f2f-c37f-ecb8519f11cc",
+                    "resultId": "244d848c-191f-4527-abd4-514a04df4973",
+                    "rows": [
+                        {
+                            "0": 3,
+                            "1": 180000,
+                            "2": "2022-08-15",
+                            "3": "2023-08-15"
+                        },
+                        {
+                            "0": 18,
+                            "1": 400000,
+                            "2": "2022-02-17",
+                            "3": "2023-02-17"
+                        },
+                        {
+                            "0": 33,
+                            "1": 300000,
+                            "2": "2021-08-19",
+                            "3": "2022-08-19"
+                        },
+                        {
+                            "0": 46,
+                            "1": 400000,
+                            "2": "2021-06-13",
+                            "3": "2022-06-13"
+                        },
+                        {
+                            "0": 58,
+                            "1": 230000,
+                            "2": "2022-01-09",
+                            "3": "2023-01-09"
+                        },
+                        {
+                            "0": 64,
+                            "1": 150000,
+                            "2": "2021-12-25",
+                            "3": "2022-12-25"
+                        },
+                        {
+                            "0": 81,
+                            "1": 50000,
+                            "2": "2022-08-26",
+                            "3": "2023-08-26"
+                        },
+                        {
+                            "0": 93,
+                            "1": 10000,
+                            "2": "2022-02-28",
+                            "3": "2023-02-28"
+                        }
+                    ],
+                    "columns": [
+                        {
+                            "title": "carId",
+                            "field": "0",
+                            "dataType": {
+                                "type": 4,
+                                "flags": [
+                                    "SIGNED",
+                                    "ZEROFILL"
+                                ],
+                                "numericPrecision": 10,
+                                "parameterFormatType": "OneOrZero",
+                                "synonyms": [
+                                    "INTEGER",
+                                    "INT4"
+                                ]
+                            },
+                            "inPK": true,
+                            "nullable": false,
+                            "autoIncrement": false
+                        },
+                        {
+                            "title": "horsePower",
+                            "field": "1",
+                            "dataType": {
+                                "type": 4,
+                                "flags": [
+                                    "SIGNED",
+                                    "ZEROFILL"
+                                ],
+                                "numericPrecision": 10,
+                                "parameterFormatType": "OneOrZero",
+                                "synonyms": [
+                                    "INTEGER",
+                                    "INT4"
+                                ]
+                            },
+                            "inPK": false,
+                            "nullable": false,
+                            "autoIncrement": false
+                        },
+                        {
+                            "title": "dateLastEngineService",
+                            "field": "2",
+                            "dataType": {
+                                "type": 27,
+                                "needsQuotes": true
+                            },
+                            "inPK": false,
+                            "nullable": false,
+                            "autoIncrement": false
+                        },
+                        {
+                            "title": "nextEngineService",
+                            "field": "3",
+                            "dataType": {
+                                "type": 27,
+                                "needsQuotes": true
+                            },
+                            "inPK": false,
+                            "nullable": false,
+                            "autoIncrement": false
+                        }
+                    ],
+                    "executionInfo": {
+                        "text": "OK, 8 records retrieved in 0.498ms"
+                    },
+                    "totalRowCount": 8,
+                    "hasMoreRows": false,
+                    "currentPage": 0,
+                    "index": 0,
+                    "sql": "-- The logistics company wants to know when each car needs to be serviced next.  A car is due 365 days after their previous service date.  \n-- Show the car id, manufacturer, and new service date.  \nSELECT * , DATE_ADD(dateLastEngineService, INTERVAL 1 YEAR) AS nextEngineService\nFROM enginecar",
+                    "updatable": true,
+                    "fullTableName": "enginecar"
+                }
+            ]
+        },
+        {
+            "state": {
+                "start": 31,
+                "end": 36,
+                "language": "mysql",
+                "result": {
+                    "type": "resultIds",
+                    "list": [
+                        "12ab7241-5fec-4c17-8ebf-ab9dedc08723"
+                    ]
+                },
+                "currentHeight": 36,
+                "currentSet": 1,
+                "statements": [
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 0,
+                            "length": 193
+                        },
+                        "contentStart": 72,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 193,
+                            "length": 1
+                        },
+                        "contentStart": 192,
+                        "state": 3
+                    }
+                ]
+            },
+            "data": [
+                {
+                    "tabId": "ad9ce891-d780-4f2f-c37f-ecb8519f11cc",
+                    "resultId": "12ab7241-5fec-4c17-8ebf-ab9dedc08723",
+                    "rows": [
+                        {
+                            "0": 3,
+                            "1": 180000,
+                            "2": 2019
+                        },
+                        {
+                            "0": 18,
+                            "1": 400000,
+                            "2": 1993
+                        },
+                        {
+                            "0": 33,
+                            "1": 300000,
+                            "2": 2018
+                        },
+                        {
+                            "0": 46,
+                            "1": 400000,
+                            "2": 2003
+                        },
+                        {
+                            "0": 58,
+                            "1": 230000,
+                            "2": 2013
+                        },
+                        {
+                            "0": 64,
+                            "1": 150000,
+                            "2": 1974
+                        },
+                        {
+                            "0": 81,
+                            "1": 50000,
+                            "2": 1959
+                        },
+                        {
+                            "0": 93,
+                            "1": 10000,
+                            "2": 1948
+                        }
+                    ],
+                    "columns": [
+                        {
+                            "title": "carId",
+                            "field": "0",
+                            "dataType": {
+                                "type": 4,
+                                "flags": [
+                                    "SIGNED",
+                                    "ZEROFILL"
+                                ],
+                                "numericPrecision": 10,
+                                "parameterFormatType": "OneOrZero",
+                                "synonyms": [
+                                    "INTEGER",
+                                    "INT4"
+                                ]
+                            },
+                            "inPK": false,
+                            "nullable": false,
+                            "autoIncrement": false
+                        },
+                        {
+                            "title": "horsePower",
+                            "field": "1",
+                            "dataType": {
+                                "type": 4,
+                                "flags": [
+                                    "SIGNED",
+                                    "ZEROFILL"
+                                ],
+                                "numericPrecision": 10,
+                                "parameterFormatType": "OneOrZero",
+                                "synonyms": [
+                                    "INTEGER",
+                                    "INT4"
+                                ]
+                            },
+                            "inPK": false,
+                            "nullable": false,
+                            "autoIncrement": false
+                        },
+                        {
+                            "title": "yearBuilt",
+                            "field": "2",
+                            "dataType": {
+                                "type": 4,
+                                "flags": [
+                                    "SIGNED",
+                                    "ZEROFILL"
+                                ],
+                                "numericPrecision": 10,
+                                "parameterFormatType": "OneOrZero",
+                                "synonyms": [
+                                    "INTEGER",
+                                    "INT4"
+                                ]
+                            },
+                            "inPK": false,
+                            "nullable": false,
+                            "autoIncrement": false
+                        }
+                    ],
+                    "executionInfo": {
+                        "text": "OK, 8 records retrieved in 0.499ms"
+                    },
+                    "totalRowCount": 8,
+                    "hasMoreRows": false,
+                    "currentPage": 0,
+                    "index": 0,
+                    "sql": "-- Display the car id, horsepower, and year built for only engine cars.\nSELECT enginecar.carId, horsePower, yearBuilt\nFROM enginecar\nINNER JOIN traincar\n    ON enginecar.carId = traincar.carId",
+                    "updatable": false,
+                    "fullTableName": ""
+                }
+            ]
+        },
+        {
+            "state": {
+                "start": 37,
+                "end": 43,
+                "language": "mysql",
+                "result": {
+                    "type": "resultIds",
+                    "list": [
+                        "32258b94-108f-416f-d5d4-c09e0295352d"
+                    ]
+                },
+                "currentHeight": 36,
+                "currentSet": 1,
+                "statements": [
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 0,
+                            "length": 221
+                        },
+                        "contentStart": 78,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 221,
+                            "length": 1
+                        },
+                        "contentStart": 220,
+                        "state": 3
+                    }
+                ]
+            },
+            "data": [
+                {
+                    "tabId": "ad9ce891-d780-4f2f-c37f-ecb8519f11cc",
+                    "resultId": "32258b94-108f-416f-d5d4-c09e0295352d",
+                    "rows": [
+                        {
+                            "0": 29,
+                            "1": "Alabama"
+                        },
+                        {
+                            "0": 43,
+                            "1": "Talgo"
+                        },
+                        {
+                            "0": 67,
+                            "1": "Talgo"
+                        },
+                        {
+                            "0": 88,
+                            "1": "American Railcar"
+                        }
+                    ],
+                    "columns": [
+                        {
+                            "title": "carId",
+                            "field": "0",
+                            "dataType": {
+                                "type": 4,
+                                "flags": [
+                                    "SIGNED",
+                                    "ZEROFILL"
+                                ],
+                                "numericPrecision": 10,
+                                "parameterFormatType": "OneOrZero",
+                                "synonyms": [
+                                    "INTEGER",
+                                    "INT4"
+                                ]
+                            },
+                            "inPK": false,
+                            "nullable": false,
+                            "autoIncrement": false
+                        },
+                        {
+                            "title": "manufacturer",
+                            "field": "1",
+                            "dataType": {
+                                "type": 17,
+                                "characterMaximumLength": 65535,
+                                "flags": [
+                                    "BINARY",
+                                    "ASCII",
+                                    "UNICODE"
+                                ],
+                                "needsQuotes": true,
+                                "parameterFormatType": "OneOrZero"
+                            },
+                            "inPK": false,
+                            "nullable": false,
+                            "autoIncrement": false
+                        }
+                    ],
+                    "executionInfo": {
+                        "text": "OK, 4 records retrieved in 0.499ms"
+                    },
+                    "totalRowCount": 4,
+                    "hasMoreRows": false,
+                    "currentPage": 0,
+                    "index": 0,
+                    "sql": "-- Show cars that are not part of a train.  List the car id and manufacturer.\nSELECT traincar.carId, manufacturer\nFROM traincar\nLEFT JOIN carintrain\n    ON traincar.carId = carintrain.carId\nWHERE carintrain.carId IS NULL",
+                    "updatable": false,
+                    "fullTableName": ""
+                }
+            ]
+        },
+        {
+            "state": {
+                "start": 44,
+                "end": 50,
+                "language": "mysql",
+                "result": {
+                    "type": "resultIds",
+                    "list": [
+                        "aca698b3-9b58-4ede-897d-5b8c461ef757"
+                    ]
+                },
+                "currentHeight": 36,
+                "currentSet": 1,
+                "statements": [
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 0,
+                            "length": 286
+                        },
+                        "contentStart": 108,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 286,
+                            "length": 1
+                        },
+                        "contentStart": 285,
+                        "state": 3
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 286,
+                            "length": 1
+                        },
+                        "contentStart": 285,
+                        "state": 3
+                    }
+                ]
+            },
+            "data": [
+                {
+                    "tabId": "ad9ce891-d780-4f2f-c37f-ecb8519f11cc",
+                    "resultId": "aca698b3-9b58-4ede-897d-5b8c461ef757",
+                    "rows": [
+                        {
+                            "0": 10,
+                            "1": "2022-05-08 21:03:00",
+                            "2": 1
+                        },
+                        {
+                            "0": 7,
+                            "1": "2021-09-02 06:08:00",
+                            "2": 2
+                        },
+                        {
+                            "0": 5,
+                            "1": "2022-06-07 23:24:00",
+                            "2": 3
+                        },
+                        {
+                            "0": 10,
+                            "1": "2022-06-25 11:01:00",
+                            "2": 4
+                        },
+                        {
+                            "0": 5,
+                            "1": "2022-07-19 02:46:00",
+                            "2": 5
+                        },
+                        {
+                            "0": 9,
+                            "1": "2022-06-10 19:54:00",
+                            "2": 6
+                        },
+                        {
+                            "0": 7,
+                            "1": "2021-09-01 11:07:00",
+                            "2": 7
+                        },
+                        {
+                            "0": 4,
+                            "1": "2021-08-30 06:27:00",
+                            "2": 8
+                        },
+                        {
+                            "0": 7,
+                            "1": "2021-09-01 23:41:00",
+                            "2": 9
+                        },
+                        {
+                            "0": 7,
+                            "1": "2022-08-25 08:04:00",
+                            "2": 10
+                        },
+                        {
+                            "0": 8,
+                            "1": "2022-08-22 20:23:00",
+                            "2": 11
+                        },
+                        {
+                            "0": 8,
+                            "1": "2022-06-28 02:23:00",
+                            "2": 12
+                        },
+                        {
+                            "0": 9,
+                            "1": "2021-09-03 23:46:00",
+                            "2": 13
+                        },
+                        {
+                            "0": 4,
+                            "1": "2021-09-05 02:19:00",
+                            "2": 14
+                        },
+                        {
+                            "0": 10,
+                            "1": "2022-08-11 03:00:00",
+                            "2": 15
+                        },
+                        {
+                            "0": 9,
+                            "1": "2021-09-07 23:09:00",
+                            "2": 16
+                        },
+                        {
+                            "0": 5,
+                            "1": "2022-06-22 09:26:00",
+                            "2": 17
+                        },
+                        {
+                            "0": 9,
+                            "1": "2022-05-28 20:03:00",
+                            "2": 18
+                        },
+                        {
+                            "0": 7,
+                            "1": "2021-08-30 12:31:00",
+                            "2": 19
+                        },
+                        {
+                            "0": 7,
+                            "1": "2022-08-27 01:35:00",
+                            "2": 20
+                        },
+                        {
+                            "0": 5,
+                            "1": "2022-07-16 23:03:00",
+                            "2": 21
+                        },
+                        {
+                            "0": 9,
+                            "1": "2022-08-12 20:58:00",
+                            "2": 22
+                        },
+                        {
+                            "0": 7,
+                            "1": "2021-09-02 22:54:00",
+                            "2": 23
+                        },
+                        {
+                            "0": 5,
+                            "1": "2022-07-22 22:24:00",
+                            "2": 24
+                        },
+                        {
+                            "0": 9,
+                            "1": "2022-08-19 16:12:00",
+                            "2": 25
+                        },
+                        {
+                            "0": 5,
+                            "1": "2022-08-07 13:16:00",
+                            "2": 26
+                        },
+                        {
+                            "0": 7,
+                            "1": "2022-07-10 10:26:00",
+                            "2": 27
+                        },
+                        {
+                            "0": 6,
+                            "1": "2021-09-01 17:56:00",
+                            "2": 28
+                        },
+                        {
+                            "0": 4,
+                            "1": "2022-08-02 08:27:00",
+                            "2": 29
+                        },
+                        {
+                            "0": 5,
+                            "1": "2022-07-25 03:43:00",
+                            "2": 30
+                        },
+                        {
+                            "0": 7,
+                            "1": "2022-07-17 11:54:00",
+                            "2": 31
+                        },
+                        {
+                            "0": 10,
+                            "1": "2022-08-07 11:40:00",
+                            "2": 32
+                        },
+                        {
+                            "0": 7,
+                            "1": "2022-07-11 16:29:00",
+                            "2": 33
+                        },
+                        {
+                            "0": 9,
+                            "1": "2022-08-17 03:12:00",
+                            "2": 34
+                        },
+                        {
+                            "0": 8,
+                            "1": "2022-07-15 02:44:00",
+                            "2": 35
+                        },
+                        {
+                            "0": 8,
+                            "1": "2021-09-01 02:15:00",
+                            "2": 36
+                        },
+                        {
+                            "0": 6,
+                            "1": "2022-08-18 05:33:00",
+                            "2": 37
+                        },
+                        {
+                            "0": 6,
+                            "1": "2021-09-03 22:58:00",
+                            "2": 38
+                        },
+                        {
+                            "0": 4,
+                            "1": "2022-08-01 14:29:00",
+                            "2": 39
+                        }
+                    ],
+                    "columns": [
+                        {
+                            "title": "numberOfLocationMarkers",
+                            "field": "0",
+                            "dataType": {
+                                "type": 4,
+                                "flags": [
+                                    "SIGNED",
+                                    "ZEROFILL"
+                                ],
+                                "numericPrecision": 10,
+                                "parameterFormatType": "OneOrZero",
+                                "synonyms": [
+                                    "INTEGER",
+                                    "INT4"
+                                ]
+                            },
+                            "inPK": false,
+                            "nullable": false,
+                            "autoIncrement": false
+                        },
+                        {
+                            "title": "departDate",
+                            "field": "1",
+                            "dataType": {
+                                "type": 26,
+                                "dateTimePrecision": 8,
+                                "needsQuotes": true,
+                                "parameterFormatType": "OneOrZero"
+                            },
+                            "inPK": false,
+                            "nullable": false,
+                            "autoIncrement": false
+                        },
+                        {
+                            "title": "trainId",
+                            "field": "2",
+                            "dataType": {
+                                "type": 4,
+                                "flags": [
+                                    "SIGNED",
+                                    "ZEROFILL"
+                                ],
+                                "numericPrecision": 10,
+                                "parameterFormatType": "OneOrZero",
+                                "synonyms": [
+                                    "INTEGER",
+                                    "INT4"
+                                ]
+                            },
+                            "inPK": false,
+                            "nullable": false,
+                            "autoIncrement": false
+                        }
+                    ],
+                    "executionInfo": {
+                        "text": "OK, 39 records retrieved in 0.5ms"
+                    },
+                    "totalRowCount": 39,
+                    "hasMoreRows": false,
+                    "currentPage": 0,
+                    "index": 0,
+                    "sql": "-- Show the train id, departure date, and number of location markers that the train travels on its route.  \nSELECT COUNT(route.locationId) AS numberOfLocationMarkers, train.departDate, train.trainId\nFROM train\nLEFT JOIN route\n    ON train.trainId = route.trainId\nGROUP BY train.trainId",
+                    "updatable": false,
+                    "fullTableName": ""
+                }
+            ]
+        },
+        {
+            "state": {
+                "start": 51,
+                "end": 59,
+                "language": "mysql",
+                "result": {
+                    "type": "resultIds",
+                    "list": [
+                        "0b796390-202c-4bcb-b88c-2216b3603ac8"
+                    ]
+                },
+                "currentHeight": 36,
+                "currentSet": 1,
+                "statements": [
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 0,
+                            "length": 394
+                        },
+                        "contentStart": 163,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 394,
+                            "length": 1
+                        },
+                        "contentStart": 393,
+                        "state": 3
+                    }
+                ]
+            },
+            "data": [
+                {
+                    "tabId": "ad9ce891-d780-4f2f-c37f-ecb8519f11cc",
+                    "resultId": "0b796390-202c-4bcb-b88c-2216b3603ac8",
+                    "rows": [
+                        {
+                            "0": 27,
+                            "1": 29,
+                            "2": 221
+                        },
+                        {
+                            "0": 11,
+                            "1": 29,
+                            "2": 90
+                        },
+                        {
+                            "0": 4,
+                            "1": 30,
+                            "2": 36
+                        },
+                        {
+                            "0": 39,
+                            "1": 30,
+                            "2": 313
+                        },
+                        {
+                            "0": 22,
+                            "1": 31,
+                            "2": 183
+                        },
+                        {
+                            "0": 8,
+                            "1": 32,
+                            "2": 65
+                        },
+                        {
+                            "0": 36,
+                            "1": 32,
+                            "2": 294
+                        },
+                        {
+                            "0": 26,
+                            "1": 33,
+                            "2": 213
+                        },
+                        {
+                            "0": 34,
+                            "1": 33,
+                            "2": 276
+                        }
+                    ],
+                    "columns": [
+                        {
+                            "title": "trainId",
+                            "field": "0",
+                            "dataType": {
+                                "type": 4,
+                                "flags": [
+                                    "SIGNED",
+                                    "ZEROFILL"
+                                ],
+                                "numericPrecision": 10,
+                                "parameterFormatType": "OneOrZero",
+                                "synonyms": [
+                                    "INTEGER",
+                                    "INT4"
+                                ]
+                            },
+                            "inPK": false,
+                            "nullable": false,
+                            "autoIncrement": false
+                        },
+                        {
+                            "title": "carCount",
+                            "field": "1",
+                            "dataType": {
+                                "type": 4,
+                                "flags": [
+                                    "SIGNED",
+                                    "ZEROFILL"
+                                ],
+                                "numericPrecision": 10,
+                                "parameterFormatType": "OneOrZero",
+                                "synonyms": [
+                                    "INTEGER",
+                                    "INT4"
+                                ]
+                            },
+                            "inPK": false,
+                            "nullable": false,
+                            "autoIncrement": false
+                        },
+                        {
+                            "title": "arrivalMarker",
+                            "field": "2",
+                            "dataType": {
+                                "type": 4,
+                                "flags": [
+                                    "SIGNED",
+                                    "ZEROFILL"
+                                ],
+                                "numericPrecision": 10,
+                                "parameterFormatType": "OneOrZero",
+                                "synonyms": [
+                                    "INTEGER",
+                                    "INT4"
+                                ]
+                            },
+                            "inPK": false,
+                            "nullable": false,
+                            "autoIncrement": false
+                        }
+                    ],
+                    "executionInfo": {
+                        "text": "OK, 9 records retrieved in 1.009ms"
+                    },
+                    "totalRowCount": 9,
+                    "hasMoreRows": false,
+                    "currentPage": 0,
+                    "index": 0,
+                    "sql": "-- Display trains that have at least 29 cars assigned to them.  Order the list by shortest train first.  Display the train id, number of cars, and arrival marker.\nSELECT train.trainId, COUNT(carintrain.carId) AS carCount, train.arrivalMarker\nFROM train\nJOIN carintrain \n    ON train.trainId = carintrain.trainId\nGROUP BY train.trainId\nHAVING COUNT(carintrain.carId) >= 29\nORDER BY carCount ASC",
+                    "updatable": false,
+                    "fullTableName": ""
+                }
+            ]
+        },
+        {
+            "state": {
+                "start": 60,
+                "end": 75,
+                "language": "mysql",
+                "result": {
+                    "type": "resultIds",
+                    "list": [
+                        "d08e16a2-e639-4587-ad3d-015e91fb731e"
+                    ]
+                },
+                "currentHeight": 36,
+                "currentSet": 1,
+                "statements": [
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 0,
+                            "length": 824
+                        },
+                        "contentStart": 302,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 824,
+                            "length": 1
+                        },
+                        "contentStart": 823,
+                        "state": 3
+                    }
+                ]
+            },
+            "data": [
+                {
+                    "tabId": "ad9ce891-d780-4f2f-c37f-ecb8519f11cc",
+                    "resultId": "d08e16a2-e639-4587-ad3d-015e91fb731e",
+                    "rows": [
+                        {
+                            "0": 18
+                        }
+                    ],
+                    "columns": [
+                        {
+                            "title": "countOfSWTrains",
+                            "field": "0",
+                            "dataType": {
+                                "type": 4,
+                                "flags": [
+                                    "SIGNED",
+                                    "ZEROFILL"
+                                ],
+                                "numericPrecision": 10,
+                                "parameterFormatType": "OneOrZero",
+                                "synonyms": [
+                                    "INTEGER",
+                                    "INT4"
+                                ]
+                            },
+                            "inPK": false,
+                            "nullable": false,
+                            "autoIncrement": false
+                        }
+                    ],
+                    "executionInfo": {
+                        "text": "OK, 1 record retrieved in 0.999ms"
+                    },
+                    "totalRowCount": 1,
+                    "hasMoreRows": false,
+                    "currentPage": 0,
+                    "index": 0,
+                    "sql": "-- Display a count of trains that have more than 20 cars and that arrived at a location that is SW of 30, 30.  A train is southwest when its lat and long are less than 30, 30.\n-- train.trainId, COUNT(carintrain.carId) AS carCount, train.arrivalMarker, locationmarker.latitude, locationmarker.longitude\nSELECT COUNT(*) AS countOfSWTrains\nFROM (\n    SELECT train.trainId, COUNT(carintrain.carId) AS carCount, train.arrivalMarker, locationmarker.latitude, locationmarker.longitude\n    FROM train\n    JOIN carintrain \n        ON train.trainId = carintrain.trainId\n    JOIN locationmarker\n        ON locationmarker.locationId = train.arrivalmarker\n    WHERE locationmarker.latitude < 30 and locationmarker.longitude < 30\n    GROUP BY train.trainId\n    HAVING COUNT(carintrain.carId) >= 20\n    ORDER BY carCount ASC\n) AS rowCount",
+                    "updatable": true,
+                    "fullTableName": ""
+                }
+            ]
+        },
+        {
+            "state": {
+                "start": 76,
+                "end": 85,
+                "language": "mysql",
+                "result": {
+                    "type": "resultIds",
+                    "list": [
+                        "4bbd3610-fcae-42d0-c545-b0c84728e0b7"
+                    ]
+                },
+                "currentHeight": 36,
+                "currentSet": 1,
+                "statements": [
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 0,
+                            "length": 539
+                        },
+                        "contentStart": 286,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 539,
+                            "length": 1
+                        },
+                        "contentStart": 538,
+                        "state": 3
+                    }
+                ]
+            },
+            "data": [
+                {
+                    "tabId": "ad9ce891-d780-4f2f-c37f-ecb8519f11cc",
+                    "resultId": "4bbd3610-fcae-42d0-c545-b0c84728e0b7",
+                    "rows": [
+                        {
+                            "0": 16,
+                            "1": 126
+                        },
+                        {
+                            "0": 22,
+                            "1": 174
+                        },
+                        {
+                            "0": 2,
+                            "1": 12
+                        },
+                        {
+                            "0": 5,
+                            "1": 37
+                        },
+                        {
+                            "0": 15,
+                            "1": 115
+                        },
+                        {
+                            "0": 18,
+                            "1": 142
+                        },
+                        {
+                            "0": 23,
+                            "1": 184
+                        },
+                        {
+                            "0": 27,
+                            "1": 214
+                        },
+                        {
+                            "0": 28,
+                            "1": 222
+                        },
+                        {
+                            "0": 30,
+                            "1": 234
+                        },
+                        {
+                            "0": 36,
+                            "1": 286
+                        },
+                        {
+                            "0": 37,
+                            "1": 295
+                        },
+                        {
+                            "0": 4,
+                            "1": 26
+                        },
+                        {
+                            "0": 8,
+                            "1": 61
+                        },
+                        {
+                            "0": 19,
+                            "1": 152
+                        },
+                        {
+                            "0": 25,
+                            "1": 198
+                        },
+                        {
+                            "0": 33,
+                            "1": 259
+                        },
+                        {
+                            "0": 35,
+                            "1": 277
+                        },
+                        {
+                            "0": 9,
+                            "1": 66
+                        },
+                        {
+                            "0": 13,
+                            "1": 100
+                        },
+                        {
+                            "0": 14,
+                            "1": 110
+                        },
+                        {
+                            "0": 32,
+                            "1": 248
+                        },
+                        {
+                            "0": 38,
+                            "1": 302
+                        },
+                        {
+                            "0": 10,
+                            "1": 74
+                        },
+                        {
+                            "0": 20,
+                            "1": 160
+                        },
+                        {
+                            "0": 31,
+                            "1": 240
+                        },
+                        {
+                            "0": 6,
+                            "1": 43
+                        },
+                        {
+                            "0": 17,
+                            "1": 136
+                        },
+                        {
+                            "0": 21,
+                            "1": 168
+                        },
+                        {
+                            "0": 34,
+                            "1": 267
+                        },
+                        {
+                            "0": 1,
+                            "1": 1
+                        },
+                        {
+                            "0": 11,
+                            "1": 82
+                        },
+                        {
+                            "0": 12,
+                            "1": 91
+                        },
+                        {
+                            "0": 24,
+                            "1": 192
+                        },
+                        {
+                            "0": 29,
+                            "1": 229
+                        },
+                        {
+                            "0": 3,
+                            "1": 20
+                        }
+                    ],
+                    "columns": [
+                        {
+                            "title": "trainId",
+                            "field": "0",
+                            "dataType": {
+                                "type": 4,
+                                "flags": [
+                                    "SIGNED",
+                                    "ZEROFILL"
+                                ],
+                                "numericPrecision": 10,
+                                "parameterFormatType": "OneOrZero",
+                                "synonyms": [
+                                    "INTEGER",
+                                    "INT4"
+                                ]
+                            },
+                            "inPK": false,
+                            "nullable": false,
+                            "autoIncrement": false
+                        },
+                        {
+                            "title": "departMarker",
+                            "field": "1",
+                            "dataType": {
+                                "type": 4,
+                                "flags": [
+                                    "SIGNED",
+                                    "ZEROFILL"
+                                ],
+                                "numericPrecision": 10,
+                                "parameterFormatType": "OneOrZero",
+                                "synonyms": [
+                                    "INTEGER",
+                                    "INT4"
+                                ]
+                            },
+                            "inPK": false,
+                            "nullable": false,
+                            "autoIncrement": false
+                        }
+                    ],
+                    "executionInfo": {
+                        "text": "OK, 36 records retrieved in 1ms"
+                    },
+                    "totalRowCount": 36,
+                    "hasMoreRows": false,
+                    "currentPage": 0,
+                    "index": 0,
+                    "sql": "-- The DoD wants to move a substantial amount of equipment.  They need trains that have over 1000 horsepower.  However, they will only consider engines that were last serviced on or after Jan 1st, 2021.  \n-- Display the train Id and departure marker for trains that meet this criteria.\nSELECT DISTINCT train.trainId, train.departMarker\nFROM train\nINNER JOIN carintrain\n    ON train.trainId = carintrain.trainId\nINNER JOIN enginecar\n    ON enginecar.carId = carintrain.carId\nWHERE horsePower > 1000 AND dateLastEngineService > '2021-01-01'",
+                    "updatable": false,
+                    "fullTableName": ""
+                }
+            ]
+        },
+        {
+            "state": {
+                "start": 86,
+                "end": 95,
+                "language": "mysql",
+                "result": {
+                    "type": "resultIds",
+                    "list": [
+                        "bb1b3749-697e-4246-fb2b-05a7883b0a23"
+                    ]
+                },
+                "currentHeight": 36,
+                "currentSet": 2,
+                "statements": [
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 0,
+                            "length": 443
+                        },
+                        "contentStart": 141,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 443,
+                            "length": 2
+                        },
+                        "contentStart": 442,
+                        "state": 3
+                    }
+                ]
+            },
+            "data": [
+                {
+                    "tabId": "ad9ce891-d780-4f2f-c37f-ecb8519f11cc",
+                    "resultId": "bb1b3749-697e-4246-fb2b-05a7883b0a23",
+                    "rows": [
+                        {
+                            "0": "TATE",
+                            "1": 55
+                        },
+                        {
+                            "0": "ECKERT",
+                            "1": 54
+                        },
+                        {
+                            "0": "AKEROYD",
+                            "1": 0
+                        },
+                        {
+                            "0": "ALLAIRE",
+                            "1": 47
+                        }
+                    ],
+                    "columns": [
+                        {
+                            "title": "supervisorLastname",
+                            "field": "0",
+                            "dataType": {
+                                "type": 17,
+                                "characterMaximumLength": 65535,
+                                "flags": [
+                                    "BINARY",
+                                    "ASCII",
+                                    "UNICODE"
+                                ],
+                                "needsQuotes": true,
+                                "parameterFormatType": "OneOrZero"
+                            },
+                            "inPK": false,
+                            "nullable": false,
+                            "autoIncrement": false
+                        },
+                        {
+                            "title": "shiftNum",
+                            "field": "1",
+                            "dataType": {
+                                "type": 4,
+                                "flags": [
+                                    "SIGNED",
+                                    "ZEROFILL"
+                                ],
+                                "numericPrecision": 10,
+                                "parameterFormatType": "OneOrZero",
+                                "synonyms": [
+                                    "INTEGER",
+                                    "INT4"
+                                ]
+                            },
+                            "inPK": false,
+                            "nullable": false,
+                            "autoIncrement": false
+                        }
+                    ],
+                    "executionInfo": {
+                        "text": "OK, 4 records retrieved in 1.499ms"
+                    },
+                    "totalRowCount": 4,
+                    "hasMoreRows": false,
+                    "currentPage": 0,
+                    "index": 0,
+                    "sql": "-- You want to see which supervisors are not pulling their weight.  Show the last name and number of shifts that each supervisor has worked.\nSELECT crewsupervisor.lastname AS supervisorLastname, COUNT(crewtotrain.shift) AS shiftNum\nFROM crewmember\nLEFT JOIN crewtotrain\n    ON crewmember.crewId = crewtotrain.crewId\nINNER JOIN crewmember AS crewsupervisor \n    ON crewmember.supervisor = crewsupervisor.crewId\nGROUP BY crewsupervisor.lastname",
+                    "updatable": false,
+                    "fullTableName": ""
+                }
+            ]
+        },
+        {
+            "state": {
+                "start": 96,
+                "end": 97,
+                "language": "mysql",
+                "result": {
+                    "type": "resultIds",
+                    "list": [
+                        "e28d5aac-2fa6-483c-b195-9864811839a3"
+                    ]
+                },
+                "currentHeight": 36,
+                "currentSet": 1,
+                "statements": [
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 0,
+                            "length": 43
+                        },
+                        "contentStart": 0,
+                        "state": 0
+                    }
+                ]
+            },
+            "data": [
+                {
+                    "tabId": "ad9ce891-d780-4f2f-c37f-ecb8519f11cc",
+                    "resultId": "e28d5aac-2fa6-483c-b195-9864811839a3",
+                    "rows": [
+                        {
+                            "0": null
+                        },
+                        {
+                            "0": 28
+                        },
+                        {
+                            "0": 60
+                        },
+                        {
+                            "0": 77
+                        },
+                        {
+                            "0": 112
+                        }
+                    ],
+                    "columns": [
+                        {
+                            "title": "supervisor",
+                            "field": "0",
+                            "dataType": {
+                                "type": 4,
+                                "flags": [
+                                    "SIGNED",
+                                    "ZEROFILL"
+                                ],
+                                "numericPrecision": 10,
+                                "parameterFormatType": "OneOrZero",
+                                "synonyms": [
+                                    "INTEGER",
+                                    "INT4"
+                                ]
+                            },
+                            "inPK": false,
+                            "nullable": false,
+                            "autoIncrement": false
+                        }
+                    ],
+                    "executionInfo": {
+                        "text": "OK, 5 records retrieved in 0.5ms"
+                    },
+                    "totalRowCount": 5,
+                    "hasMoreRows": false,
+                    "currentPage": 0,
+                    "index": 0,
+                    "sql": "SELECT DISTINCT supervisor\nFROM crewmember",
+                    "updatable": false,
+                    "fullTableName": ""
+                }
+            ]
+        },
+        {
+            "state": {
+                "start": 98,
+                "end": 98,
+                "language": "mysql",
+                "currentSet": 1,
+                "statements": [
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 0,
+                            "length": 0
+                        },
+                        "contentStart": 0,
+                        "state": 0
+                    }
+                ]
+            },
+            "data": []
+        },
+        {
+            "state": {
+                "start": 99,
+                "end": 99,
+                "language": "mysql",
+                "currentSet": 1,
+                "statements": [
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 0,
+                            "length": 0
+                        },
+                        "contentStart": 0,
+                        "state": 0
+                    }
+                ]
+            },
+            "data": []
+        },
+        {
+            "state": {
+                "start": 100,
+                "end": 100,
+                "language": "mysql",
+                "currentSet": 1,
+                "statements": [
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 0,
+                            "length": 24
+                        },
+                        "contentStart": 1,
+                        "state": 0
+                    }
+                ]
+            },
+            "data": []
+        },
+        {
+            "state": {
+                "start": 101,
+                "end": 103,
+                "language": "mysql",
+                "currentSet": 1,
+                "statements": [
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 0,
+                            "length": 111
+                        },
+                        "contentStart": 0,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 111,
+                            "length": 0
+                        },
+                        "contentStart": 110,
+                        "state": 3
+                    }
+                ]
+            },
+            "data": []
+        },
+        {
+            "state": {
+                "start": 104,
+                "end": 104,
+                "language": "mysql",
+                "currentSet": 1,
+                "statements": [
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 0,
+                            "length": 0
+                        },
+                        "contentStart": 0,
+                        "state": 0
+                    }
+                ]
+            },
+            "data": []
+        },
+        {
+            "state": {
+                "start": 105,
+                "end": 105,
+                "language": "mysql",
+                "currentSet": 1,
+                "statements": [
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 0,
+                            "length": 15
+                        },
+                        "contentStart": 1,
+                        "state": 0
+                    }
+                ]
+            },
+            "data": []
+        },
+        {
+            "state": {
+                "start": 106,
+                "end": 106,
+                "language": "mysql",
+                "currentSet": 1,
+                "statements": [
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 0,
+                            "length": 23
+                        },
+                        "contentStart": 0,
+                        "state": 0
+                    }
+                ]
+            },
+            "data": []
+        },
+        {
+            "state": {
+                "start": 107,
+                "end": 108,
+                "language": "mysql",
+                "currentSet": 1,
+                "statements": [
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 0,
+                            "length": 52
+                        },
+                        "contentStart": 0,
+                        "state": 0
+                    }
+                ]
+            },
+            "data": []
+        },
+        {
+            "state": {
+                "start": 109,
+                "end": 110,
+                "language": "mysql",
+                "currentSet": 1,
+                "statements": [
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 0,
+                            "length": 49
+                        },
+                        "contentStart": 0,
+                        "state": 0
+                    }
+                ]
+            },
+            "data": []
+        },
+        {
+            "state": {
+                "start": 111,
+                "end": 112,
+                "language": "mysql",
+                "result": {
+                    "type": "resultIds",
+                    "list": [
+                        "78489057-6be0-4724-f6fb-971dab7856d1"
+                    ]
+                },
+                "currentHeight": 142,
+                "currentSet": 1,
+                "statements": [
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 0,
+                            "length": 19
+                        },
+                        "contentStart": 2,
+                        "state": 0
+                    }
+                ]
+            },
+            "data": [
+                {
+                    "tabId": "ad9ce891-d780-4f2f-c37f-ecb8519f11cc",
+                    "resultId": "78489057-6be0-4724-f6fb-971dab7856d1",
+                    "rows": [
+                        {
+                            "0": "carId",
+                            "1": "int unsigned",
+                            "2": "NO",
+                            "3": "PRI",
+                            "4": null,
+                            "5": "auto_increment"
+                        },
+                        {
+                            "0": "manufacturer",
+                            "1": "varchar(60)",
+                            "2": "NO",
+                            "3": "",
+                            "4": null,
+                            "5": ""
+                        },
+                        {
+                            "0": "yearBuilt",
+                            "1": "int unsigned",
+                            "2": "NO",
+                            "3": "",
+                            "4": null,
+                            "5": ""
+                        }
+                    ],
+                    "columns": [
+                        {
+                            "title": "Field",
+                            "field": "0",
+                            "dataType": {
+                                "type": 17,
+                                "characterMaximumLength": 65535,
+                                "flags": [
+                                    "BINARY",
+                                    "ASCII",
+                                    "UNICODE"
+                                ],
+                                "needsQuotes": true,
+                                "parameterFormatType": "OneOrZero"
+                            },
+                            "inPK": false,
+                            "nullable": false,
+                            "autoIncrement": false
+                        },
+                        {
+                            "title": "Type",
+                            "field": "1",
+                            "dataType": {
+                                "type": 17,
+                                "characterMaximumLength": 65535,
+                                "flags": [
+                                    "BINARY",
+                                    "ASCII",
+                                    "UNICODE"
+                                ],
+                                "needsQuotes": true,
+                                "parameterFormatType": "OneOrZero"
+                            },
+                            "inPK": false,
+                            "nullable": false,
+                            "autoIncrement": false
+                        },
+                        {
+                            "title": "Null",
+                            "field": "2",
+                            "dataType": {
+                                "type": 17,
+                                "characterMaximumLength": 65535,
+                                "flags": [
+                                    "BINARY",
+                                    "ASCII",
+                                    "UNICODE"
+                                ],
+                                "needsQuotes": true,
+                                "parameterFormatType": "OneOrZero"
+                            },
+                            "inPK": false,
+                            "nullable": false,
+                            "autoIncrement": false
+                        },
+                        {
+                            "title": "Key",
+                            "field": "3",
+                            "dataType": {
+                                "type": 43,
+                                "needsQuotes": true
+                            },
+                            "inPK": false,
+                            "nullable": false,
+                            "autoIncrement": false
+                        },
+                        {
+                            "title": "Default",
+                            "field": "4",
+                            "dataType": {
+                                "type": 17,
+                                "characterMaximumLength": 65535,
+                                "flags": [
+                                    "BINARY",
+                                    "ASCII",
+                                    "UNICODE"
+                                ],
+                                "needsQuotes": true,
+                                "parameterFormatType": "OneOrZero"
+                            },
+                            "inPK": false,
+                            "nullable": false,
+                            "autoIncrement": false
+                        },
+                        {
+                            "title": "Extra",
+                            "field": "5",
+                            "dataType": {
+                                "type": 17,
+                                "characterMaximumLength": 65535,
+                                "flags": [
+                                    "BINARY",
+                                    "ASCII",
+                                    "UNICODE"
+                                ],
+                                "needsQuotes": true,
+                                "parameterFormatType": "OneOrZero"
+                            },
+                            "inPK": false,
+                            "nullable": false,
+                            "autoIncrement": false
+                        }
+                    ],
+                    "executionInfo": {
+                        "text": "OK, 3 records retrieved in 0.999ms"
+                    },
+                    "totalRowCount": 3,
+                    "hasMoreRows": false,
+                    "currentPage": 0,
+                    "index": 0,
+                    "sql": "\nDESCRIBE traincar",
+                    "updatable": false
+                }
+            ]
+        },
+        {
+            "state": {
+                "start": 113,
+                "end": 117,
+                "language": "mysql",
+                "result": {
+                    "type": "text",
+                    "text": [
+                        {
+                            "type": 4,
+                            "index": 0,
+                            "resultId": "db6d7c67-ff7b-4750-d67a-a4b9af4504d4",
+                            "content": "OK, 39 rows affected in 29.082ms"
+                        }
+                    ]
+                },
+                "currentHeight": 28,
+                "currentSet": 1,
+                "statements": [
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 0,
+                            "length": 258
+                        },
+                        "contentStart": 0,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 258,
+                            "length": 0
+                        },
+                        "contentStart": 257,
+                        "state": 3
+                    }
+                ]
+            },
+            "data": []
+        },
+        {
+            "state": {
+                "start": 118,
+                "end": 118,
+                "language": "mysql",
+                "result": {
+                    "type": "resultIds",
+                    "list": [
+                        "89bf24a8-2e01-42f5-b7a4-4cce3863e009"
+                    ]
+                },
+                "currentHeight": 206,
+                "currentSet": 1,
+                "statements": [
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 0,
+                            "length": 29
+                        },
+                        "contentStart": 0,
+                        "state": 0
+                    }
+                ]
+            },
+            "data": [
+                {
+                    "tabId": "ad9ce891-d780-4f2f-c37f-ecb8519f11cc",
+                    "resultId": "89bf24a8-2e01-42f5-b7a4-4cce3863e009",
+                    "rows": [
+                        {
+                            "0": "carintrain",
+                            "1": "CREATE TABLE `carintrain` (\n  `carId` int unsigned NOT NULL,\n  `trainId` int unsigned NOT NULL,\n  `carPosition` int unsigned NOT NULL,\n  PRIMARY KEY (`carId`,`trainId`),\n  CONSTRAINT `notNegative` CHECK ((`carPosition` >= 0))\n) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci"
+                        }
+                    ],
+                    "columns": [
+                        {
+                            "title": "Table",
+                            "field": "0",
+                            "dataType": {
+                                "type": 17,
+                                "characterMaximumLength": 65535,
+                                "flags": [
+                                    "BINARY",
+                                    "ASCII",
+                                    "UNICODE"
+                                ],
+                                "needsQuotes": true,
+                                "parameterFormatType": "OneOrZero"
+                            },
+                            "inPK": false,
+                            "nullable": false,
+                            "autoIncrement": false
+                        },
+                        {
+                            "title": "Create Table",
+                            "field": "1",
+                            "dataType": {
+                                "type": 17,
+                                "characterMaximumLength": 65535,
+                                "flags": [
+                                    "BINARY",
+                                    "ASCII",
+                                    "UNICODE"
+                                ],
+                                "needsQuotes": true,
+                                "parameterFormatType": "OneOrZero"
+                            },
+                            "inPK": false,
+                            "nullable": false,
+                            "autoIncrement": false
+                        }
+                    ],
+                    "executionInfo": {
+                        "text": "OK, 1 record retrieved in 0.503ms"
+                    },
+                    "totalRowCount": 1,
+                    "hasMoreRows": false,
+                    "currentPage": 0,
+                    "index": 0,
+                    "sql": "SHOW CREATE TABLE carintrain",
+                    "updatable": false
+                }
+            ]
+        },
+        {
+            "state": {
+                "start": 119,
+                "end": 119,
+                "language": "mysql",
+                "currentSet": 1,
+                "statements": [
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 0,
+                            "length": 0
+                        },
+                        "contentStart": 0,
+                        "state": 0
+                    }
+                ]
+            },
+            "data": []
+        },
+        {
+            "state": {
+                "start": 120,
+                "end": 122,
+                "language": "mysql",
+                "result": {
+                    "type": "text",
+                    "text": [
+                        {
+                            "type": 4,
+                            "index": 0,
+                            "resultId": "aaf1ff67-c153-422b-9c97-d863f8eb0780",
+                            "content": "OK, 99 rows affected in 19.302ms"
+                        }
+                    ]
+                },
+                "currentHeight": 28,
+                "currentSet": 1,
+                "statements": [
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 0,
+                            "length": 112
+                        },
+                        "contentStart": 0,
+                        "state": 0
+                    }
+                ]
+            },
+            "data": []
+        },
+        {
+            "state": {
+                "start": 123,
+                "end": 124,
+                "language": "mysql",
+                "result": {
+                    "type": "resultIds",
+                    "list": [
+                        "8cdc42f8-41d0-4b0e-8ab8-a6dcf87d713b"
+                    ]
+                },
+                "currentHeight": 352,
+                "currentSet": 1,
+                "statements": [
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 0,
+                            "length": 23
+                        },
+                        "contentStart": 0,
+                        "state": 0
+                    }
+                ]
+            },
+            "data": [
+                {
+                    "tabId": "ad9ce891-d780-4f2f-c37f-ecb8519f11cc",
+                    "resultId": "8cdc42f8-41d0-4b0e-8ab8-a6dcf87d713b",
+                    "rows": [
+                        {
+                            "0": 1,
+                            "1": "Talgo",
+                            "2": 1976
+                        },
+                        {
+                            "0": 2,
+                            "1": "Freight Car America",
+                            "2": 1979
+                        },
+                        {
+                            "0": 3,
+                            "1": "Global Railway Industries",
+                            "2": 2019
+                        },
+                        {
+                            "0": 4,
+                            "1": "Talgo",
+                            "2": 1964
+                        },
+                        {
+                            "0": 5,
+                            "1": "American Railcar",
+                            "2": 2019
+                        },
+                        {
+                            "0": 6,
+                            "1": "American Railcar",
+                            "2": 1963
+                        },
+                        {
+                            "0": 7,
+                            "1": "Alabama",
+                            "2": 1959
+                        },
+                        {
+                            "0": 8,
+                            "1": "Talgo",
+                            "2": 2018
+                        },
+                        {
+                            "0": 9,
+                            "1": "Alabama",
+                            "2": 1950
+                        },
+                        {
+                            "0": 10,
+                            "1": "Freight Car America",
+                            "2": 2020
+                        },
+                        {
+                            "0": 11,
+                            "1": "Alabama",
+                            "2": 1961
+                        },
+                        {
+                            "0": 12,
+                            "1": "Talgo",
+                            "2": 1987
+                        },
+                        {
+                            "0": 13,
+                            "1": "Talgo",
+                            "2": 2014
+                        },
+                        {
+                            "0": 14,
+                            "1": "Talgo",
+                            "2": 1965
+                        },
+                        {
+                            "0": 15,
+                            "1": "American Railcar",
+                            "2": 1954
+                        },
+                        {
+                            "0": 16,
+                            "1": "American Railcar",
+                            "2": 2005
+                        },
+                        {
+                            "0": 17,
+                            "1": "Talgo",
+                            "2": 1978
+                        },
+                        {
+                            "0": 18,
+                            "1": "Global Railway Industries",
+                            "2": 1993
+                        },
+                        {
+                            "0": 19,
+                            "1": "Freight Car America",
+                            "2": 1970
+                        },
+                        {
+                            "0": 20,
+                            "1": "National Steel Car",
+                            "2": 1999
+                        },
+                        {
+                            "0": 21,
+                            "1": "American Railcar",
+                            "2": 1979
+                        },
+                        {
+                            "0": 22,
+                            "1": "Talgo",
+                            "2": 1970
+                        },
+                        {
+                            "0": 23,
+                            "1": "Talgo",
+                            "2": 2013
+                        },
+                        {
+                            "0": 24,
+                            "1": "Talgo",
+                            "2": 1982
+                        },
+                        {
+                            "0": 25,
+                            "1": "Alabama",
+                            "2": 1963
+                        },
+                        {
+                            "0": 26,
+                            "1": "Alabama",
+                            "2": 1951
+                        },
+                        {
+                            "0": 27,
+                            "1": "Freight Car America",
+                            "2": 1959
+                        },
+                        {
+                            "0": 28,
+                            "1": "American Railcar",
+                            "2": 1980
+                        },
+                        {
+                            "0": 29,
+                            "1": "Alabama",
+                            "2": 1959
+                        },
+                        {
+                            "0": 30,
+                            "1": "Talgo",
+                            "2": 1986
+                        },
+                        {
+                            "0": 31,
+                            "1": "American Railcar",
+                            "2": 1991
+                        },
+                        {
+                            "0": 32,
+                            "1": "National Steel Car",
+                            "2": 1988
+                        },
+                        {
+                            "0": 33,
+                            "1": "Global Railway Industries",
+                            "2": 2018
+                        },
+                        {
+                            "0": 34,
+                            "1": "Alabama",
+                            "2": 1971
+                        },
+                        {
+                            "0": 35,
+                            "1": "Talgo",
+                            "2": 1948
+                        },
+                        {
+                            "0": 36,
+                            "1": "Alabama",
+                            "2": 2019
+                        },
+                        {
+                            "0": 37,
+                            "1": "Freight Car America",
+                            "2": 2004
+                        },
+                        {
+                            "0": 38,
+                            "1": "Alabama",
+                            "2": 1960
+                        },
+                        {
+                            "0": 39,
+                            "1": "American Railcar",
+                            "2": 1965
+                        },
+                        {
+                            "0": 40,
+                            "1": "Talgo",
+                            "2": 2000
+                        },
+                        {
+                            "0": 41,
+                            "1": "Talgo",
+                            "2": 2004
+                        },
+                        {
+                            "0": 42,
+                            "1": "Talgo",
+                            "2": 1978
+                        },
+                        {
+                            "0": 43,
+                            "1": "Talgo",
+                            "2": 1961
+                        },
+                        {
+                            "0": 44,
+                            "1": "Talgo",
+                            "2": 2004
+                        },
+                        {
+                            "0": 45,
+                            "1": "Alabama",
+                            "2": 1945
+                        },
+                        {
+                            "0": 46,
+                            "1": "Amsted Rail Group",
+                            "2": 2003
+                        },
+                        {
+                            "0": 47,
+                            "1": "American Railcar",
+                            "2": 1959
+                        },
+                        {
+                            "0": 48,
+                            "1": "Talgo",
+                            "2": 2000
+                        },
+                        {
+                            "0": 49,
+                            "1": "Alabama",
+                            "2": 1958
+                        },
+                        {
+                            "0": 50,
+                            "1": "American Railcar",
+                            "2": 1954
+                        },
+                        {
+                            "0": 51,
+                            "1": "Talgo",
+                            "2": 1951
+                        },
+                        {
+                            "0": 52,
+                            "1": "Talgo",
+                            "2": 2003
+                        },
+                        {
+                            "0": 53,
+                            "1": "Alabama",
+                            "2": 1992
+                        },
+                        {
+                            "0": 54,
+                            "1": "Talgo",
+                            "2": 1980
+                        },
+                        {
+                            "0": 55,
+                            "1": "Talgo",
+                            "2": 1995
+                        },
+                        {
+                            "0": 56,
+                            "1": "Talgo",
+                            "2": 1991
+                        },
+                        {
+                            "0": 57,
+                            "1": "Freight Car America",
+                            "2": 1998
+                        },
+                        {
+                            "0": 58,
+                            "1": "Global Railway Industries",
+                            "2": 2013
+                        },
+                        {
+                            "0": 59,
+                            "1": "Talgo",
+                            "2": 1981
+                        },
+                        {
+                            "0": 60,
+                            "1": "American Railcar",
+                            "2": 2019
+                        },
+                        {
+                            "0": 61,
+                            "1": "Talgo",
+                            "2": 1976
+                        },
+                        {
+                            "0": 62,
+                            "1": "Talgo",
+                            "2": 1987
+                        },
+                        {
+                            "0": 63,
+                            "1": "Talgo",
+                            "2": 1999
+                        },
+                        {
+                            "0": 64,
+                            "1": "Amsted Rail Group",
+                            "2": 1974
+                        },
+                        {
+                            "0": 65,
+                            "1": "American Railcar",
+                            "2": 1991
+                        },
+                        {
+                            "0": 66,
+                            "1": "American Railcar",
+                            "2": 1970
+                        },
+                        {
+                            "0": 67,
+                            "1": "Talgo",
+                            "2": 1969
+                        },
+                        {
+                            "0": 68,
+                            "1": "Alabama",
+                            "2": 1952
+                        },
+                        {
+                            "0": 69,
+                            "1": "Freight Car America",
+                            "2": 1979
+                        },
+                        {
+                            "0": 70,
+                            "1": "Alabama",
+                            "2": 2005
+                        },
+                        {
+                            "0": 71,
+                            "1": "Talgo",
+                            "2": 2020
+                        },
+                        {
+                            "0": 72,
+                            "1": "National Steel Car",
+                            "2": 1972
+                        },
+                        {
+                            "0": 73,
+                            "1": "Talgo",
+                            "2": 2012
+                        },
+                        {
+                            "0": 74,
+                            "1": "American Railcar",
+                            "2": 1989
+                        },
+                        {
+                            "0": 75,
+                            "1": "Talgo",
+                            "2": 2003
+                        },
+                        {
+                            "0": 76,
+                            "1": "Alabama",
+                            "2": 1981
+                        },
+                        {
+                            "0": 77,
+                            "1": "Alabama",
+                            "2": 2020
+                        },
+                        {
+                            "0": 78,
+                            "1": "Alabama",
+                            "2": 1993
+                        },
+                        {
+                            "0": 79,
+                            "1": "Freight Car America",
+                            "2": 1977
+                        },
+                        {
+                            "0": 80,
+                            "1": "Talgo",
+                            "2": 1965
+                        },
+                        {
+                            "0": 81,
+                            "1": "Amsted Rail Group",
+                            "2": 1959
+                        },
+                        {
+                            "0": 82,
+                            "1": "Talgo",
+                            "2": 1983
+                        },
+                        {
+                            "0": 83,
+                            "1": "Talgo",
+                            "2": 1982
+                        },
+                        {
+                            "0": 84,
+                            "1": "American Railcar",
+                            "2": 1985
+                        },
+                        {
+                            "0": 85,
+                            "1": "American Railcar",
+                            "2": 1957
+                        },
+                        {
+                            "0": 86,
+                            "1": "Alabama",
+                            "2": 1971
+                        },
+                        {
+                            "0": 87,
+                            "1": "Alabama",
+                            "2": 1983
+                        },
+                        {
+                            "0": 88,
+                            "1": "American Railcar",
+                            "2": 1949
+                        },
+                        {
+                            "0": 89,
+                            "1": "Alabama",
+                            "2": 1980
+                        },
+                        {
+                            "0": 90,
+                            "1": "American Railcar",
+                            "2": 1965
+                        },
+                        {
+                            "0": 91,
+                            "1": "Talgo",
+                            "2": 2020
+                        },
+                        {
+                            "0": 92,
+                            "1": "Talgo",
+                            "2": 1989
+                        },
+                        {
+                            "0": 93,
+                            "1": "Amsted Rail Group",
+                            "2": 1948
+                        },
+                        {
+                            "0": 94,
+                            "1": "Talgo",
+                            "2": 1978
+                        },
+                        {
+                            "0": 95,
+                            "1": "Freight Car America",
+                            "2": 2020
+                        },
+                        {
+                            "0": 96,
+                            "1": "Talgo",
+                            "2": 1950
+                        },
+                        {
+                            "0": 97,
+                            "1": "Alabama",
+                            "2": 1973
+                        },
+                        {
+                            "0": 98,
+                            "1": "Talgo",
+                            "2": 1992
+                        },
+                        {
+                            "0": 99,
+                            "1": "Freight Car America",
+                            "2": 1984
+                        }
+                    ],
+                    "columns": [
+                        {
+                            "title": "carId",
+                            "field": "0",
+                            "dataType": {
+                                "type": 4,
+                                "flags": [
+                                    "SIGNED",
+                                    "ZEROFILL"
+                                ],
+                                "numericPrecision": 10,
+                                "parameterFormatType": "OneOrZero",
+                                "synonyms": [
+                                    "INTEGER",
+                                    "INT4"
+                                ]
+                            },
+                            "inPK": true,
+                            "nullable": false,
+                            "autoIncrement": true
+                        },
+                        {
+                            "title": "manufacturer",
+                            "field": "1",
+                            "dataType": {
+                                "type": 17,
+                                "characterMaximumLength": 65535,
+                                "flags": [
+                                    "BINARY",
+                                    "ASCII",
+                                    "UNICODE"
+                                ],
+                                "needsQuotes": true,
+                                "parameterFormatType": "OneOrZero"
+                            },
+                            "inPK": false,
+                            "nullable": false,
+                            "autoIncrement": false
+                        },
+                        {
+                            "title": "yearBuilt",
+                            "field": "2",
+                            "dataType": {
+                                "type": 1,
+                                "flags": [
+                                    "UNSIGNED",
+                                    "ZEROFILL"
+                                ],
+                                "numericPrecision": 3,
+                                "parameterFormatType": "OneOrZero",
+                                "synonyms": [
+                                    "BOOL",
+                                    "BOOLEAN",
+                                    "INT1"
+                                ]
+                            },
+                            "inPK": false,
+                            "nullable": false,
+                            "autoIncrement": false
+                        }
+                    ],
+                    "executionInfo": {
+                        "text": "OK, 99 records retrieved in 0s"
+                    },
+                    "totalRowCount": 99,
+                    "hasMoreRows": false,
+                    "currentPage": 0,
+                    "index": 0,
+                    "sql": "SELECT *\nFROM traincar",
+                    "updatable": true,
+                    "fullTableName": "traincar"
+                }
+            ]
+        },
+        {
+            "state": {
+                "start": 125,
+                "end": 125,
+                "language": "mysql",
+                "currentSet": 1,
+                "statements": [
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 0,
+                            "length": 0
+                        },
+                        "contentStart": 0,
+                        "state": 0
+                    }
+                ]
+            },
+            "data": []
+        },
+        {
+            "state": {
+                "start": 126,
+                "end": 137,
+                "language": "mysql",
+                "result": {
+                    "type": "resultIds",
+                    "list": [
+                        "ed482146-392c-4ddd-da18-e214fb3194eb"
+                    ]
+                },
+                "currentHeight": 36,
+                "currentSet": 1,
+                "statements": [
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 0,
+                            "length": 496
+                        },
+                        "contentStart": 0,
+                        "state": 0
+                    }
+                ]
+            },
+            "data": [
+                {
+                    "tabId": "ad9ce891-d780-4f2f-c37f-ecb8519f11cc",
+                    "resultId": "ed482146-392c-4ddd-da18-e214fb3194eb",
+                    "rows": [
+                        {
+                            "0": 18
+                        }
+                    ],
+                    "columns": [
+                        {
+                            "title": "countOfSWTrains",
+                            "field": "0",
+                            "dataType": {
+                                "type": 4,
+                                "flags": [
+                                    "SIGNED",
+                                    "ZEROFILL"
+                                ],
+                                "numericPrecision": 10,
+                                "parameterFormatType": "OneOrZero",
+                                "synonyms": [
+                                    "INTEGER",
+                                    "INT4"
+                                ]
+                            },
+                            "inPK": false,
+                            "nullable": false,
+                            "autoIncrement": false
+                        }
+                    ],
+                    "executionInfo": {
+                        "text": "OK, 1 record retrieved in 0.997ms"
+                    },
+                    "totalRowCount": 1,
+                    "hasMoreRows": false,
+                    "currentPage": 0,
+                    "index": 0,
+                    "sql": "SELECT COUNT(*) AS countOfSWTrains\nFROM (\n    SELECT train.trainId, COUNT(carintrain.carId) AS carCount, train.arrivalMarker, locationmarker.latitude, locationmarker.longitude\n    FROM train\n    JOIN carintrain \n        ON train.trainId = carintrain.trainId\n    JOIN locationmarker\n        ON locationmarker.locationId = train.arrivalmarker\n    WHERE locationmarker.latitude < 30 and locationmarker.longitude < 30\n    GROUP BY train.trainId\n    HAVING COUNT(carintrain.carId) >= 20\n) AS rowCount",
+                    "updatable": true,
+                    "fullTableName": ""
+                }
+            ]
+        },
+        {
+            "state": {
+                "start": 138,
+                "end": 144,
+                "language": "mysql",
+                "result": {
+                    "type": "text",
+                    "text": [
+                        {
+                            "type": 4,
+                            "index": 0,
+                            "resultId": "154a0222-2c08-40c3-bbb3-2635e54adb37",
+                            "content": "OK, 0 records retrieved in 1.499ms"
+                        }
+                    ]
+                },
+                "currentHeight": 28,
+                "currentSet": 1,
+                "statements": [
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 0,
+                            "length": 185
+                        },
+                        "contentStart": 0,
+                        "state": 0
+                    }
+                ]
+            },
+            "data": []
+        },
+        {
+            "state": {
+                "start": 145,
+                "end": 145,
+                "language": "mysql",
+                "currentSet": 1,
+                "statements": [
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 0,
+                            "length": 0
+                        },
+                        "contentStart": 0,
+                        "state": 0
+                    }
+                ]
+            },
+            "data": []
+        },
+        {
+            "state": {
+                "start": 146,
+                "end": 146,
+                "language": "mysql",
+                "currentSet": 1,
+                "statements": [
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 0,
+                            "length": 0
+                        },
+                        "contentStart": 0,
+                        "state": 0
+                    }
+                ]
+            },
+            "data": []
+        },
+        {
+            "state": {
+                "start": 147,
+                "end": 147,
+                "language": "mysql",
+                "currentSet": 1,
+                "statements": [
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 0,
+                            "length": 0
+                        },
+                        "contentStart": 0,
+                        "state": 0
+                    }
+                ]
+            },
+            "data": []
+        },
+        {
+            "state": {
+                "start": 148,
+                "end": 148,
+                "language": "mysql",
+                "currentSet": 1,
+                "statements": [
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 0,
+                            "length": 0
+                        },
+                        "contentStart": 0,
+                        "state": 0
+                    }
+                ]
+            },
+            "data": []
+        },
+        {
+            "state": {
+                "start": 149,
+                "end": 149,
+                "language": "mysql",
+                "currentSet": 1,
+                "statements": [
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 0,
+                            "length": 0
+                        },
+                        "contentStart": 0,
+                        "state": 0
+                    }
+                ]
+            },
+            "data": []
+        },
+        {
+            "state": {
+                "start": 150,
+                "end": 150,
+                "language": "mysql",
+                "currentSet": 1,
+                "statements": [
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 0,
+                            "length": 0
+                        },
+                        "contentStart": 0,
+                        "state": 0
+                    }
+                ]
+            },
+            "data": []
+        },
+        {
+            "state": {
+                "start": 151,
+                "end": 151,
+                "language": "mysql",
+                "currentSet": 1,
+                "statements": [
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 0,
+                            "length": 0
+                        },
+                        "contentStart": 0,
+                        "state": 0
+                    }
+                ]
+            },
+            "data": []
+        },
+        {
+            "state": {
+                "start": 152,
+                "end": 152,
+                "language": "mysql",
+                "currentSet": 1,
+                "statements": [
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 0,
+                            "length": 0
+                        },
+                        "contentStart": 0,
+                        "state": 0
+                    }
+                ]
+            },
+            "data": []
+        },
+        {
+            "state": {
+                "start": 153,
+                "end": 153,
+                "language": "mysql",
+                "currentSet": 1,
+                "statements": [
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 0,
+                            "length": 0
+                        },
+                        "contentStart": 0,
+                        "state": 0
+                    }
+                ]
+            },
+            "data": []
+        },
+        {
+            "state": {
+                "start": 154,
+                "end": 154,
+                "language": "mysql",
+                "currentSet": 1,
+                "statements": [
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 0,
+                            "length": 0
+                        },
+                        "contentStart": 0,
+                        "state": 0
+                    }
+                ]
+            },
+            "data": []
+        },
+        {
+            "state": {
+                "start": 155,
+                "end": 155,
+                "language": "mysql",
+                "currentSet": 1,
+                "statements": [
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 0,
+                            "length": 0
+                        },
+                        "contentStart": 0,
+                        "state": 0
+                    }
+                ]
+            },
+            "data": []
+        },
+        {
+            "state": {
+                "start": 156,
+                "end": 156,
+                "language": "mysql",
+                "currentSet": 1,
+                "statements": [
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 0,
+                            "length": 0
+                        },
+                        "contentStart": 0,
+                        "state": 0
+                    }
+                ]
+            },
+            "data": []
+        },
+        {
+            "state": {
+                "start": 157,
+                "end": 157,
+                "language": "mysql",
+                "currentSet": 1,
+                "statements": [
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 0,
+                            "length": 0
+                        },
+                        "contentStart": 0,
+                        "state": 0
+                    }
+                ]
+            },
+            "data": []
+        },
+        {
+            "state": {
+                "start": 158,
+                "end": 158,
+                "language": "mysql",
+                "currentSet": 1,
+                "statements": [
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 0,
+                            "length": 0
+                        },
+                        "contentStart": 0,
+                        "state": 0
+                    }
+                ]
+            },
+            "data": []
+        },
+        {
+            "state": {
+                "start": 159,
+                "end": 159,
+                "language": "mysql",
+                "currentSet": 1,
+                "statements": [
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 0,
+                            "length": 0
+                        },
+                        "contentStart": 0,
+                        "state": 0
+                    }
+                ]
+            },
+            "data": []
+        }
+    ]
+}
