@@ -2,7 +2,7 @@
     "type": "MySQLNotebook",
     "version": "1.0",
     "caption": "DB Notebook",
-    "content": "USE blog;\nSELECT * FROM author;\n-- create a prepared statement to insert a new author into the author table\nPREPARE insert_author\nFROM 'INSERT INTO author (firstName, lastName, email, birthdate) VALUES (?, ?, ?, ?)';\nSET @first = 'Ethan';\nSET @last = 'Shafer';\nSET @email = 'ethan.shafer@westpoint.edu';\nSET @dob = '1990-11-25';\nEXECUTE insert_author USING @first, @last, @email, @dob;\n-- create a prepared statement that updates an author's email.  It should take in the author's id and new email address\nPREPARE update_email\nFROM 'UPDATE author SET email = ? WHERE id = ?';\nSET @email = 'new.email@westpoint.edu';\nSET @id = 51;\nEXECUTE update_email USING @email, @id;\n-- create a prepared statement that returns all authors whose last name starts with the provided argument\nPREPARE find_authors_last\nFROM \"SELECT * FROM author WHERE lastName LIKE CONCAT(?, '%')\";\nSET @lastLike = 'Sha';\nEXECUTE find_authors_last USING @lastLike;\n-- create a prepared statement that returns a specific column from the author table\n-- hint:  this doesn't work properly\nPREPARE select_column\nFROM \"SELECT ? FROM author LIMIT 10\";\nSET @columnName = 'firstName';\nEXECUTE select_column USING @columnName;\n-- create a prepared statement that returns the last post created\nPREPARE last_post\nFROM \"SELECT * FROM post ORDER BY date DESC LIMIT 1;\"\nEXECUTE last_post;\n-- create a prepared statement that returns between the last X and Y posts\nPREPARE post_pagination\nFROM \"SELECT * FROM post ORDER BY date DESC LIMIT ? OFFSET ?\";\nSET @start = 10;\nSET @stop = 20;\nSET @offset = @stop - @start;\nEXECUTE post_pagination USING @start, @offset;\n-- stop here\n\n-- create a stored procedure to insert a new author into the author table\nDELIMITER //\nCREATE PROCEDURE insert_author(IN in_firstName CHAR(50), IN in_lastName CHAR(50), IN in_email CHAR(100), IN in_birthdate DATE)\nBEGIN\n    INSERT INTO author (firstName, lastName, email, birthdate) VALUES \n        (in_firstName, in_lastName, in_email, in_birthdate);\nEND\nDELIMITER ;\n\n-- create a stored procedure that updates an author's email.  It should take in the author's id and new email address.\n\n-- create a stored procedure that gives the total amount of sponsorship by company for a given author.  It should return the total dollar amount of all sponsorships for that author in a variable\n\n-- create a stored procedure that finds the common sponsors between two authors\n\n-- create a stored procedure that gives all authors of a certain age and returns the count of those authors in a variable",
+    "content": "USE blog;\nSELECT * FROM author;\n-- create a prepared statement to insert a new author into the author table\nPREPARE insert_author\nFROM 'INSERT INTO author (firstName, lastName, email, birthdate) VALUES (?, ?, ?, ?)';\nSET @first = 'Ethan';\nSET @last = 'Shafer';\nSET @email = 'ethan.shafer@westpoint.edu';\nSET @dob = '1990-11-25';\nEXECUTE insert_author USING @first, @last, @email, @dob;\n-- create a prepared statement that updates an author's email.  It should take in the author's id and new email address\nPREPARE update_email\nFROM 'UPDATE author SET email = ? WHERE id = ?';\nSET @email = 'new.email@westpoint.edu';\nSET @id = 51;\nEXECUTE update_email USING @email, @id;\n-- create a prepared statement that returns all authors whose last name starts with the provided argument\nPREPARE find_authors_last\nFROM \"SELECT * FROM author WHERE lastName LIKE CONCAT(?, '%')\";\nSET @lastLike = 'Sha';\nEXECUTE find_authors_last USING @lastLike;\n-- create a prepared statement that returns a specific column from the author table\n-- hint:  this doesn't work properly\nPREPARE select_column\nFROM \"SELECT ? FROM author LIMIT 10\";\nSET @columnName = 'firstName';\nEXECUTE select_column USING @columnName;\n-- create a prepared statement that returns the last post created\nPREPARE last_post\nFROM \"SELECT * FROM post ORDER BY date DESC LIMIT 1;\"\nEXECUTE last_post;\n-- create a prepared statement that returns between the last X and Y posts\nPREPARE post_pagination\nFROM \"SELECT * FROM post ORDER BY date DESC LIMIT ? OFFSET ?\";\nSET @start = 10;\nSET @stop = 20;\nSET @offset = @stop - @start;\nEXECUTE post_pagination USING @start, @offset;\n-- stop here\n\n-- create a stored procedure to insert a new author into the author table\nDROP PROCEDURE IF EXISTS insert_author;\nDELIMITER //\nCREATE PROCEDURE insert_author(IN in_firstName CHAR(50), IN in_lastName CHAR(50), IN in_email CHAR(100), IN in_birthdate DATE)\nBEGIN\n    INSERT INTO author (firstName, lastName, email, birthdate) VALUES \n        (in_firstName, in_lastName, in_email, in_birthdate);\nEND\nDELIMITER ;\n\n-- create a stored procedure that updates an author's email.  It should take in the author's id and new email address.\nDROP PROCEDURE IF EXISTS update_author;\nDELIMITER //\nCREATE PROCEDURE update_author(IN authorId INT, IN newEmail CHAR(100))\nBEGIN\n    UPDATE Author\n    SET email = newEmail\n    WHERE id = authorId;\nEND\nDELIMITER ;\n\n-- create a stored procedure that gives the total amount of sponsorship by company for a given author.  It should return the total dollar amount of all sponsorships for that author in a variable\nDROP PROCEDURE IF EXISTS total_sponsorship;\nDELIMITER //\nCREATE PROCEDURE total_sponsorship(IN authorId INT, OUT totalValue INT)\nBEGIN\n    SELECT SUM(amount) INTO totalValue\n    FROM sponsorship\n    WHERE authorSponsored = authorId\n    GROUP BY authorSponsored;\n\n    SELECT companyName, SUM(amount)\n    FROM sponsorship\n    WHERE authorSponsored = authorId\n    GROUP BY companyName;\nEND\nDELIMITER ;\n-- create a stored procedure that finds the common sponsors between two authors\nDROP PROCEDURE IF EXISTS common_sponsors;\nDELIMITER //\nCREATE PROCEDURE common_sponsors(IN authorOne INT, IN authorTwo INT)\nBEGIN\n    SELECT DISTINCT companyName\n    FROM sponsorship\n    WHERE authorSponsored = authorOne\n    INTERSECT\n    SELECT DISTINCT companyName\n    FROM sponsorship\n    WHERE authorSponsored = authorTwo;\nEND\nDELIMITER ;\n\n-- create a stored procedure that gives all authors of a certain age and returns the count of those authors in a variable\nDROP PROCEDURE IF EXISTS author_by_age;\nDELIMITER //\nCREATE PROCEDURE author_by_age(IN age INT, OUT authorCount INT)\nBEGIN\n    SELECT COUNT(*) INTO authorCount\n    FROM Author\n    WHERE TIMESTAMPDIFF(YEAR, birthDate, CURRENT_DATE()) = age;\n\n    SELECT *\n    FROM Author\n    WHERE TIMESTAMPDIFF(YEAR, birthDate, CURRENT_DATE()) = age;\nEND\nDELIMITER ;\n\n",
     "options": {
         "tabSize": 4,
         "indentSize": 4,
@@ -15,22 +15,38 @@
             {
                 "inSelectionMode": false,
                 "selectionStart": {
+<<<<<<< Updated upstream
                     "lineNumber": 35,
                     "column": 17
                 },
                 "position": {
                     "lineNumber": 35,
                     "column": 17
+=======
+                    "lineNumber": 108,
+                    "column": 1
+                },
+                "position": {
+                    "lineNumber": 108,
+                    "column": 1
+>>>>>>> Stashed changes
                 }
             }
         ],
         "viewState": {
             "scrollLeft": 0,
             "firstPosition": {
+<<<<<<< Updated upstream
                 "lineNumber": 29,
                 "column": 1
             },
             "firstPositionDeltaTop": -22
+=======
+                "lineNumber": 71,
+                "column": 1
+            },
+            "firstPositionDeltaTop": -15
+>>>>>>> Stashed changes
         },
         "contributionsState": {
             "editor.contrib.folding": {},
@@ -49,8 +65,8 @@
                         {
                             "type": 4,
                             "index": 0,
-                            "resultId": "b6f5b404-162e-438e-c54d-13432699b8a3",
-                            "content": "OK, 0 records retrieved in 0.992ms"
+                            "resultId": "04a91b29-5320-4921-f99c-89738c6723de",
+                            "content": "OK, 0 records retrieved in 0.997ms"
                         }
                     ]
                 },
@@ -78,7 +94,11 @@
                 "result": {
                     "type": "resultIds",
                     "list": [
+<<<<<<< Updated upstream
                         "2c5a59dd-c72a-4192-abf4-5ca99558a234"
+=======
+                        "08eff4d8-1e67-490f-dd5f-9c9d95505a68"
+>>>>>>> Stashed changes
                     ]
                 },
                 "currentHeight": 36,
@@ -97,8 +117,13 @@
             },
             "data": [
                 {
+<<<<<<< Updated upstream
                     "tabId": "00abbef2-7757-466a-c382-b502f513c142",
                     "resultId": "2c5a59dd-c72a-4192-abf4-5ca99558a234",
+=======
+                    "tabId": "3a00264e-a662-4bff-d961-3bfca65e3bde",
+                    "resultId": "08eff4d8-1e67-490f-dd5f-9c9d95505a68",
+>>>>>>> Stashed changes
                     "rows": [
                         {
                             "0": 1,
@@ -881,8 +906,13 @@
                 "result": {
                     "type": "resultIds",
                     "list": [
+<<<<<<< Updated upstream
                         "4d17ca8b-52dc-41b8-dc67-47a9acaf232d",
                         "47780f31-7935-420b-8b55-2b734bca4aa7"
+=======
+                        "25277daa-9df6-4632-c01f-bad07490c148",
+                        "0300334f-f95e-4507-dacd-302617867e62"
+>>>>>>> Stashed changes
                     ]
                 },
                 "currentHeight": 36,
@@ -910,8 +940,13 @@
             },
             "data": [
                 {
+<<<<<<< Updated upstream
                     "tabId": "00abbef2-7757-466a-c382-b502f513c142",
                     "resultId": "4d17ca8b-52dc-41b8-dc67-47a9acaf232d",
+=======
+                    "tabId": "3a00264e-a662-4bff-d961-3bfca65e3bde",
+                    "resultId": "25277daa-9df6-4632-c01f-bad07490c148",
+>>>>>>> Stashed changes
                     "rows": [
                         {
                             "0": 51,
@@ -1033,8 +1068,13 @@
                     "updatable": false
                 },
                 {
+<<<<<<< Updated upstream
                     "tabId": "00abbef2-7757-466a-c382-b502f513c142",
                     "resultId": "47780f31-7935-420b-8b55-2b734bca4aa7",
+=======
+                    "tabId": "3a00264e-a662-4bff-d961-3bfca65e3bde",
+                    "resultId": "0300334f-f95e-4507-dacd-302617867e62",
+>>>>>>> Stashed changes
                     "rows": [],
                     "executionInfo": {
                         "text": "OK, 0 records retrieved in 2.01ms",
@@ -1089,8 +1129,13 @@
                 "result": {
                     "type": "resultIds",
                     "list": [
+<<<<<<< Updated upstream
                         "75fc21f1-71a1-4b94-d434-ada957fe497d",
                         "e8b185f2-dfce-4a86-9d04-87636e89278e"
+=======
+                        "d533db49-4cb4-4f1c-ef5e-d95127dddd92",
+                        "5c48f7f4-e0ac-4d4b-d02a-a07b3d05fe67"
+>>>>>>> Stashed changes
                     ]
                 },
                 "currentHeight": 36,
@@ -1118,8 +1163,13 @@
             },
             "data": [
                 {
+<<<<<<< Updated upstream
                     "tabId": "00abbef2-7757-466a-c382-b502f513c142",
                     "resultId": "75fc21f1-71a1-4b94-d434-ada957fe497d",
+=======
+                    "tabId": "3a00264e-a662-4bff-d961-3bfca65e3bde",
+                    "resultId": "d533db49-4cb4-4f1c-ef5e-d95127dddd92",
+>>>>>>> Stashed changes
                     "rows": [
                         {
                             "0": "firstName"
@@ -1183,8 +1233,13 @@
                     "updatable": false
                 },
                 {
+<<<<<<< Updated upstream
                     "tabId": "00abbef2-7757-466a-c382-b502f513c142",
                     "resultId": "e8b185f2-dfce-4a86-9d04-87636e89278e",
+=======
+                    "tabId": "3a00264e-a662-4bff-d961-3bfca65e3bde",
+                    "resultId": "5c48f7f4-e0ac-4d4b-d02a-a07b3d05fe67",
+>>>>>>> Stashed changes
                     "rows": [],
                     "executionInfo": {
                         "text": "OK, 0 records retrieved in 1.004ms",
@@ -1236,6 +1291,7 @@
                 "start": 31,
                 "end": 31,
                 "language": "mysql",
+<<<<<<< Updated upstream
                 "result": {
                     "type": "resultIds",
                     "list": [
@@ -1243,6 +1299,8 @@
                     ]
                 },
                 "currentHeight": 104.953125,
+=======
+>>>>>>> Stashed changes
                 "currentSet": 1,
                 "statements": [
                     {
@@ -1256,6 +1314,7 @@
                     }
                 ]
             },
+<<<<<<< Updated upstream
             "data": [
                 {
                     "tabId": "00abbef2-7757-466a-c382-b502f513c142",
@@ -1388,6 +1447,9 @@
                     "updatable": false
                 }
             ]
+=======
+            "data": []
+>>>>>>> Stashed changes
         },
         {
             "state": {
@@ -1400,8 +1462,8 @@
                         {
                             "type": 4,
                             "index": 0,
-                            "resultId": "92638849-32a6-437b-b722-ad53cb17e28b",
-                            "content": "OK, 0 records retrieved in 0.945ms"
+                            "resultId": "3a0f51ad-e763-48e8-a73a-dd1fbe467481",
+                            "content": "OK, 0 records retrieved in 1.002ms"
                         }
                     ]
                 },
@@ -1426,6 +1488,7 @@
                 "start": 35,
                 "end": 38,
                 "language": "mysql",
+<<<<<<< Updated upstream
                 "result": {
                     "type": "resultIds",
                     "list": [
@@ -1437,6 +1500,9 @@
                 },
                 "currentHeight": 351.984375,
                 "currentSet": 1,
+=======
+                "currentSet": 3,
+>>>>>>> Stashed changes
                 "statements": [
                     {
                         "delimiter": ";",
@@ -1476,6 +1542,7 @@
                     }
                 ]
             },
+<<<<<<< Updated upstream
             "data": [
                 {
                     "tabId": "00abbef2-7757-466a-c382-b502f513c142",
@@ -1725,6 +1792,9 @@
                     "updatable": false
                 }
             ]
+=======
+            "data": []
+>>>>>>> Stashed changes
         },
         {
             "state": {
@@ -1769,56 +1839,72 @@
         {
             "state": {
                 "start": 41,
-                "end": 48,
+                "end": 49,
                 "language": "mysql",
+                "result": {
+                    "type": "text",
+                    "text": [
+                        {
+                            "type": 4,
+                            "index": 0,
+                            "resultId": "39cd43a6-3ef8-4331-9b8a-f9a1d2424ccf",
+                            "content": "OK, 0 records retrieved in 9.727ms"
+                        },
+                        {
+                            "type": 4,
+                            "index": 3,
+                            "resultId": "77dee388-61d5-42ec-be2d-0203c07297e6",
+                            "content": "OK, 0 records retrieved in 5.013ms"
+                        }
+                    ]
+                },
+                "currentHeight": 28,
                 "currentSet": 1,
                 "statements": [
                     {
-                        "delimiter": "//",
+                        "delimiter": ";",
                         "span": {
                             "start": 0,
-                            "length": 86
+                            "length": 113
                         },
-                        "contentStart": 74,
+                        "contentStart": 75,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 113,
+                            "length": 1
+                        },
+                        "contentStart": 112,
+                        "state": 3
+                    },
+                    {
+                        "delimiter": "//",
+                        "span": {
+                            "start": 114,
+                            "length": 12
+                        },
+                        "contentStart": 114,
                         "state": 4
                     },
                     {
                         "delimiter": "//",
                         "span": {
-                            "start": 86,
+                            "start": 126,
                             "length": 270
                         },
-                        "contentStart": 87,
+                        "contentStart": 127,
                         "state": 3
                     },
                     {
                         "delimiter": ";",
                         "span": {
-                            "start": 356,
+                            "start": 396,
                             "length": 11
                         },
-                        "contentStart": 356,
+                        "contentStart": 396,
                         "state": 4
-                    }
-                ]
-            },
-            "data": []
-        },
-        {
-            "state": {
-                "start": 49,
-                "end": 49,
-                "language": "mysql",
-                "currentSet": 1,
-                "statements": [
-                    {
-                        "delimiter": ";",
-                        "span": {
-                            "start": 0,
-                            "length": 0
-                        },
-                        "contentStart": 0,
-                        "state": 0
                     }
                 ]
             },
@@ -1835,10 +1921,10 @@
                         "delimiter": ";",
                         "span": {
                             "start": 0,
-                            "length": 118
+                            "length": 0
                         },
                         "contentStart": 0,
-                        "state": 1
+                        "state": 0
                     }
                 ]
             },
@@ -1847,7 +1933,81 @@
         {
             "state": {
                 "start": 51,
-                "end": 51,
+                "end": 60,
+                "language": "mysql",
+                "result": {
+                    "type": "text",
+                    "text": [
+                        {
+                            "type": 4,
+                            "index": 0,
+                            "resultId": "cf049cd3-179a-4f08-b8d8-b306a2415787",
+                            "content": "OK, 0 records retrieved in 2.521ms"
+                        },
+                        {
+                            "type": 4,
+                            "index": 3,
+                            "resultId": "e12b1719-0f65-4c72-ae40-d3acb8b2d39d",
+                            "content": "OK, 0 records retrieved in 7.036ms"
+                        }
+                    ]
+                },
+                "currentHeight": 28,
+                "currentSet": 1,
+                "statements": [
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 0,
+                            "length": 158
+                        },
+                        "contentStart": 120,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 158,
+                            "length": 1
+                        },
+                        "contentStart": 157,
+                        "state": 3
+                    },
+                    {
+                        "delimiter": "//",
+                        "span": {
+                            "start": 159,
+                            "length": 12
+                        },
+                        "contentStart": 159,
+                        "state": 4
+                    },
+                    {
+                        "delimiter": "//",
+                        "span": {
+                            "start": 171,
+                            "length": 150
+                        },
+                        "contentStart": 172,
+                        "state": 3
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 321,
+                            "length": 11
+                        },
+                        "contentStart": 321,
+                        "state": 4
+                    }
+                ]
+            },
+            "data": []
+        },
+        {
+            "state": {
+                "start": 61,
+                "end": 61,
                 "language": "mysql",
                 "currentSet": 1,
                 "statements": [
@@ -1866,8 +2026,8 @@
         },
         {
             "state": {
-                "start": 52,
-                "end": 52,
+                "start": 62,
+                "end": 62,
                 "language": "mysql",
                 "currentSet": 1,
                 "statements": [
@@ -1886,8 +2046,232 @@
         },
         {
             "state": {
-                "start": 53,
-                "end": 53,
+                "start": 63,
+                "end": 77,
+                "language": "mysql",
+                "result": {
+                    "type": "text",
+                    "text": [
+                        {
+                            "type": 4,
+                            "index": 0,
+                            "resultId": "4711aef8-7afc-46f7-b58c-af057c03883e",
+                            "content": "OK, 0 records retrieved in 1.996ms"
+                        },
+                        {
+                            "type": 4,
+                            "index": 2,
+                            "resultId": "56e2c7d9-44a2-4c94-896f-e03d7c58a234",
+                            "content": "OK, 0 records retrieved in 6.008ms"
+                        }
+                    ]
+                },
+                "currentHeight": 44.65625,
+                "currentSet": 1,
+                "statements": [
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 0,
+                            "length": 43
+                        },
+                        "contentStart": 1,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": "//",
+                        "span": {
+                            "start": 43,
+                            "length": 13
+                        },
+                        "contentStart": 44,
+                        "state": 4
+                    },
+                    {
+                        "delimiter": "//",
+                        "span": {
+                            "start": 56,
+                            "length": 331
+                        },
+                        "contentStart": 57,
+                        "state": 3
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 387,
+                            "length": 11
+                        },
+                        "contentStart": 387,
+                        "state": 4
+                    }
+                ]
+            },
+            "data": []
+        },
+        {
+            "state": {
+                "start": 78,
+                "end": 91,
+                "language": "mysql",
+                "result": {
+                    "type": "text",
+                    "text": [
+                        {
+                            "type": 4,
+                            "index": 0,
+                            "resultId": "9ce10724-84f7-4e49-cb8f-a560b8bb6d5c",
+                            "content": "OK, 0 records retrieved in 0.982ms"
+                        },
+                        {
+                            "type": 4,
+                            "index": 2,
+                            "resultId": "69ad6f5d-7d19-4fe0-fb6a-4b6a4efac419",
+                            "content": "OK, 0 records retrieved in 4.996ms"
+                        }
+                    ]
+                },
+                "currentHeight": 44.65625,
+                "currentSet": 1,
+                "statements": [
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 0,
+                            "length": 121
+                        },
+                        "contentStart": 81,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": "//",
+                        "span": {
+                            "start": 121,
+                            "length": 13
+                        },
+                        "contentStart": 122,
+                        "state": 4
+                    },
+                    {
+                        "delimiter": "//",
+                        "span": {
+                            "start": 134,
+                            "length": 277
+                        },
+                        "contentStart": 135,
+                        "state": 3
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 411,
+                            "length": 11
+                        },
+                        "contentStart": 411,
+                        "state": 4
+                    }
+                ]
+            },
+            "data": []
+        },
+        {
+            "state": {
+                "start": 92,
+                "end": 92,
+                "language": "mysql",
+                "currentSet": 1,
+                "statements": [
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 0,
+                            "length": 0
+                        },
+                        "contentStart": 0,
+                        "state": 1
+                    }
+                ]
+            },
+            "data": []
+        },
+        {
+            "state": {
+                "start": 93,
+                "end": 107,
+                "language": "mysql",
+                "result": {
+                    "type": "text",
+                    "text": [
+                        {
+                            "type": 4,
+                            "index": 0,
+                            "resultId": "2ff3d775-3e87-470b-dc7f-48efdf61a74f",
+                            "content": "OK, 0 records retrieved in 2.001ms"
+                        },
+                        {
+                            "type": 4,
+                            "index": 2,
+                            "resultId": "6d275196-f305-4f9e-cd44-cbb76089db16",
+                            "content": "OK, 0 records retrieved in 9.992ms"
+                        }
+                    ]
+                },
+                "currentHeight": 44.65625,
+                "currentSet": 1,
+                "statements": [
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 0,
+                            "length": 161
+                        },
+                        "contentStart": 123,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": "//",
+                        "span": {
+                            "start": 161,
+                            "length": 13
+                        },
+                        "contentStart": 162,
+                        "state": 4
+                    },
+                    {
+                        "delimiter": "//",
+                        "span": {
+                            "start": 174,
+                            "length": 286
+                        },
+                        "contentStart": 175,
+                        "state": 3
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 460,
+                            "length": 11
+                        },
+                        "contentStart": 460,
+                        "state": 4
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 471,
+                            "length": 1
+                        },
+                        "contentStart": 470,
+                        "state": 3
+                    }
+                ]
+            },
+            "data": []
+        },
+        {
+            "state": {
+                "start": 108,
+                "end": 108,
                 "language": "mysql",
                 "currentSet": 1,
                 "statements": [
@@ -1899,66 +2283,6 @@
                         },
                         "contentStart": 0,
                         "state": 0
-                    }
-                ]
-            },
-            "data": []
-        },
-        {
-            "state": {
-                "start": 54,
-                "end": 54,
-                "language": "mysql",
-                "currentSet": 1,
-                "statements": [
-                    {
-                        "delimiter": ";",
-                        "span": {
-                            "start": 0,
-                            "length": 79
-                        },
-                        "contentStart": 0,
-                        "state": 1
-                    }
-                ]
-            },
-            "data": []
-        },
-        {
-            "state": {
-                "start": 55,
-                "end": 55,
-                "language": "mysql",
-                "currentSet": 1,
-                "statements": [
-                    {
-                        "delimiter": ";",
-                        "span": {
-                            "start": 0,
-                            "length": 0
-                        },
-                        "contentStart": 0,
-                        "state": 1
-                    }
-                ]
-            },
-            "data": []
-        },
-        {
-            "state": {
-                "start": 56,
-                "end": 56,
-                "language": "mysql",
-                "currentSet": 1,
-                "statements": [
-                    {
-                        "delimiter": ";",
-                        "span": {
-                            "start": 0,
-                            "length": 121
-                        },
-                        "contentStart": 0,
-                        "state": 1
                     }
                 ]
             },
