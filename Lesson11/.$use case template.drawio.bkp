@@ -1,0 +1,28 @@
+<mxfile host="Electron" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/24.7.5 Chrome/126.0.6478.183 Electron/31.3.0 Safari/537.36" version="24.7.5">
+  <diagram name="Page-1" id="pCsZuaA5z1JTF7aSOXdf">
+    <mxGraphModel dx="788" dy="1183" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="Pm5u3H1z8by2jEkY2p9G-5" value="" style="group" vertex="1" connectable="0" parent="1">
+          <mxGeometry x="330" y="130" width="300" height="410" as="geometry" />
+        </mxCell>
+        <mxCell id="Pm5u3H1z8by2jEkY2p9G-2" value="" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="Pm5u3H1z8by2jEkY2p9G-5">
+          <mxGeometry width="300" height="410" as="geometry" />
+        </mxCell>
+        <mxCell id="Pm5u3H1z8by2jEkY2p9G-4" value="System Name" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="Pm5u3H1z8by2jEkY2p9G-5">
+          <mxGeometry width="90" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="Pm5u3H1z8by2jEkY2p9G-3" value="1. Use Case" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="Pm5u3H1z8by2jEkY2p9G-5">
+          <mxGeometry x="100" y="80" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="Pm5u3H1z8by2jEkY2p9G-1" value="Actor" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;" vertex="1" parent="1">
+          <mxGeometry x="180" y="210" width="30" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="Pm5u3H1z8by2jEkY2p9G-6" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;fontStyle=1;endArrow=none;endFill=0;strokeWidth=3;" edge="1" parent="1" source="Pm5u3H1z8by2jEkY2p9G-1" target="Pm5u3H1z8by2jEkY2p9G-3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
