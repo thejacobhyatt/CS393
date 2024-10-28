@@ -1,0 +1,14 @@
+{% extends "todo_app/main.html" %}
+
+{% block content %}
+
+{% if task %}
+    {{ task.title }} - {{task.status.statusName}}
+{% else %}
+    No tasks found.
+{% endif %}
+
+<br />
+<a href="{% url 'all_tasks' %}">Back to list</a>
+
+{% endblock %}

@@ -1,0 +1,17 @@
+{% extends "todo_app/main.html" %}
+
+{% block content %}
+
+{% if all_tasks %}
+<ol>
+    {% for task in all_tasks %}
+    <li>
+        <a href="{% url 'task' task.taskId %}">{{ task.title }} - {{ task.description|default:"No description" }}</a> : {{ task.dueDate }}
+    </li>
+    {% endfor %}
+</ol>
+{% else %}
+    <p>No tasks present</p>
+{% endif %}
+
+{% endblock %}

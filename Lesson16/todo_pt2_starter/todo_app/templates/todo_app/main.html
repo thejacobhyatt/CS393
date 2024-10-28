@@ -1,0 +1,40 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Basic Layout</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'todo_app/styles.css' %}" />
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav>
+        <a href="/">Home</a>
+        <a href="{% url 'all_tasks' %}">Task List</a>
+    </nav>
+
+    <!-- Sidebar -->
+    <aside>
+        {% block sidebar %}
+        <ul>
+            Here's a sidebar
+        </ul>
+        {% endblock %}
+    </aside>
+
+    <!-- Main Content Area -->
+    <main>
+        {% block content %}
+        <h1>Welcome to my ToDo App</h1>
+        <p>I'm a student learning how to make my own web pages!  Please be kind.</p>
+        {% endblock %}
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p>Footer Information &copy; 2024</p>
+    </footer>
+</body>
+</html>
