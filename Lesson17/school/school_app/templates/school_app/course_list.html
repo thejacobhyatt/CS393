@@ -1,0 +1,16 @@
+{% extends "school_app/main.html" %}
+
+{% block content %}
+
+<!-- courses/course_list.html -->
+<h1>All Courses</h1>
+<ul>
+  {% for course in courses %}
+    <li>
+      {{ course.course_name }} - {{ course.students.count }} students enrolled <br />
+      <a href="{% url 'course_detail' course.course_id %}">View Details</a>
+    </li>
+  {% endfor %}
+</ul>
+
+{% endblock %}

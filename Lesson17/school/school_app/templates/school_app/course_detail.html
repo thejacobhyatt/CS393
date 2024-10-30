@@ -1,0 +1,23 @@
+{% extends "school_app/main.html" %}
+
+{% block content %}
+
+{% if message %}
+<h4>{{ message }}</h4>
+{% endif %}
+<!-- courses/course_detail.html -->
+<h1>{{ course.course_name }}</h1>
+<p>Teacher: {{ course.teacher.first_name }} {{ course.teacher.last_name }}</p>
+<p>Credits: {{ course.credits }}</p>
+
+<h2>Enrolled Students</h2>
+<ul>
+  {% for student in enrolled_students %}
+    <li>{{ student.first_name }} {{ student.last_name }}</li>
+  {% empty %}
+    <p>No students enrolled in this course.</p>
+  {% endfor %}
+</ul>
+<a href="{% url 'course_list' %}">Back to courses</a>
+
+{% endblock %}
