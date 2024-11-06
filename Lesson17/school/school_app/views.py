@@ -4,6 +4,9 @@ from .forms import EnrollmentForm
 from django.utils import timezone
 from django.http import Http404
 
+from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
+from django.contrib import messages 
+
 # Create your views here.
 def index(request):
     return render(request, "school_app/main.html")
@@ -56,3 +59,21 @@ def enroll_student(request):
     else:
         form = EnrollmentForm()
         return render(request, "school_app/enrollment_form.html", {"form": form})
+    
+
+def logout(request):
+    if request.user.is_authenticated:
+        auth_logout(request)
+    return redirect('index')
+
+def login(request):
+    if request.method == 'POST':
+        user = authenticate(request, username=request.POST['username'], password=request.POST['password'])
+        
+        if user is not None:
+            auth_login(request, user)
+            return redirect('index')
+        else:
+            messages.error(request, 'Invalid username or password')
+    
+    return render(request, 'school_app/login.html')
