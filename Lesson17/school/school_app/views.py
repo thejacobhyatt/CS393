@@ -59,7 +59,6 @@ def enroll_student(request):
     else:
         form = EnrollmentForm()
         return render(request, "school_app/enrollment_form.html", {"form": form})
-    
 
 def logout(request):
     if request.user.is_authenticated:
