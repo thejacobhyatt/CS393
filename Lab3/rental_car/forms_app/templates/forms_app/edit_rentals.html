@@ -1,0 +1,62 @@
+{% extends "forms_app/main.html" %}
+
+{% block content %}
+,<h1>Edit Rentals</h1>
+<!-- edit_rentals.html -->
+<form method="get" action="{% url 'edit_rentals' %}">
+    <label for="customer">Select Customer to Edit Rentals:</label>
+    <select name="customer" id="customer">
+        <option value="">-- Select Customer --</option>
+        {% for customer in customers %}
+            <option value="{{ customer.customer_id }}" {% if customer.customer_id == selected_customer.customer_id %} selected {% endif %}>
+                {{ customer.name }} (ID: {{ customer.customer_id }})
+            </option>
+        {% endfor %}
+    </select>
+    <button type="submit">Show Rentals</button>
+</form>
+
+{% if selected_customer %}
+    <h2>Editing Rentals for {{ selected_customer.name }}</h2>
+    <form method="post">
+        {% csrf_token %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Vehicle</th>
+                    <th>Pickup Location</th>
+                    <th>Start Date</th>
+                    <th>End Date</th>
+                    <th>Total Cost</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for rental in rentals %}
+                <tr>
+                    <td>{{ rental.vehicle }}</td>
+                    <td>{{ rental.pickup_location }}</td>
+                    <td>
+                        <input type="date" name="start_date_{{ rental.id }}" value="{{ rental.start_date|date:'Y-m-d' }}">
+                    </td>
+                    <td>
+                        <input type="date" name="end_date_{{ rental.id }}" value="{{ rental.end_date|date:'Y-m-d' }}">
+                    </td>
+                    <td>
+                        <input type="number" step="0.01" name="total_cost_{{ rental.id }}" value="{{ rental.total_cost }}">
+                    </td>
+                    <td>
+                        <button type="submit" name="rental_id" value="{{ rental.id }}">Save</button>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="6">No rentals found for this customer.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </form>
+{% endif %}
+
+{% endblock %}

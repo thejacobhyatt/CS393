@@ -1,0 +1,38 @@
+{% extends "forms_app/main.html" %}
+
+{% block content %}
+<h1>List of Vehicles</h1>
+
+<!-- Dropdown form to filter by location -->
+<form method="get" action="{% url 'vehicles' %}">
+    <label for="location">Filter by Location:</label>
+    <select name="location" id="location">
+        <option value="">All Locations</option>
+        {% for location in locations %}
+            <option value="{{ location }}" {% if location == request.GET.location %} selected {% endif %}>
+                {{ location }}
+            </option>
+        {% endfor %}
+    </select>
+    <button type="submit">Filter</button>
+</form>
+
+<table>
+    <tr>
+        <th>Make</th>
+        <th>Model</th>
+        <th>Year</th>
+        <th>Rental Rate per Day</th>
+        <th>Current Location</th>
+    </tr>
+    {% for vehicle in vehicles %}
+    <tr>
+        <td>{{ vehicle.make }}</td>
+        <td>{{ vehicle.model }}</td>
+        <td>{{ vehicle.year }}</td>
+        <td>{{ vehicle.rental_rate_per_day }}</td>
+        <td>{{ vehicle.current_location }}</td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}

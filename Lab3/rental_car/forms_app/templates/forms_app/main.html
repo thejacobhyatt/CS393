@@ -1,0 +1,32 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rental Management System</title>
+    <link rel="stylesheet" href="{% static 'forms_app/style.css' %}">
+</head>
+<body>
+    <div class="container">
+        <!-- Top Navigation Bar -->
+        <div class="navbar">
+            <a class="active" href="{% url 'index' %}"><i class="fa fa-fw fa-home"></i> Home</a>
+            <a class="active" href="{% url 'vehicles' %}"><i class="fa fa-car"></i> Vehicles</a>
+            <a class="active" href="{% url 'rentals' %}"><i class="fa fa-book"></i> Rentals</a>
+            <a class="active" href="{% url 'edit_rentals' %}"><i class="fa fa-edit"></i> Edit Rentals</a>
+            <a class="active" href="{% url 'view_rentals' %}"><i class="fa fa-eye"></i> View Rentals</a>
+
+        </div>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            {% block content %}
+            Welcom to my rental car website 
+            {% endblock %}
+        </main>
+    </div>
+</body>
+</html>

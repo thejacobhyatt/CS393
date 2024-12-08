@@ -1,0 +1,123 @@
+{% extends "forms_app/main.html" %}
+
+{% block content %}
+<h1>Rental List</h1>
+
+
+<!-- Rental Input Form -->
+<h2>
+    
+    New Rental</h2>
+<form method="POST">
+    {% csrf_token %}
+    <table>
+        <tr>
+            <th><label for="vehicle">Vehicle:</label></th>
+            <td>
+                <select name="vehicle" id="vehicle" required>
+                    {% for vehicle in vehicles %}
+                        <option value="{{ vehicle.id }}">{{ vehicle.make }}</option>
+                    {% endfor %}
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <th><label for="customer">Customer:</label></th>
+            <td>
+                <select name="customer" id="customer" required>
+                    {% for customer in customers %}
+                        <option value="{{ customer.id }}">{{ customer.name }}</option>
+                    {% endfor %}
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <th><label for="departing_agent">Departing Agent:</label></th>
+            <td>
+                <select name="departing_agent" id="departing_agent" required>
+                    {% for agent in agents %}
+                        <option value="{{ agent.id }}">{{ agent.name }}</option>
+                    {% endfor %}
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <th><label for="returning_agent">Returning Agent:</label></th>
+            <td>
+                <select name="returning_agent" id="returning_agent" required>
+                    {% for agent in agents %}
+                        <option value="{{ agent.id }}">{{ agent.name }}</option>
+                    {% endfor %}
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <th><label for="pickup_location">Pickup Location:</label></th>
+            <td>
+                <select name="pickup_location" id="pickup_location" required>
+                    {% for location in locations %}
+                        <option value="{{ location.id }}">{{ location.name }}</option>
+                    {% endfor %}
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <th><label for="return_location">Return Location:</label></th>
+            <td>
+                <select name="return_location" id="return_location" required>
+                    {% for location in locations %}
+                        <option value="{{ location.id }}">{{ location.name }}</option>
+                    {% endfor %}
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <th><label for="start_date">Start Date:</label></th>
+            <td><input type="date" name="start_date" id="start_date" required></td>
+        </tr>
+        <tr>
+            <th><label for="end_date">End Date:</label></th>
+            <td><input type="date" name="end_date" id="end_date" required></td>
+        </tr>
+        <tr>
+            <th><label for="total_cost">Total Cost:</label></th>
+            <td><input type="number" name="total_cost" id="total_cost" step="0.01" required></td>
+        </tr>
+        <tr>
+            <td colspan="2" style="text-align: center;">
+                <button type="submit">Submit</button>
+            </td>
+        </tr>
+    </table>
+</form>
+
+
+<!-- Rental List Table -->
+<table>
+
+    <tr>
+        <th>Vehicle</th>
+        <th>Customer</th>
+        <th>Departing Agent</th>
+        <th>Returning Agent</th>
+        <th>Pickup Location</th>
+        <th>Return Location</th>
+        <th>Start Date</th>
+        <th>End Date</th>
+        <th>Total Cost</th>
+    </tr>
+    {% for rental in rentals %}
+    <tr>
+        <td>{{ rental.vehicle }}</td>
+        <td>{{ rental.customer }}</td>
+        <td>{{ rental.departing_agent }}</td>
+        <td>{{ rental.returning_agent }}</td>
+        <td>{{ rental.pickup_location }}</td>
+        <td>{{ rental.return_location }}</td>
+        <td>{{ rental.start_date }}</td>
+        <td>{{ rental.end_date }}</td>
+        <td>{{ rental.total_cost }}</td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}

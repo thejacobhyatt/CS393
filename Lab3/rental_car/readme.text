@@ -1,0 +1,11 @@
+Sir, 
+
+To run the DJANGO app run the following:
+
+python manage.py makemigrations
+python manage.py migrate      
+python manage.py runscript import_data
+
+Thank You sir. 
+
+CDT Jacob Hyatt

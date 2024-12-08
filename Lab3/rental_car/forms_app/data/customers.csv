@@ -1,0 +1,4 @@
+customer_id,name,drivers_license_number,phone,email,address
+CUST001,John Doe,A1234567890,555-1111,john.doe@example.com,101 Elm St
+CUST002,Jane Smith,B0987654321,555-2222,jane.smith@example.com,202 Oak St
+CUST003,Bob Johnson,C1230987654,555-3333,bob.johnson@example.com,303 Pine St

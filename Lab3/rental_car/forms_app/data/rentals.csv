@@ -1,0 +1,4 @@
+vehicle_id,customer_id,departing_agent,returning_agent,pickup_location,return_location,start_date,end_date,total_cost,rental_id
+ABC123,CUST001,Alice Brown,Alice Brown,Downtown Branch,Downtown Branch,2024-12-01,2024-12-03,90.00,1
+DEF456,CUST002,Charlie Davis,Charlie Davis,Airport Branch,Airport Branch,2024-12-02,2024-12-05,150.00,2
+GHI789,CUST003,Emily White,Emily White,Suburban Branch,Suburban Branch,2024-12-03,2024-12-04,55.00,3

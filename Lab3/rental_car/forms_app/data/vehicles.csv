@@ -1,0 +1,5 @@
+make,model,year,vehicle_id,rental_rate_per_day,location
+Toyota,Corolla,2020,ABC123,45.00,Downtown Branch
+Honda,Civic,2021,DEF456,50.00,Airport Branch
+Ford,Escape,2019,GHI789,55.00,Suburban Branch
+Chevrolet,Malibu,2022,JKL012,60.00,Downtown Branch
